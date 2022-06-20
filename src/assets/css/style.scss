@@ -1,0 +1,114 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video, input, textarea {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: normal;
+  vertical-align: baseline;
+  user-select:none;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, menu, nav, section {
+  display: block;
+}
+li{
+  list-style: none;
+}
+a{
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-backface-visibility: hidden;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+*{
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color:#bfbfbf;
+  font-size: .24rem;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color:#bfbfbf;
+  font-size: .24rem;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color:#bfbfbf;
+  font-size: .24rem;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color:#bfbfbf;
+  font-size: .24rem;
+}
+
+input, textarea{
+  -webkit-appearance: none;
+  background: transparent;
+  outline: none;
+}
+
+i{
+  font-style: normal;
+}
+
+.fl{
+  float: left;
+}
+
+.fr{
+  float: right;
+}
+.clearfix{
+  zoom:1;
+}
+.clearfix:after{
+  content: " ";
+  display: block;
+  height:0;
+  width:100%;
+  clear:both;
+}
+
+html {
+  background: #000000;
+  touch-action:none;
+  touch-action:pan-x;
+}
+
+/* 重置confirm弹出框样式 */
+.wc-popup{
+  color: #fff!important;
+}
+.wc-popup-inner{
+  padding: 20px 15px!important;
+  background: rgba(0,0,0,.8)!important;
+}
+.wc-popup-title+.wc-popup-text{
+  font-size: 16px!important;
+}
+.wc-popup-title{
+  display: none!important;
+}
+.wc-popup-button{
+  background: rgba(0,0,0,.8)!important;
+  color: #efbf7f!important;
+  border-top: 1px solid #4e3c23;
+}
