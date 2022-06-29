@@ -2,9 +2,11 @@
   <div class="header">
     <div class="menu">
       <ul class="menu_">
-        <li class="menu_li" v-for="list in this.$store.state.menu">
-          <router-link :to="`/home/${list.url}`" :list="list" class="service">{{ list.name }}</router-link>
+        <template v-for="list in this.$store.state.menu">
+        <li class="menu_li"  @click="routerId(list.url)">
+          <router-link :to="`/home/${list.url}`"  class="service">{{ list.name }}</router-link>
         </li>
+        </template>
       </ul>
     </div>
     <div class="search">
@@ -48,21 +50,20 @@ export default {
     }
   },
   mounted() {
-
     this.getMenu();
   },
 
   methods: {
     getMenu() {
-      // _getMenu().then(res =>{
-      //   this.menuList = res.data.data;
-      //   console.log('menuList',res.data.data);
-      // })
-      // this.menuList = this.$store.state.menu;
-      // console.log('menuList', this.menuList);
       this.$store.dispatch('getMenu')
     },
-
+    routerId(url){
+      this.$router.push({
+        name: url,
+        query: {id: url}
+      })
+    alert(123);
+    },
     onlineService() {
       alert('您好，正在为您联系客服。请稍等片刻！');
     },

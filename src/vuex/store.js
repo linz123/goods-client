@@ -9,6 +9,8 @@ const state = {
   menu:[]
 }
 
+
+
 const getters = {
   total(state) {
     let money = 0;
@@ -84,7 +86,7 @@ const mutations = {
 
 const actions = {
   getMenu({commit}){
-    //用setTimeout模拟一个异步数据的获取
+    //异步数据的获取
     _getMenu().then(res=>{
       if (res.data.code === 200){
         commit('getMenu', res.data.data)
