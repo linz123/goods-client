@@ -1,21 +1,24 @@
 <template>
   <div class="header">
-   <div class="menu">
-     <ul class="menu_">
-       <li class="menu_li" v-for="list in this.$store.state.menu">
-         <router-link :to="`/home/${list.url}`" :list="list" class="service">{{list.name}}</router-link>
-       </li>
-     </ul>
-   </div>
+    <div class="menu">
+      <ul class="menu_">
+        <li class="menu_li" v-for="list in this.$store.state.menu">
+          <router-link :to="`/home/${list.url}`" :list="list" class="service">{{ list.name }}</router-link>
+        </li>
+      </ul>
+    </div>
     <div class="search">
       <div class="logo">logo</div>
       <div class="search-input">
         <input placeholder="请输入您想搜索的商品、品牌">
-        <div class="search-img"><a-icon type="search" /></div>
+        <div class="search-img">
+          <a-icon type="search"/>
+        </div>
       </div>
       <div class="search-right">
-        <div class="cart"><router-link to="/shopping-cart" class="service-link"></router-link>
-        <i class="cartNumber">{{shopCartTotal}}</i></div>
+        <div class="cart">
+          <router-link to="/shopping-cart" class="service-link"></router-link>
+          <i class="cartNumber">{{ shopCartTotal }}</i></div>
         <div class="line_service" @click="onlineService()"></div>
       </div>
     </div>
@@ -36,37 +39,37 @@
 import {_getMenu, getShopCartData} from "../../http/apiProduct";
 
 export default {
-name: "header",
-  data(){
-   return{
-     menuList: null,
-     list: null,
-     shopCartTotal: null,
-   }
+  name: "header",
+  data() {
+    return {
+      menuList: null,
+      list: null,
+      shopCartTotal: null,
+    }
   },
   mounted() {
 
-this.getMenu();
+    this.getMenu();
   },
 
-  methods:{
-  getMenu(){
-    // _getMenu().then(res =>{
-    //   this.menuList = res.data.data;
-    //   console.log('menuList',res.data.data);
-    // })
-    this.menuList =this.$store.state.menu;
-    console.log('menuList',this.menuList);
+  methods: {
+    getMenu() {
+      // _getMenu().then(res =>{
+      //   this.menuList = res.data.data;
+      //   console.log('menuList',res.data.data);
+      // })
+      // this.menuList = this.$store.state.menu;
+      // console.log('menuList', this.menuList);
+      this.$store.dispatch('getMenu')
+    },
 
-  },
-
-    onlineService(){
+    onlineService() {
       alert('您好，正在为您联系客服。请稍等片刻！');
     },
-    searchProduct(name){
+    searchProduct(name) {
       this.$router.push({
         name: 'Search',
-        query: {id:name}
+        query: {id: name}
       })
     }
 
@@ -74,39 +77,45 @@ this.getMenu();
 }
 </script>
 
-<style scoped >
-.header{
+<style scoped>
+.header {
   width: 100%;
 }
-.menu{
+
+.menu {
   width: 1200px;
   height: 50px;
   margin: 0 auto;
 }
-.menu_{
+
+.menu_ {
   width: 1200px;
   display: flex;
   margin: 0 0;
   padding: 0;
 }
-.menu_li{
+
+.menu_li {
   font-size: 16px;
   width: 80px;
   line-height: 50px;
   text-align: center;
   list-style: none;
 }
-.service{
+
+.service {
   color: #333;
 }
-.search{
+
+.search {
   width: 1200px;
   height: 50px;
   margin: 0 auto;
   display: flex;
   justify-content: space-around;
 }
-.logo{
+
+.logo {
   width: 120px;
   height: 50px;
   text-align: center;
@@ -114,7 +123,8 @@ this.getMenu();
   line-height: 50px;
   background: antiquewhite;
 }
-.search-input{
+
+.search-input {
   width: 800px;
   height: 36px;
   background: #f3f3f3;
@@ -123,14 +133,16 @@ this.getMenu();
   display: flex;
 
 }
-input{
+
+input {
   width: 750px;
   text-align: left;
   border-radius: 5px;
   color: #333333;
   font-size: 18px;
 }
-.search-img{
+
+.search-img {
   width: 35px;
   text-align: center;
   line-height: 25px;
@@ -138,13 +150,15 @@ input{
   font-size: 15px;
   /*background: url("../../assets/img/home_img/ss.png") no-repeat;*/
 }
-.search-right{
+
+.search-right {
   width: 150px;
   height: 34px;
   display: flex;
   align-content: center;
   justify-content: space-around;
 }
+
 .line_service {
   width: 35px;
   height: 34px;
@@ -153,12 +167,14 @@ input{
   border-radius: 3px;
   background: url("../../assets/img/home_img/s-icon.png") no-repeat;
 }
-.service-link{
+
+.service-link {
   width: 35px;
   height: 34px;
   display: block;
- }
-.cart{
+}
+
+.cart {
   width: 35px;
   height: 35px;
   text-align: center;
@@ -167,26 +183,30 @@ input{
   border-radius: 3px;
   background: url("../../assets/img/home_img/car-icon.png") no-repeat;
 }
-.cartNumber{
+
+.cartNumber {
   color: #ff0000;
   font-size: 15px;
   position: relative;
   top: -13px;
   left: 15px;
 }
-.hot_products{
+
+.hot_products {
   width: 1200px;
   height: 30px;
   margin: 0 auto;
 }
-.hot_{
+
+.hot_ {
   width: 870px;
   height: 30px;
   padding: 0;
   margin: 0 auto;
   display: flex;
 }
-.products{
+
+.products {
   text-align: left;
   color: #999;
   padding-right: 20px;

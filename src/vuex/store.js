@@ -26,9 +26,7 @@ const getters = {
 const mutations = {
   //获取菜单
   getMenu(state, menu) {
-    state.menu = _getMenu().then(res=>{
-      console.log('vuex导航',res.data.data);
-   })
+    state.menu = menu;
   },
 
   // 这里通过params 接收到actions里面传来的数据
@@ -85,15 +83,14 @@ const mutations = {
 }
 
 const actions = {
-  getMenu({commit}, params){
+  getMenu({commit}){
     //用setTimeout模拟一个异步数据的获取
-    setTimeout(() => {
-      let result = 'success'
-      if (result === 'success') {
-        //模拟数据已经获取成功，commit mutations里面的getMenu的方法，第二个参数是传参
-        commit('getMenu', params)
+    _getMenu().then(res=>{
+      if (res.data.code === 200){
+        commit('getMenu', res.data.data)
       }
-    }, 300)
+      console.log('vuex导航',res.data.data);
+    })
   },
 
   addGood({commit}, params) {
