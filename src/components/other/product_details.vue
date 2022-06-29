@@ -7,7 +7,7 @@
           <span class="text-color">首页</span>&nbsp;&nbsp;<a-icon type="double-right"/>
           <span class="text-color">超市</span>&nbsp;&nbsp;<a-icon type="double-right"/>
           <span class="text-color">蔬菜水果</span>&nbsp;&nbsp;<a-icon type="double-right"/>
-          <span>{{goodsData.goodsName}}</span>
+          <span>{{goodData.goodsName}}</span>
         </div>
         <div class="product">
           <div class="product_">
@@ -24,11 +24,11 @@
             </div>
 
             <div class="goods-information">
-              <div class="goods-" v-if="goodsData">
+              <div class="goods-" v-if="goodData">
 
-                <h2 class="goods-name">{{goodsData.goodsName}}</h2>
-                <p class="product_number">{{goodsData.serialNumber}}</p>
-                <h1 class="goods-price" >{{goodsData.price}}</h1>
+                <h2 class="goods-name">{{goodData.goodsName}}</h2>
+                <p class="product_number">{{goodData.serialNumber}}</p>
+                <h1 class="goods-price" >{{goodData.price}}</h1>
                 <div class="exchange-number fr">
                   <span class="noselect" @click="changeNum(false)">-</span>
                   <a-input class="nmu-input" v-model="goodNumber"/>
@@ -57,16 +57,16 @@
             </div>
           </div>
 <!--          <div class="imgList">-->
-<!--            <div class="product_img product_img-active" v-for="list in goodsData.imgs[0]">-->
+<!--            <div class="product_img product_img-active" v-for="list in goodData.imgs[0]">-->
 <!--              <img :src="list.img" alt=""/>-->
 <!--            </div>-->
 <!--          </div>-->
         </div>
 
-        <div class="specifications" v-if="goodsData">
-          <h2>{{goodsData.goodsName}}</h2>
+        <div class="specifications" v-if="goodData">
+          <h2>{{goodData.goodsName}}</h2>
           <ul >
-            <li>{{goodsData.describe}}</li>
+            <li>{{goodData.describe}}</li>
           </ul>
         </div>
       </div>
@@ -86,7 +86,6 @@ import Header from "../home/header";
 import Footer from "../home/footer";
 import NoData from "./no-data";
 import {getGoodsInfo} from '../../http/apiProduct';
-import {mapMutations} from '../../vuex/store'
 export default {
   name: "product_details",
   components: {NoData, Footer, Header},
@@ -97,14 +96,12 @@ export default {
       //兑换商品数量
       goodNumber: 1,
       id: null,
-      goodsData:[],
+      goodData:[],
     }
   },
   computed:{
-    ...mapState(['car'])
   },
   created() {
-    this.initCar()
     const id = this.$route.params.id;
     if(!id){
       this.goHistory()
@@ -116,7 +113,6 @@ export default {
    this.init();
   },
   methods: {
-    ...mapMutations(['addGood','initCar']),
     init(){
       getGoodsInfo({id:this.id}).then(res => {
         if (res.status !== 200){
@@ -124,25 +120,22 @@ export default {
           },1000)
           return;
         }
-        this.goodsData = res.data.data;
-        console.log('商品详情信息', this.goodsData);
+        this.goodData = res.data.data;
       }) .catch(function (err){
         console.log(err)
       })
     },
     submit() {
       this.addProduct = true;
-      const goods = {
-        goodsName: this.goodsData.goodsName,
-        serialNumber:this.goodsData.serialNumber,
-        price: this.goodsData.price,
-        goodNumber: this.goodNumber,
-        check: true
-      }
-      let list = JSON.parse(localStorage.getItem('goodsData') || '[]');
-      list.unshift(goods);
-      localStorage.setItem('goodsData', JSON.stringify(list));
-      this.$store.commit('addGood', goods);
+      const good = {
+        check: true,
+        goodId:this.goodData.goodId,
+        goodsName:this.goodData.goodsName,
+        goodNumber: parseInt(this.goodNumber),
+        price:this.goodData.price,
+
+      };
+      this.$store.commit('addGood', good);
       setTimeout(() => {
         this.addProduct = false;
       }, 1000);
@@ -164,7 +157,6 @@ export default {
     },
 
   },
-
 
 }
 </script>

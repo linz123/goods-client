@@ -17,33 +17,37 @@
         </div>
       </div>
       <div class="content-center-botton">
-        <div class="content-center-botton-product" @click="checkProduct('B.ZERO1戒指')">
+        <div class="content-center-botton-product" >
           <h2>B.ZERO1戒指</h2>
           <p>18克拉玫瑰金双环戒指</p>
           <b>54,300.00 Baht</b>
           <button @click="addProduct()">添加到购物车</button>
-          <img src="../../assets/img/home_img/content_center_bottom1.png"/>
+          <img src="../../assets/img/home_img/content_center_bottom1.png"
+               @click="checkProduct('B.ZERO1戒指')"/>
         </div>
-        <div class="content-center-botton-product" @click="checkProduct('SK-II套装')">
+        <div class="content-center-botton-product" >
           <h2>SK-II套装</h2>
           <p>护肤精华露与精华霜套装</p>
           <b>10,640.00 Baht</b>
           <button @click="addProduct()">添加到购物车</button>
-          <img src="../../assets/img/home_img/content_center_bottom2.png"/>
+          <img src="../../assets/img/home_img/content_center_bottom2.png"
+               @click="checkProduct('SK-II套装')"/>
         </div>
-        <div class="content-center-botton-product" @click="checkProduct('阿玛尼男士手表')">
+        <div class="content-center-botton-product" >
           <h2>阿玛尼男士手表</h2>
           <p>Renato都会经典湛蓝多功能</p>
           <b>6,5550.00 Baht</b>
           <button @click="addProduct()">添加到购物车</button>
-          <img src="../../assets/img/home_img/content_center_bottom3.png"/>
+          <img src="../../assets/img/home_img/content_center_bottom3.png"
+               @click="checkProduct('阿玛尼男士手表')"/>
         </div>
-        <div class="content-center-botton-product" @click="checkProduct('圣罗兰Y男士淡香水')">
+        <div class="content-center-botton-product" >
           <h2>圣罗兰Y男士淡香水</h2>
           <p>淡香水EDT-100ML</p>
           <b>3,740.00 Baht</b>
           <button @click="addProduct()">添加到购物车</button>
-          <img src="../../assets/img/home_img/content_center_bottom4.png"/>
+          <img src="../../assets/img/home_img/content_center_bottom4.png"
+               @click="checkProduct('圣罗兰Y男士淡香水')"/>
         </div>
       </div>
     </div>
@@ -59,7 +63,8 @@
 
 <script>
 import axios from 'axios';
-import {getGoodsInfo, getDate,getClassesPage } from "../../http/apiProduct";
+import {getGoodsInfo, getDate,_getClassesPage } from "../../http/apiProduct";
+import {message} from "ant-design-vue";
 
 export default {
   name: "index",
@@ -83,32 +88,15 @@ export default {
         {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00 Baht', imgUrl: '', id: '123'},
         {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00 Baht', imgUrl: '', id: '123'},
       ],
-      goodsData: null,
-      // classesPage: this.getDate,
+      goodData: null,
+
     }
   },
   mounted() {
-    // this.getDate();
-    // this.initGetClassesPage();
-    // this.getDate();
 
-    // this.init();
   },
   methods: {
-    // init(){
-    //   getGoodsInfo({id:1}).then(res => {
-    //     if (res.status != 200){
-    //       console.log(res.msg);
-    //       setTimeout(() => {
-    //       },1000)
-    //       return;
-    //     }
-    //     this.goodsData = res.data.data;
-    //     console.log('123', this.goodsData);
-    //   }) .catch(function (err){
-    //     console.log('321', err)
-    //   })
-    // },
+
     // 查看详情
     checkProduct(id) {
       this.$router.push({
@@ -117,7 +105,18 @@ export default {
       })
     },
     addProduct() {
-      alert('已添加至您的购物车');
+      const good = {
+        check: true,
+        goodId: this.goodData.goodId,
+        goodsName: this.goodData.goodsName,
+        goodNumber: parseInt(this.goodNumber),
+        price: this.goodData.price,
+        img: this.goodData.img
+      };
+      this.$store.commit('addGood', good);
+      setTimeout(() => {
+        message.success('已添加至您的购物车');
+      }, 300);
     },
     goKingPower() {
       this.$router.push({
@@ -135,7 +134,7 @@ export default {
       })
     },
     initGetClassesPage() {
-      getClassesPage({
+      _getClassesPage({
         pageSize: 10,
         pageNumber: 1,
       })
@@ -146,19 +145,6 @@ export default {
           console.log(err);
         })
     },
-    //
-    // getDate(){
-    //   getDate({
-    //     pageSize:10,
-    //     pageNumber:1,
-    //   })
-    //     .then(function (res){
-    //       console.log(res);
-    //     })
-    //     .catch(function (err){
-    //       console.log(err);
-    //     })
-    // },
   }
 }
 </script>

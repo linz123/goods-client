@@ -2,13 +2,9 @@
   <div class="header">
    <div class="menu">
      <ul class="menu_">
-       <li class="menu_li"><router-link to="/home/index" class="service">首页</router-link></li>
-       <li class="menu_li"><router-link to="/home/market" class="service">超市</router-link></li>
-       <li class="menu_li"><router-link to="/home/digital-product" class="service">数码产品</router-link></li>
-       <li class="menu_li"><router-link to="/home/king-power" class="service">免税店</router-link></li>
-       <li class="menu_li"><router-link to="/home/amulet" class="service">佛牌</router-link></li>
-       <li class="menu_li"><router-link to="/home/food" class="service">泰国菜</router-link></li>
-       <li class="menu_li"><router-link to="/home/car" class="service">出租车</router-link></li>
+       <li class="menu_li" v-for="list in this.$store.state.menu">
+         <router-link :to="`/home/${list.url}`" :list="list" class="service">{{list.name}}</router-link>
+       </li>
      </ul>
    </div>
     <div class="search">
@@ -37,45 +33,33 @@
 </template>
 
 <script>
-import {getMenu, getShopCartData} from "../../http/apiProduct";
+import {_getMenu, getShopCartData} from "../../http/apiProduct";
 
 export default {
 name: "header",
   data(){
    return{
-     menuList: [
-
-     ],
-     productsList: [
-
-     ],
+     menuList: null,
+     list: null,
      shopCartTotal: null,
    }
   },
   mounted() {
-this.getShopCartTotal();
+
+this.getMenu();
   },
 
   methods:{
-  getShopCartTotal(){
-    // let prdData =JSON.parse(localStorage.getItem('goodsData')||[]);
-    // this.shopCartTotal = prdData.length;
-    // console.log(this.shopCartTotal);
+  getMenu(){
+    // _getMenu().then(res =>{
+    //   this.menuList = res.data.data;
+    //   console.log('menuList',res.data.data);
+    // })
+    this.menuList =this.$store.state.menu;
+    console.log('menuList',this.menuList);
+
   },
 
-
-    // init() {
-    //   getMenu({
-    //     pageSize: 10,
-    //     pageNumber: 1,
-    //   })
-    //     .then(function (res) {
-    //       console.log(res);
-    //     })
-    //     .catch(function (err) {
-    //       console.log(err);
-    //     })
-    // },
     onlineService(){
       alert('您好，正在为您联系客服。请稍等片刻！');
     },

@@ -15,33 +15,38 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(item,index) in getData">
+          <tr v-for="(item,index) in carData">
             <td>
               <!--                <a-checkbox :checked="item.check" @click="aloncheck(index)"></a-checkbox>-->
-              <a-checkbox :checked="item.check" @click="aloncheck(index)"></a-checkbox>
+              <a-checkbox :checked="item.good.check" v-model="check" @click="this.$store.commit('ckd',item.good.check)"></a-checkbox>
             </td>
             <td style="text-align: left">
               <img src="../../assets/img/xiangqing/xq1.png" alt=""/>
-              {{ item.goodsName }}
+              {{ item.good.goodsName }}
             </td>
-            <td>{{ item.price }}</td>
+            <td>{{ item.good.price }}</td>
             <td>
-              <button @click="reduceGood({id:item.id})" :disabled="goodNumber<=1">-</button>
-              {{ item.goodNumber++ }}
-              <button @click="addGood({id:item.id,price:item.price})">+</button>
+              <button @click="this.$store.commit('reduceGood',{id:item.good.goodId})" :disabled="item.good.goodNumber<=1">-</button>
+              {{ item.good.goodNumber}}
+              <button @click="this.$store.commit('addGood',{id:item.good.goodId,price:item.good.price})">+</button>
             </td>
-            <td>{{ item.price * goodNumber }}</td>
+            <td>{{ item.good.price * item.good.goodNumber }}</td>
             <td>
-              <button @click="removeGood(index)">移除</button>
+              <button @click="removeGood( item.good.goodId, index)">移除</button>
             </td>
           </tr>
           </tbody>
+
         </table>
+        <div v-if="!carData.length>0" class="noData">
+          <div class="noData-box" style=""></div>
+          <h2 class="noData_text">购物车空空如也，快快去购物把！</h2>
+        </div>
         <!--        </div>-->
         <div class="product-total">
           <div class="all">
             <!--            <input type="checkbox" :checked="checkAll"  @click="allCheck()">全选-->
-            <a-checkbox :indeterminate="indeterminate" :checked="checkAll" @click="allCheck()">全选</a-checkbox>
+            <a-checkbox :indeterminate="indeterminate" v-model="checkAll" :checked="checkAll" @click="allCheck()">全选</a-checkbox>
             <span>(3)</span>
             <div class="price-show" @click="show()">价格表</div>
           </div>
@@ -59,7 +64,7 @@
             <div class="account-">
               <div class="account">
                 <p class="tt">总计（0项）：</p>
-                <p class="pp"> {{ total }}฿</p>
+                <p class="pp"> 0฿</p>
               </div>
               <button class="print" @click="submit()">订单提交</button>
             </div>
@@ -120,8 +125,7 @@
 import Header from "../home/header";
 import Footer from "../home/footer";
 import NoData from "./no-data";
-import {mapMutations, mapGetters, mapState} from '../../vuex/store'
-
+import {_createGoodsOrder} from "../../http/apiProduct";
 export default {
   name: "shopping-cart",
   components: {NoData, Footer, Header},
@@ -137,21 +141,20 @@ export default {
     }
   },
   mounted() {
-    this.getData = this.$store.state.car;
-    // this.goodNumber=this.getData[0].goodNumber;
-    console.log('获取数据', this.getData);
 
   },
   computed: {
-    ...mapState(['car']),
-    ...mapGetters(['total']),
+    carData() {
+      console.log('购物车的数据', this.$store.getters.getCar);
+      return this.$store.getters.getCar;
+    },
     //全选
     allCheck: {
       get() {
         if (this.getData.length === 0) {
           return false;
         }
-        return this.$store.state.car.every(item => {
+        return this.$store.state.car.every( item => {
           return item.check == true;
         })
       },
@@ -162,11 +165,11 @@ export default {
 
   },
   methods: {
-    ...mapMutations(['addGood', 'reduceGood', 'removeGood']),
     //移除产品
-    removeGood(index) {
+    removeGood(id,index) {
       // this.getData.splice(index,1);
-      this.$store.commit('removeGood', index);
+      console.log('id',id, index);
+      this.$store.commit('removeGood', {id, index});
     },
     //单选产品
     aloncheck(index) {
@@ -187,7 +190,10 @@ export default {
       this.showPrice = !this.showPrice;
     },
     submit() {
-      alert("您的订单已经提交至客服，有疑问请联系客服！");
+      const {id, goodNumber} =this;
+      let pramas={id, goodNumber};
+      _createGoodsOrder(pramas, this);
+      alert("您的订单正在提交中····！");
     },
     print() {
       alert("您的订单已打印！");
@@ -442,7 +448,26 @@ export default {
         }
       }
     }
-
+    .noData{
+      width: 100%;
+      height: 400px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .noData-box{
+        width: 150px;
+        height: 150px;
+        text-align: center;
+        background: url("../../assets/img/shoppcart/empty.jpg");
+        background-size: cover;
+      }
+      .noData_text{
+        font-size: 16px;
+        color: #c0b7b7;
+        text-align: center;
+      }
+    }
     .product-total {
       width: 1200px;
       padding: 8px 0;

@@ -13,15 +13,15 @@
       </div>
       <div class="content-box">
         <div class="product">
-          <div class="product_list" v-for="good in productList"
-               :key="good.id"
-               :good='good'
-               @click="checkProduct(good.goodId)">
-            <img class="product_img" src="../../assets/img/xiangqing/xq.png" alt="" />
-            <h2 class="product_name">{{good.goodsName}}</h2>
+          <div class="product_list" v-for="item in productList"
+               :key="item.goodId"
+               >
+            <img class="product_img" src="../../assets/img/xiangqing/xq.png" alt=""
+                 @click="checkProduct(item.goodId)"/>
+            <h2 class="product_name">{{item.goodsName}}</h2>
 <!--            <p class="product_parameter">{{index.describe}}</p>-->
-            <p class="product_price">{{good.price}}</p>
-            <div class="addCar" @click="addGood(good)"></div>
+            <p class="product_price">{{item.price}}</p>
+            <div class="addCar" @click="submit(item)"></div>
           </div>
         </div>
         <div class="paging">
@@ -33,16 +33,18 @@
 </template>
 
 <script>
-import {getClassesPage, getDate} from "../../http/apiProduct";
-import {mapMutations} from '../../vuex/store'
+import {_getClassesPage, getDate} from "../../http/apiProduct";
+import { message } from 'ant-design-vue';
 
 export default {
   name: "all_categories",
+
   data(){
     return{
       currentPayerIndex: 0,
       productList: null,
       classesList:null,
+      goodData:null
     }
   },
   mounted() {
@@ -50,7 +52,7 @@ export default {
     this.initGetClassesPage();
   },
   methods:{
-    ...mapMutations(['addGood']),
+
     //获取数据
     getProDate(){
       getDate({
@@ -69,16 +71,31 @@ export default {
     },
     //侧边栏分类
     initGetClassesPage() {
-      getClassesPage({
-        pageSize: 10,
-        pageNumber: 1,
-      })
-        .then(res => {
-          this.classesList = res.data.data.pages;
-        })
-        .catch(err => {
-          console.log(err);
-        })
+      // _getClassesPage({
+      //   pageSize: 10,
+      //   pageNumber: 1,
+      // })
+      //   .then(res => {
+      //     this.classesList = res.data.data;
+      //     console.log('分类',res.data)
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   })
+    },
+    submit(item) {
+      const good = {
+        check: true,
+        goodId:this.goodData.goodId,
+        goodsName:this.goodData.goodsName,
+        goodNumber: parseInt(this.goodNumber),
+        price:this.goodData.price,
+        img: this.goodData.img
+      };
+      this.$store.commit('addGood', good);
+      setTimeout(() => {
+        message.success('已添加至您的购物车');
+      }, 300);
     },
 
     // 查看详情
