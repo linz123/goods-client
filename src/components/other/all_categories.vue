@@ -14,19 +14,20 @@
       </div>
       <div class="content-box">
         <div class="product">
-          <div class="product_list" v-for="item in this.$store.state.currentGoodData"
+          <div class="product_list" v-for="item in this.$store.state.currentGoodData.list || []"
                :key="item.goodId"
           >
-            <img class="product_img"  v-bind:src="'//192.168.20.254:8080'+item.thumbImg[0].ImgRelativeUrl" alt=""
+            <img class="product_img" v-bind:src="'//192.168.20.254:8080'+item.thumbImg[0].ImgRelativeUrl" alt=""
                  @click="checkProduct(item.goodId)"/>
-            <h2 class="product_name">{{ item.goodsName }}</h2>
+            <h2 class="product_name">{{ item.goodsName + "\|||||||||" + item.goodId }}</h2>
             <!--            <p class="product_parameter">{{index.describe}}</p>-->
             <p class="product_price">{{ item.price }}</p>
             <div class="addCar" @click="submit(item)"></div>
           </div>
         </div>
         <div class="paging">
-          <a-pagination :default-current="6" :total="500"/>
+          <a-pagination @change="onChange" :default-current="pageConfig.pageNumber"
+                        :total="this.$store.state.currentGoodData.total"/>
         </div>
       </div>
     </div>
@@ -54,7 +55,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'classList'
+      'classList',
+      'pageConfig'
     ])
   },
   methods: {
@@ -113,12 +115,22 @@ export default {
     },
     selectClass(item) {
       let paras = Object.assign({}, {
-          classId: item.classId.toString()
-        },
-        this.$store.state.pageConfig)
+        classId: item.classId.toString()
+      }, this.$store.state.pageConfig)
       console.log('selectClass', paras)
       this.$store.dispatch('getGoodByClass', paras)
       this.$store.dispatch('toggleCurrentClassItem', item)
+    },
+    onChange(current, pageSize) {
+      this.$store.dispatch('changePageConfig', {
+        pageSize,
+        pageNumber: current
+      })
+      console.log('current', current)
+      let paras = Object.assign({}, {
+        classId: this.$store.state.currentClass.classId.toString()
+      }, this.$store.state.pageConfig)
+      this.$store.dispatch('getGoodByClass', paras)
     }
   }
 }

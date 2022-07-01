@@ -29,12 +29,18 @@ const getters = {
 
   getCar(state) {
     return state.car
-  }, getCurrentMenu(state) {
+  },
+  getCurrentMenu(state) {
     return state.currentMenu;
-  }, getCurrentClass(state) {
+  },
+  getCurrentClass(state) {
     return state.currentClass;
-  }, classList(state) {
+  },
+  classList(state) {
     return state.currentMenu.classes;
+  },
+  pageConfig(state){
+    return state.pageConfig;
   }
 }
 
@@ -112,6 +118,9 @@ const mutations = {
   setGoodData(state, goodData){
     console.log('goodData',goodData)
     state.currentGoodData = goodData;
+  },
+  setPageConfig(state,data){
+    Object.assign(state.pageConfig,data)
   }
 }
 
@@ -180,6 +189,9 @@ const actions = {
   },
   toggleCurrentClassItem({commit}, item){
     commit('toggleClass', item)
+  },
+  changePageConfig({commit}, item){
+    commit('setPageConfig', item)
   }
 }
 
