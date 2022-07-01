@@ -29,31 +29,31 @@ export default new Router({
         {
           path: 'digital-product',
           name: 'Digital-product',
-          component: () => import('@/components/page/digital-product.vue'),
+          component: () => import('@/components/page/market.vue'),
         },
         //免税店
         {
           path: 'king-power',
           name: 'King-power',
-          component: () => import('@/components/page/king-power.vue'),
+          component: () => import('@/components/page/market.vue'),
         },
         //佛牌
         {
           path: 'amulet',
           name: 'Amulet',
-          component: () => import('@/components/page/amulet.vue'),
+          component: () => import('@/components/page/market.vue'),
         },
         //美食
         {
           path: 'food',
           name: 'Food',
-          component: () => import('@/components/page/food.vue'),
+          component: () => import('@/components/page/market.vue'),
         },
         //出租车
         {
           path: 'car',
           name: 'Car',
-          component: () => import('@/components/page/car.vue'),
+          component: () => import('@/components/page/market.vue'),
         },
       ]
     },

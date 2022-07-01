@@ -2,10 +2,10 @@
   <div class="header">
     <div class="menu">
       <ul class="menu_">
-        <template v-for="list in this.$store.state.menu">
-        <li class="menu_li"  @click="routerId(list.url)">
-          <router-link :to="`/home/${list.url}`"  class="service">{{ list.name }}</router-link>
-        </li>
+        <template v-for="(item,index) in this.$store.state.menu">
+          <li class="menu_li" @click="selectMenu(index)">
+            <router-link :to="`/home/${item.url}`" class="service">{{ item.name }}</router-link>
+          </li>
         </template>
       </ul>
     </div>
@@ -41,7 +41,7 @@
 import {_getMenu, getShopCartData} from "../../http/apiProduct";
 
 export default {
-  name: "header",
+  name: "Header",
   data() {
     return {
       menuList: null,
@@ -57,12 +57,16 @@ export default {
     getMenu() {
       this.$store.dispatch('getMenu')
     },
-    routerId(url){
-      this.$router.push({
-        name: url,
-        query: {id: url}
-      })
-    alert(123);
+    selectMenu(index) {
+      this.$store.dispatch('toggleMenu', this.$store.state.menu[index])
+      let paras = Object.assign({}, {
+        classId: this.$store.state.currentClass.classId.toString()},
+        this.$store.state.pageConfig)
+      console.log('paras', paras)
+      if (index !== 0) {
+        this.$store.dispatch('getGoodByClass', paras)
+      }
+
     },
     onlineService() {
       alert('您好，正在为您联系客服。请稍等片刻！');

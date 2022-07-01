@@ -3,29 +3,30 @@
     <div class="categories">
       <div class="menu">
         <div class="menu-title">
-          <a-icon type="unordered-list" />
-          所有类别</div>
+          <a-icon type="unordered-list"/>
+          当前类别
+        </div>
         <div class="category">
-          <ul v-for="(item, index) in classesList">
-            <li  v-bind:class="(index === currentPayerIndex) ? 'active' : ''">{{item.className}}</li>
+          <ul v-for="(item, index) in classList" @click="selectClass(item)">
+            <li v-bind:class="(index === currentPayerIndex) ? 'active' : ''">{{ item.className }}</li>
           </ul>
         </div>
       </div>
       <div class="content-box">
         <div class="product">
-          <div class="product_list" v-for="item in productList"
+          <div class="product_list" v-for="item in this.$store.state.currentGoodData"
                :key="item.goodId"
-               >
-            <img class="product_img" src="../../assets/img/xiangqing/xq.png" alt=""
+          >
+            <img class="product_img"  v-bind:src="'//192.168.20.254:8080'+item.thumbImg[0].ImgRelativeUrl" alt=""
                  @click="checkProduct(item.goodId)"/>
-            <h2 class="product_name">{{item.goodsName}}</h2>
-<!--            <p class="product_parameter">{{index.describe}}</p>-->
-            <p class="product_price">{{item.price}}</p>
+            <h2 class="product_name">{{ item.goodsName }}</h2>
+            <!--            <p class="product_parameter">{{index.describe}}</p>-->
+            <p class="product_price">{{ item.price }}</p>
             <div class="addCar" @click="submit(item)"></div>
           </div>
         </div>
         <div class="paging">
-          <a-pagination :default-current="6" :total="500" />
+          <a-pagination :default-current="6" :total="500"/>
         </div>
       </div>
     </div>
@@ -34,33 +35,38 @@
 
 <script>
 import {_getClassesPage, getDate} from "../../http/apiProduct";
-import { message } from 'ant-design-vue';
+import {message} from 'ant-design-vue';
+import {mapGetters} from 'vuex'
 
 export default {
   name: "all_categories",
 
-  data(){
-    return{
+  data() {
+    return {
       currentPayerIndex: 0,
-      productList: null,
-      classesList:null,
-      goodData:null
+      productList: [],
+      goodData: []
     }
   },
   mounted() {
-    this.getProDate();
-    this.initGetClassesPage();
+    // this.getProDate();
+    // this.initGetClassesPage();
   },
-  methods:{
+  computed: {
+    ...mapGetters([
+      'classList'
+    ])
+  },
+  methods: {
 
     //获取数据
-    getProDate(){
+    getProDate() {
       getDate({
-        pageSize:10,
-        pageNumber:1,
+        pageSize: 10,
+        pageNumber: 1,
       })
         .then(res => {
-          if(!res){
+          if (!res) {
             return;
           }
           this.productList = res.data.data;
@@ -86,10 +92,10 @@ export default {
     submit(item) {
       const good = {
         check: true,
-        goodId:this.goodData.goodId,
-        goodsName:this.goodData.goodsName,
+        goodId: this.goodData.goodId,
+        goodsName: this.goodData.goodsName,
         goodNumber: parseInt(this.goodNumber),
-        price:this.goodData.price,
+        price: this.goodData.price,
         img: this.goodData.img
       };
       this.$store.commit('addGood', good);
@@ -102,27 +108,39 @@ export default {
     checkProduct(id) {
       this.$router.push({
         name: 'Product_details',
-        params: {id:id}
+        params: {id: id}
       })
+    },
+    selectClass(item) {
+      let paras = Object.assign({}, {
+          classId: item.classId.toString()
+        },
+        this.$store.state.pageConfig)
+      console.log('selectClass', paras)
+      this.$store.dispatch('getGoodByClass', paras)
+      this.$store.dispatch('toggleCurrentClassItem', item)
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.content{
+.content {
   width: 100%;
-  border-top:1px solid #dfdada;
-  .categories{
+  border-top: 1px solid #dfdada;
+
+  .categories {
     width: 1200px;
     margin: 20px auto;
     display: flex;
     justify-content: space-between;
-    .menu{
+
+    .menu {
       width: 180px;
       height: 800px;
       background: #fbf7f7;
-      .menu-title{
+
+      .menu-title {
         margin-top: 15px;
         padding: 0 15px 10px 15px;
         margin-bottom: 10px;
@@ -132,9 +150,10 @@ export default {
         font-weight: 700;
         text-align: left;
       }
-      .category{
-        ul{
-          li{
+
+      .category {
+        ul {
+          li {
             text-align: left;
             padding: 5px 15px;
             font-size: 15px;
@@ -142,53 +161,62 @@ export default {
             color: #666;
             cursor: pointer;
           }
-          .active{
+
+          .active {
             color: #efbf7f;
           }
         }
       }
     }
-    .content-box{
+
+    .content-box {
       width: 1000px;
       min-height: 900px;
-      .product{
+
+      .product {
         width: 980px;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        .product_list{
+
+        .product_list {
           width: 190px;
           height: 280px;
           margin-bottom: 13px;
           text-align: left;
           cursor: pointer;
           position: relative;
-          .product_img{
+
+          .product_img {
             width: 100%;
           }
-         .product_name{
+
+          .product_name {
             padding-left: 15px;
             padding-top: 12px;
             margin-bottom: 5px;
             font-size: 15px;
             font-weight: 600;
           }
-          .product_parameter{
+
+          .product_parameter {
             padding-left: 15px;
             margin-bottom: 5px;
             font-size: 15px;
             font-weight: 600;
           }
-          .product_price{
+
+          .product_price {
             margin-bottom: 5px;
             padding-left: 15px;
             font-size: 14px;
             color: #c69d6b;
             font-weight: 600;
           }
-          .addCar{
+
+          .addCar {
             position: absolute;
-            bottom:14px;
+            bottom: 14px;
             right: 10px;
             width: 35px;
             height: 35px;
@@ -197,7 +225,8 @@ export default {
           }
         }
       }
-      .paging{
+
+      .paging {
         width: 980px;
         height: 50px;
         margin-top: 25px;
