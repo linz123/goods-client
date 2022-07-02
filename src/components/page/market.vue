@@ -21,11 +21,9 @@ export default {
       },
       methods:{
         getMarketData(){
-          alert(111);
           console.log('导航栏传过来的数据', list)
         },
         getSubMenu(){
-          alert(2111);
           const url = this.$route.params.id;
           console.log('url',url);
          const menuList =this.$store.state.menu;

@@ -7,7 +7,7 @@
           当前类别
         </div>
         <div class="category">
-          <ul v-for="(item, index) in classList" @click="selectClass(item)">
+          <ul v-for="(item, index) in classList" @click="selectClass(item,index)">
             <li v-bind:class="(index === currentPayerIndex) ? 'active' : ''">{{ item.className }}</li>
           </ul>
         </div>
@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="paging">
-          <a-pagination @change="onChange" :default-current="pageConfig.pageNumber"
+          <a-pagination @change="onChange" :pageSize="pageConfig.pageSize" :current="pageConfig.pageNumber"
                         :total="this.$store.state.currentGoodData.total"/>
         </div>
       </div>
@@ -113,14 +113,19 @@ export default {
         params: {id: id}
       })
     },
-    selectClass(item) {
-      let paras = Object.assign({}, {
-        classId: item.classId.toString()
-      }, this.$store.state.pageConfig)
+    selectClass(item,index) {
+      this.currentPayerIndex = index;
+      let paras;
+      this.$store.dispatch('reSetPageConfig').then(()=>{
+        paras = Object.assign({}, {
+          classId: item.classId.toString()
+        }, this.$store.state.pageConfig)
       console.log('selectClass', paras)
       this.$store.dispatch('getGoodByClass', paras)
       this.$store.dispatch('toggleCurrentClassItem', item)
+      })
     },
+
     onChange(current, pageSize) {
       this.$store.dispatch('changePageConfig', {
         pageSize,

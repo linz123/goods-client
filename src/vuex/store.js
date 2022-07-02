@@ -76,7 +76,6 @@ const mutations = {
     for (let i = 0; i < len, i++;) {
       if (state.car[i].good.goodId === goodId) {
         // state.car.splice(i,1)
-        alert(555)
         // if(state.car[i].num === 0){
         //   state.car.splice(i,i)
         //   break;
@@ -192,7 +191,10 @@ const actions = {
   },
   changePageConfig({commit}, item){
     commit('setPageConfig', item)
-  }
+  },
+  reSetPageConfig({commit}){
+    commit('reInitPageConfig')
+  },
 }
 
 const store = new Vuex.Store({
