@@ -5,15 +5,16 @@ import {_getClassesPage, _getMenu} from "../http/apiProduct";
 Vue.use(Vuex);
 
 const state = {
-  car: [],
+  car: [],// {goodNumber:1,check: true,good:{}} 商品数量，是否选中，商品详情
   menu: [],
   currentMenu: {}, //当前菜单选中的菜单
   currentClass: undefined,  // 当前选中分类
   currentGoodData: undefined, // 依据当前分类获取的商品分页数据
-  pageConfig: {  // 分页数据
+  pageConfig: {  // 全局分页配置
     pageSize: 20,
     pageNumber: 1
-  }
+  },
+  goodItemDetail: undefined, // 选中的商品详情
 
 }
 
@@ -27,7 +28,7 @@ const getters = {
     return money;
   },
 
-  getCar(state) {
+  carList(state) {
     return state.car
   },
   getCurrentMenu(state) {
@@ -39,9 +40,13 @@ const getters = {
   classList(state) {
     return state.currentMenu.classes;
   },
-  pageConfig(state){
+  pageConfig(state) {
     return state.pageConfig;
+  },
+  goodItemDetail(state) {
+    return state.goodItemDetail;
   }
+
 }
 
 const mutations = {
@@ -52,46 +57,45 @@ const mutations = {
 
   // 这里通过params 接收到actions里面传来的数据
   // 通过对象的方法将里面的数据提取出来
-  addGood(state, good) {
+  addGood(state, carItem) {
     //下面是根据传来的数据修改car中的数据
     let isHas = state.car.some(item => {
       //some方法中只要有一个item，isHas就为true
-      if (item.good.goodId === good.goodId) {
-        item.good.goodNumber += good.goodNumber;
+      console.log("newItem", carItem, "oldItem", item)
+
+      if (item.good.goodId === carItem.good.goodId) {
+        item.goodNumber += carItem.goodNumber;
         return true;
       } else {
         return false
       }
     })
     if (!isHas) {
-      state.car.push({
-        good,
-      })
+      state.car.push(carItem)
     }
-    console.log('传过来购物的商品', state.car)
+    console.log('购物车', state.car)
   },
 
-  reduceGood(state, {goodId, index}) {
+  syncGood(state, {good, goodNumber}) { //同步商品数量
     let len = state.car.length;
     for (let i = 0; i < len, i++;) {
-      if (state.car[i].good.goodId === goodId) {
-        // state.car.splice(i,1)
-        // if(state.car[i].num === 0){
-        //   state.car.splice(i,i)
-        //   break;
-        // }
+      if (state.car[i].good.goodId === good.goodId) {
+        state.car[i].goodNumber = goodNumber;
       }
     }
   },
 
-  removeGood(state, {id}) {
+  removeGood(state, id) {    // 移除购物车
+    console.log('removeGoodId', id)
     let len = state.car.length;
     for (let i = 0; i < len; i++) {
-      if (state.car[i].id === id) {
-        state.car.splice(i, i)
+      console.log('state.car[i].good.goodId', state.car[i].good.goodId)
+      if (state.car[i].good.goodId === id) {
+        state.car.splice(i, 1)
         break;
       }
     }
+    console.log('removeGood', state.car)
   },
 
   ckd(state, check) {
@@ -108,18 +112,21 @@ const mutations = {
     state.currentClass = classItem;
     console.log('toggleClass', this.state.currentClass)
   },
-  reInitPageConfig(state){
+  reInitPageConfig(state) {
     state.pageConfig = {
       pageSize: 20,
       pageNumber: 1
     }
   },
-  setGoodData(state, goodData){
-    console.log('goodData',goodData)
+  setGoodData(state, goodData) {
+    console.log('goodData', goodData)
     state.currentGoodData = goodData;
   },
-  setPageConfig(state,data){
-    Object.assign(state.pageConfig,data)
+  setPageConfig(state, data) {
+    Object.assign(state.pageConfig, data)
+  },
+  setGoodItemDetail(state, data) {
+    state.goodItemDetail = data;
   }
 }
 
@@ -135,34 +142,16 @@ const actions = {
   },
 
   addGood({commit}, params) {
-    //用setTimeout模拟一个异步数据的获取
-    setTimeout(() => {
-      let result = 'success'
-      if (result === 'success') {
-        //模拟数据已经获取成功，commit mutations里面的addGood的方法，第二个参数是传参
-        commit('addGood', params)
-      }
-    }, 300)
+    //模拟数据已经获取成功，commit mutations里面的addGood的方法，第二个参数是传参
+    commit('addGood', params)
   },
 
-  reduceGood({commit}, params) {
-    setTimeout(() => {
-      let result = 'success'
-      if (result === 'success') {
-        //模拟数据已经获取成功，commit mutations里面的reduceGood的方法，第二个参数是传参
-        commit('reduceGood', params)
-      }
-    }, 300)
+  syncGood({commit}, params) {
+    commit('syncGood', params)
   },
 
   removeGood({commit}, params) {
-    setTimeout(() => {
-      let result = 'success'
-      if (result === 'success') {
-        //模拟数据已经获取成功，commit mutations里面的removeGood的方法，第二个参数是传参
-        commit('remove', params)
-      }
-    }, 300)
+    commit('removeGood', params)
   },
 
   ckd({commit}, params) {
@@ -180,21 +169,24 @@ const actions = {
     commit('toggleClass', params.classes[0]) // 默认选择第一个分类
   },
   getGoodByClass({commit}, params) {
-    _getClassesPage(params).then(resp =>{
+    _getClassesPage(params).then(resp => {
       if (resp.data.code === 200) {
         commit('setGoodData', resp.data.data)
       }
     })
   },
-  toggleCurrentClassItem({commit}, item){
+  toggleCurrentClassItem({commit}, item) {
     commit('toggleClass', item)
   },
-  changePageConfig({commit}, item){
+  changePageConfig({commit}, item) {
     commit('setPageConfig', item)
   },
-  reSetPageConfig({commit}){
+  reSetPageConfig({commit}) {
     commit('reInitPageConfig')
   },
+  setGoodItem({commit}, item) {
+    commit('setGoodItemDetail', item)
+  }
 }
 
 const store = new Vuex.Store({

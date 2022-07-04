@@ -18,7 +18,7 @@
                :key="item.goodId"
           >
             <img class="product_img" v-bind:src="'//192.168.20.254:8080'+item.thumbImg[0].ImgRelativeUrl" alt=""
-                 @click="checkProduct(item.goodId)"/>
+                 @click="checkProduct(item)"/>
             <h2 class="product_name">{{ item.goodsName + "\|||||||||" + item.goodId }}</h2>
             <!--            <p class="product_parameter">{{index.describe}}</p>-->
             <p class="product_price">{{ item.price }}</p>
@@ -92,25 +92,35 @@ export default {
       //   })
     },
     submit(item) {
-      const good = {
+      // const good = {
+      //   check: true,
+      //   goodNumber: parseInt(this.goodNumber),
+      //
+      // };
+      // this.$store.commit('addGood', good);
+      // setTimeout(() => {
+      //   message.success('已添加至您的购物车');
+      // }, 300);
+
+      const carItem = {
         check: true,
-        goodId: this.goodData.goodId,
-        goodsName: this.goodData.goodsName,
-        goodNumber: parseInt(this.goodNumber),
-        price: this.goodData.price,
-        img: this.goodData.img
+        goodNumber: 1,
+        good: item
       };
-      this.$store.commit('addGood', good);
-      setTimeout(() => {
-        message.success('已添加至您的购物车');
-      }, 300);
+      this.$store.dispatch('addGood', carItem).then(()=>{
+        setTimeout(() => {
+          this.addProduct = false;
+        }, 1000);
+      })
     },
 
     // 查看详情
-    checkProduct(id) {
-      this.$router.push({
-        name: 'Product_details',
-        params: {id: id}
+    checkProduct(item) {
+      this.$store.dispatch('setGoodItem',item).then(()=>{
+        this.$router.push({
+          name: 'Product_details',
+          params: {id: item.goodId}
+        })
       })
     },
     selectClass(item,index) {

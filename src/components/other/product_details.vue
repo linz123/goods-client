@@ -26,9 +26,9 @@
             <div class="goods-information">
               <div class="goods-" v-if="goodData">
 
-                <h2 class="goods-name">{{goodData.goodsName}}</h2>
-                <p class="product_number">{{goodData.serialNumber}}</p>
-                <h1 class="goods-price" >{{goodData.price}}</h1>
+                <h2 class="goods-name">{{goodItemDetail.goodsName}}</h2>
+                <p class="product_number">{{goodItemDetail.serialNumber}}</p>
+                <h1 class="goods-price" >{{goodItemDetail.price}}</h1>
                 <div class="exchange-number fr">
                   <span class="noselect" @click="changeNum(false)">-</span>
                   <a-input class="nmu-input" v-model="goodNumber"/>
@@ -64,9 +64,9 @@
         </div>
 
         <div class="specifications" v-if="goodData">
-          <h2>{{goodData.goodsName}}</h2>
+          <h2>{{goodItemDetail.goodsName}}</h2>
           <ul >
-            <li>{{goodData.describe}}</li>
+            <li>{{goodItemDetail.describe}}</li>
           </ul>
         </div>
       </div>
@@ -86,10 +86,11 @@ import Header from "../home/header";
 import Footer from "../home/footer";
 import NoData from "./no-data";
 import {getGoodsInfo} from '../../http/apiProduct';
+import {mapGetters} from "vuex";
 export default {
   name: "product_details",
   components: {NoData, Footer, Header},
-  props:['good'],
+  // props:['good'],
   data() {
     return {
       addProduct: false,
@@ -100,6 +101,9 @@ export default {
     }
   },
   computed:{
+    ...mapGetters([
+      'goodItemDetail'
+    ])
   },
   created() {
     const id = this.$route.params.id;
@@ -110,35 +114,33 @@ export default {
     this.id = id;
   },
   mounted() {
-   this.init();
+   // this.init();
   },
   methods: {
-    init(){
-      getGoodsInfo({id:this.id}).then(res => {
-        if (res.status !== 200){
-          setTimeout(() => {
-          },1000)
-          return;
-        }
-        this.goodData = res.data.data;
-      }) .catch(function (err){
-        console.log(err)
-      })
-    },
+    // init(){
+    //   getGoodsInfo({id:this.id}).then(res => {
+    //     if (res.status !== 200){
+    //       setTimeout(() => {
+    //       },1000)
+    //       return;
+    //     }
+    //     this.goodData = res.data.data;
+    //   }) .catch(function (err){
+    //     console.log(err)
+    //   })
+    // },
     submit() {
       this.addProduct = true;
-      const good = {
+      const carItem = {
         check: true,
-        goodId:this.goodData.goodId,
-        goodsName:this.goodData.goodsName,
         goodNumber: parseInt(this.goodNumber),
-        price:this.goodData.price,
-
+        good: this.goodItemDetail
       };
-      this.$store.commit('addGood', good);
-      setTimeout(() => {
-        this.addProduct = false;
-      }, 1000);
+      this.$store.dispatch('addGood', carItem).then(()=>{
+        setTimeout(() => {
+          this.addProduct = false;
+        }, 1000);
+      })
     },
 
     share() {
