@@ -45,6 +45,48 @@ const getters = {
   },
   goodItemDetail(state) {
     return state.goodItemDetail;
+  },
+  allTips(state) { //获取全部消费
+    let count = 0;
+    state.car.forEach(item => {
+      count += item.goodNumber * item.good.tip.priceAmount;
+    })
+    return count
+  },
+  allPrice(state) {  // 获取全部价格费用
+    let count = 0;
+    state.car.forEach(item => {
+      count += item.goodNumber * item.good.price;
+    })
+    return count
+  },
+  allCount(state) {  // 全部商品数量
+    let count = 0;
+    state.car.forEach(item => {
+      count += item.goodNumber;
+    })
+    return count
+  },
+  checkCount(state) { // 选中的数量
+    let count = 0;
+    state.car.forEach(item => {
+      if (item.check === true) {
+        count += item.goodNumber;
+      }
+    })
+    return count
+  },
+  checkCarParas(state) {  // 返回提交参数
+    let para = [];
+    state.car.forEach(item => {
+      if (item.check === true) {
+        para.push({
+          goodId:item.good.goodId,
+          amount:item.goodNumber
+        })
+      }
+    })
+    return para;
   }
 
 }
@@ -98,11 +140,19 @@ const mutations = {
     console.log('removeGood', state.car)
   },
 
-  ckd(state, check) {
-    alert(111);
-    // state.car.forEach(item=>{
-    //   item.check = newAll
-    // })
+  ckd(state, goodId) {
+    state.car.forEach(item => {
+      if (item.good.goodId === goodId) {
+        item.check = !item.check
+        console.log('item', item)
+      }
+    })
+  },
+  ckdAll(state, isCheck) {
+    state.car.forEach(item => {
+      item.check = isCheck
+    })
+    console.log('ckdAll', state.car)
   }
   , toggleMenu(state, menu) {
     state.currentMenu = menu;
@@ -127,6 +177,9 @@ const mutations = {
   },
   setGoodItemDetail(state, data) {
     state.goodItemDetail = data;
+  },
+  setCar(state,carData){
+    state.car = carData;
   }
 }
 
@@ -142,7 +195,7 @@ const actions = {
   },
 
   addGood({commit}, params) {
-    //模拟数据已经获取成功，commit mutations里面的addGood的方法，第二个参数是传参
+
     commit('addGood', params)
   },
 

@@ -12,22 +12,22 @@ export const  getRecommendDate = data => post('/api/client/getRecommendByType',d
 // 获取商品详情
 export const getGoodsInfo = data => post('/api/client/getGoodById', data);
 // 创建购物车订单
-const createGoodsOrder = data => post('/api/client/getGoodById', data, true);
+export const createGoodsOrder = data => post('/api/client/addOrder', data);
 
 export const getShopCartData = () =>{
   let prdData = JSON.parse(localStorage.getItem('goodData')||[]);
    return prdData;
 }
 
-export const _createGoodsOrder =(data, vm)=>{
-  vm.$confirm('您的采购订单已提交至客服，查看订单可联系客服！', ()=>{
-    //创建订单
-    createGoodsOrder(data).then(res=>{
-      vm.tipMsg = res.msg;
-      vm.tipShow = true;
-      if(res.status === 10000){
-        vm.tipSuccess= true;
-      }
-    })
-  })
-}
+// export const _createGoodsOrder =(data, vm)=>{
+//   vm.$confirm('您的采购订单已提交至客服，查看订单可联系客服！', ()=>{
+//     //创建订单
+//     createGoodsOrder(data).then(res=>{
+//       vm.tipMsg = res.msg;
+//       vm.tipShow = true;
+//       if(res.status === 10000){
+//         vm.tipSuccess= true;
+//       }
+//     })
+//   })
+// }
