@@ -1,61 +1,61 @@
 <template>
   <div class="content">
     <div class="content-top">
-      <div class="banner" @click="goKingPower()"></div>
+      <div class="banner" :style="bannerList[0]" @click="goKingPower()"></div>
       <div class="banners_right">
-        <div class="banners_right1" @click="goDigitalProduct()"></div>
-        <div class="banners_right2" @click="goMarket()"></div>
+        <div class="banners_right1" :style="bannerList[1]" @click="goDigitalProduct()"></div>
+        <div class="banners_right2" :style="bannerList[2]" @click="goMarket()"></div>
       </div>
     </div>
     <div class="content-center">
       <div class="content-center-top">
-        <div class="content-center-top-left" @click="checkProduct('iphone13ProMax')">
+        <div class="content-center-top-left" :style="bannerList[3]" @click="checkProduct('iphone13ProMax')">
           <a @click="addProduct()"></a>
         </div>
-        <div class="content-center-top-right" @click="checkProduct('AppleWatchSeries7')">
+        <div class="content-center-top-right" :style="bannerList[4]" @click="checkProduct('AppleWatchSeries7')">
           <a @click="addProduct()"></a>
         </div>
       </div>
       <div class="content-center-botton">
-        <div class="content-center-botton-product" >
-          <h2>B.ZERO1戒指</h2>
-          <p>18克拉玫瑰金双环戒指</p>
-          <b>54,300.00 Baht</b>
+        <div class="content-center-botton-product" v-for="item in recommend2" :key ="item.goodId">
+          <h2>{{item.goodsName}}</h2>
+          <p>{{item.title}}</p>
+          <b>{{item.price}} Baht</b>
           <button @click="addProduct()">添加到购物车</button>
-          <img src="../../assets/img/home_img/content_center_bottom1.png"
+          <img :src='"http://192.168.20.254:8080" + item.thumbImg[0].ImgRelativeUrl'
                @click="checkProduct('B.ZERO1戒指')"/>
         </div>
-        <div class="content-center-botton-product" >
-          <h2>SK-II套装</h2>
-          <p>护肤精华露与精华霜套装</p>
-          <b>10,640.00 Baht</b>
-          <button @click="addProduct()">添加到购物车</button>
-          <img src="../../assets/img/home_img/content_center_bottom2.png"
-               @click="checkProduct('SK-II套装')"/>
-        </div>
-        <div class="content-center-botton-product" >
-          <h2>阿玛尼男士手表</h2>
-          <p>Renato都会经典湛蓝多功能</p>
-          <b>6,5550.00 Baht</b>
-          <button @click="addProduct()">添加到购物车</button>
-          <img src="../../assets/img/home_img/content_center_bottom3.png"
-               @click="checkProduct('阿玛尼男士手表')"/>
-        </div>
-        <div class="content-center-botton-product" >
-          <h2>圣罗兰Y男士淡香水</h2>
-          <p>淡香水EDT-100ML</p>
-          <b>3,740.00 Baht</b>
-          <button @click="addProduct()">添加到购物车</button>
-          <img src="../../assets/img/home_img/content_center_bottom4.png"
-               @click="checkProduct('圣罗兰Y男士淡香水')"/>
-        </div>
+<!--        <div class="content-center-botton-product">-->
+<!--          <h2>SK-II套装</h2>-->
+<!--          <p>护肤精华露与精华霜套装</p>-->
+<!--          <b>10,640.00 Baht</b>-->
+<!--          <button @click="addProduct()">添加到购物车</button>-->
+<!--          <img src="../../assets/img/home_img/content_center_bottom2.png"-->
+<!--               @click="checkProduct('SK-II套装')"/>-->
+<!--        </div>-->
+<!--        <div class="content-center-botton-product">-->
+<!--          <h2>阿玛尼男士手表</h2>-->
+<!--          <p>Renato都会经典湛蓝多功能</p>-->
+<!--          <b>6,5550.00 Baht</b>-->
+<!--          <button @click="addProduct()">添加到购物车</button>-->
+<!--          <img src="../../assets/img/home_img/content_center_bottom3.png"-->
+<!--               @click="checkProduct('阿玛尼男士手表')"/>-->
+<!--        </div>-->
+<!--        <div class="content-center-botton-product">-->
+<!--          <h2>圣罗兰Y男士淡香水</h2>-->
+<!--          <p>淡香水EDT-100ML</p>-->
+<!--          <b>3,740.00 Baht</b>-->
+<!--          <button @click="addProduct()">添加到购物车</button>-->
+<!--          <img src="../../assets/img/home_img/content_center_bottom4.png"-->
+<!--               @click="checkProduct('圣罗兰Y男士淡香水')"/>-->
+<!--        </div>-->
       </div>
     </div>
     <div class="content-bottom">
-      <div class="content-bottom-product" v-for="index in productList" @click="checkProduct(index.goodId)">
+      <div class="content-bottom-product" v-for="item in recommend3" @click="checkProduct(index.goodId)">
         <img src="../../assets/img/home_img/content_center_bottom1.png"/>
-        <h2>{{ index.name }}</h2>
-        <p>{{ index.prices }}</p>
+        <h2>{{ item.goodsName }}</h2>
+        <p>{{ item.price }}</p>
       </div>
     </div>
   </div>
@@ -63,13 +63,22 @@
 
 <script>
 import axios from 'axios';
-import {getGoodsInfo, getDate,_getClassesPage } from "../../http/apiProduct";
+import {getGoodsInfo, getDate, _getClassesPage} from "../../http/apiProduct";
 import {message} from "ant-design-vue";
+import {mapGetters} from "vuex";
 
 export default {
   name: "index",
   data() {
     return {
+      // bannerList: [
+      //   // {backgroundImage: "url(" + this.recommendList[0][0].thumbImg[0].ImgRelativeUrl + ")"},
+      //   // {backgroundImage: "url(" + this.recommendList[0][1].thumbImg[0].ImgRelativeUrl + ")"},
+      //   // {backgroundImage: "url(" + this.recommendList[0][2].thumbImg[0].ImgRelativeUrl + ")"}
+      //   {backgroundImage: "url(" + "http://192.168.20.254:8080" + this.recommendList[0][0].thumbImg[0].ImgRelativeUrl+ ")"},
+      //   {backgroundImage: "url(" + "http://192.168.20.254:8080" + this.recommendList[0][1].thumbImg[0].ImgRelativeUrl+ ")"},
+      //   {backgroundImage: "url(" + "http://192.168.20.254:8080" + this.recommendList[0][2].thumbImg[0].ImgRelativeUrl+ ")"},
+      // ],
       pList: [
         {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00', imgUrl: ''},
         {name: 'SK-II套装', remark: '护肤精华露与精华霜套装', prices: '10,640.00', imgUrl: ''},
@@ -92,8 +101,36 @@ export default {
 
     }
   },
+  computed: {
+    ...mapGetters([
+      'recommendList',
+    ]),
+    carData() {
+      // console.log('购物车的数据', this.$store.getters.getCar);
+      // return this.$store.getters.getCar;
+    },
+    bannerList() {
+      return [
+        {backgroundImage: "url(" + "http://192.168.20.254:8080" + (this.recommendList[0][0] && this.recommendList[0][0].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + "http://192.168.20.254:8080" + (this.recommendList[0][1] && this.recommendList[0][1].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + "http://192.168.20.254:8080" + (this.recommendList[0][2] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + "http://192.168.20.254:8080" + (this.recommendList[1][0] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + "http://192.168.20.254:8080" + (this.recommendList[1][1] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
+      ]
+    },
+    recommend2(){
+      return this.recommendList[1].slice(2);
+    },
+    recommend3(){
+      return this.recommendList[2];
+    }
+
+  },
   mounted() {
 
+  },
+  created() {
+    this.getRecommend()
   },
   methods: {
 
@@ -145,6 +182,13 @@ export default {
           console.log(err);
         })
     },
+
+    // 修改
+
+
+    getRecommend() {
+      this.$store.dispatch('getRecommend');
+    }
   }
 }
 </script>
@@ -162,7 +206,7 @@ export default {
     .banner {
       width: 788px;
       height: 226px;
-      background: url("../../assets/img/home_img/content_top-banner.png");
+      //background: url("../../assets/img/home_img/content_top-banner.png");
     }
 
     .banners_right {
@@ -172,13 +216,13 @@ export default {
       .banners_right1 {
         width: 400px;
         height: 120px;
-        background: url("../../assets/img/home_img/content_top-banner-right1.png") no-repeat;
+        //background: url("../../assets/img/home_img/content_top-banner-right1.png") no-repeat;
       }
 
       .banners_right2 {
         width: 400px;
         height: 320px;
-        background: url("../../assets/img/home_img/content_top-banner-right2.png") no-repeat;
+        //background: url("../../assets/img/home_img/content_top-banner-right2.png") no-repeat;
       }
 
       a {
@@ -199,7 +243,7 @@ export default {
       .content-center-top-right {
         width: 464px;
         height: 300px;
-        background: url("../../assets/img/home_img/content_center_right.png");
+        //background: url("../../assets/img/home_img/content_center_right.png");
 
         a {
           width: 110px;
@@ -216,7 +260,7 @@ export default {
       .content-center-top-left {
         width: 700px;
         height: 300px;
-        background: url("../../assets/img/home_img/content_center_l.png");
+        //background: url("../../assets/img/home_img/content_center_l.png");
 
         a {
           width: 110px;

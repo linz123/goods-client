@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {_getClassesPage, _getMenu} from "../http/apiProduct";
+import {_getClassesPage, _getMenu, getRecommend} from "../http/apiProduct";
 //管理响应
 Vue.use(Vuex);
 
@@ -15,6 +15,7 @@ const state = {
     pageNumber: 1
   },
   goodItemDetail: undefined, // 选中的商品详情
+  Recommend: [[], [], []]
 
 }
 
@@ -81,12 +82,15 @@ const getters = {
     state.car.forEach(item => {
       if (item.check === true) {
         para.push({
-          goodId:item.good.goodId,
-          amount:item.goodNumber
+          goodId: item.good.goodId,
+          amount: item.goodNumber
         })
       }
     })
     return para;
+  },
+  recommendList(state) {
+    return state.Recommend;
   }
 
 }
@@ -178,8 +182,11 @@ const mutations = {
   setGoodItemDetail(state, data) {
     state.goodItemDetail = data;
   },
-  setCar(state,carData){
+  setCar(state, carData) {
     state.car = carData;
+  },
+  setRecommend(state, data) {
+    state.Recommend = data;
   }
 }
 
@@ -187,10 +194,8 @@ const actions = {
   getMenu({commit}) {
     //异步数据的获取
     _getMenu().then(res => {
-      if (res.data.code === 200) {
-        commit('getMenu', res.data.data)
-      }
-      console.log('vuex导航', res.data.data);
+      commit('getMenu', res.data)
+      console.log('vuex导航', res.data);
     })
   },
 
@@ -223,9 +228,7 @@ const actions = {
   },
   getGoodByClass({commit}, params) {
     _getClassesPage(params).then(resp => {
-      if (resp.data.code === 200) {
-        commit('setGoodData', resp.data.data)
-      }
+      commit('setGoodData', resp.data)
     })
   },
   toggleCurrentClassItem({commit}, item) {
@@ -239,6 +242,11 @@ const actions = {
   },
   setGoodItem({commit}, item) {
     commit('setGoodItemDetail', item)
+  },
+  getRecommend({commit}) {
+    getRecommend().then(resp => {
+      commit('setRecommend', resp.data)
+    })
   }
 }
 

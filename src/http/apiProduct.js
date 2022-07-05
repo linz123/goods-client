@@ -1,18 +1,25 @@
-import { get, post }  from 'axios';
+// import { get, post }  from 'axios';
+
+import {axios} from "./axiosConfig";
 
 //获取导航栏
-export const _getMenu = data => post('/api/client/getTreeList', data)
+export const _getMenu = data => axios.post('/api/client/getTreeList', data)
 //获取全部分类
-export const _getClassesPage = data => post('/api/client/getGoodBYClass', data);
+export const _getClassesPage = data => axios.post('/api/client/getGoodBYClass', data);
 // 获取首页商品
-export const  getDate = data => post('/api/client/goodList',data);
+export const  getDate = data => axios.post('/api/client/goodList',data);
 // 获取首页推荐
-export const  getRecommendDate = data => post('/api/client/getRecommendByType',data);
+export const  getRecommendDate = data => axios.post('/api/client/getRecommendByType',data);
 
 // 获取商品详情
-export const getGoodsInfo = data => post('/api/client/getGoodById', data);
+export const getGoodsInfo = data => axios.post('/api/client/getGoodById', data);
 // 创建购物车订单
-export const createGoodsOrder = data => post('/api/client/addOrder', data);
+export const createGoodsOrder = data => axios.post('/api/client/addOrder', data);
+// 获取首页推荐
+export const getRecommend = data => axios.post('/api/client/getRecommend', data);
+
+
+
 
 export const getShopCartData = () =>{
   let prdData = JSON.parse(localStorage.getItem('goodData')||[]);

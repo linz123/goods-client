@@ -203,12 +203,8 @@ export default {
     submit() {
       createGoodsOrder({bills: this.checkCarParas}).then(resp => {
         console.log('resp', resp);
-        if (resp.data.code === 200) {
           this.$store.commit('setCar',[]) //清空购物车
           // console.log('resp', resp);
-        } else {
-          alert(resp.message)
-        }
       })
     },
     print() {
