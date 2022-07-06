@@ -108,9 +108,7 @@ export default {
         good: item
       };
       this.$store.dispatch('addGood', carItem).then(()=>{
-        setTimeout(() => {
-          this.addProduct = false;
-        }, 1000);
+       this.$message.success("添加成功")
       })
     },
 

@@ -1,18 +1,18 @@
 <template>
   <div class="content">
     <div class="content-top">
-      <div class="banner" :style="bannerList[0]" @click="goKingPower()"></div>
+      <div class="banner" :style="bannerList[0]" @click="checkProduct(this.recommendList[0][1])"></div>
       <div class="banners_right">
-        <div class="banners_right1" :style="bannerList[1]" @click="goDigitalProduct()"></div>
-        <div class="banners_right2" :style="bannerList[2]" @click="goMarket()"></div>
+        <div class="banners_right1" :style="bannerList[1]" @click="checkProduct(this.recommendList[0][2])"></div>
+        <div class="banners_right2" :style="bannerList[2]" @click="checkProduct(this.recommendList[0][3])"></div>
       </div>
     </div>
     <div class="content-center">
       <div class="content-center-top">
-        <div class="content-center-top-left" :style="bannerList[3]" @click="checkProduct('iphone13ProMax')">
+        <div class="content-center-top-left" :style="bannerList[3]" @click="checkProduct(this.recommendList[1][0])">
           <a @click="addProduct()"></a>
         </div>
-        <div class="content-center-top-right" :style="bannerList[4]" @click="checkProduct('AppleWatchSeries7')">
+        <div class="content-center-top-right" :style="bannerList[4]" @click="checkProduct(this.recommendList[1][1])">
           <a @click="addProduct()"></a>
         </div>
       </div>
@@ -23,7 +23,7 @@
           <b>{{item.price}} Baht</b>
           <button @click="addProduct()">添加到购物车</button>
           <img :src='"http://192.168.20.254:8080" + item.thumbImg[0].ImgRelativeUrl'
-               @click="checkProduct('B.ZERO1戒指')"/>
+               @click="checkProduct(item)"/>
         </div>
 <!--        <div class="content-center-botton-product">-->
 <!--          <h2>SK-II套装</h2>-->
@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="content-bottom">
-      <div class="content-bottom-product" v-for="item in recommend3" @click="checkProduct(index.goodId)">
+      <div class="content-bottom-product" v-for="item in recommend3" @click="checkProduct(item)">
         <img src="../../assets/img/home_img/content_center_bottom1.png"/>
         <h2>{{ item.goodsName }}</h2>
         <p>{{ item.price }}</p>
@@ -71,33 +71,6 @@ export default {
   name: "index",
   data() {
     return {
-      // bannerList: [
-      //   // {backgroundImage: "url(" + this.recommendList[0][0].thumbImg[0].ImgRelativeUrl + ")"},
-      //   // {backgroundImage: "url(" + this.recommendList[0][1].thumbImg[0].ImgRelativeUrl + ")"},
-      //   // {backgroundImage: "url(" + this.recommendList[0][2].thumbImg[0].ImgRelativeUrl + ")"}
-      //   {backgroundImage: "url(" + "http://192.168.20.254:8080" + this.recommendList[0][0].thumbImg[0].ImgRelativeUrl+ ")"},
-      //   {backgroundImage: "url(" + "http://192.168.20.254:8080" + this.recommendList[0][1].thumbImg[0].ImgRelativeUrl+ ")"},
-      //   {backgroundImage: "url(" + "http://192.168.20.254:8080" + this.recommendList[0][2].thumbImg[0].ImgRelativeUrl+ ")"},
-      // ],
-      pList: [
-        {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00', imgUrl: ''},
-        {name: 'SK-II套装', remark: '护肤精华露与精华霜套装', prices: '10,640.00', imgUrl: ''},
-        {name: '阿玛尼男士手表', remark: 'Renato都会经典湛蓝多功能', prices: '6,5550.00', imgUrl: ''},
-        {name: '圣罗兰Y男士淡香水', remark: '淡香水EDT-100ML', prices: '3,740.00', imgUrl: ''}
-      ],
-      productList: [
-        {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00 Baht', imgUrl: '', id: '123'},
-        {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00 Baht', imgUrl: '', id: '123'},
-        {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00 Baht', imgUrl: '', id: '123'},
-        {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00 Baht', imgUrl: '', id: '123'},
-        {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00 Baht', imgUrl: '', id: '123'},
-        {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00 Baht', imgUrl: '', id: '123'},
-        {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00 Baht', imgUrl: '', id: '123'},
-        {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00 Baht', imgUrl: '', id: '123'},
-        {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00 Baht', imgUrl: '', id: '123'},
-        {name: 'B.ZERO1戒指', remark: '18克拉玫瑰金双环戒指', prices: '54,300.00 Baht', imgUrl: '', id: '123'},
-      ],
-      goodData: null,
 
     }
   },
@@ -135,11 +108,15 @@ export default {
   methods: {
 
     // 查看详情
-    checkProduct(id) {
-      this.$router.push({
-        name: 'Product_details',
-        params: {id: id}
-      })
+    checkProduct(item) {
+      // 查看详情
+        this.$store.dispatch('setGoodItem',item).then(()=>{
+          this.$router.push({
+            name: 'Product_details',
+            params: {id: item.goodId}
+          })
+        })
+
     },
     addProduct() {
       const good = {

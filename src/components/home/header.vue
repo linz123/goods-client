@@ -18,11 +18,27 @@
         </div>
       </div>
       <div class="search-right">
-        <div class="cart">
-          <router-link to="/shopping-cart" class="service-link"></router-link>
-          <i class="cartNumber">{{ shopCartTotal }}</i></div>
-        <div class="line_service" @click="onlineService()"></div>
+        <router-link to="/shopping-cart" class="service-link" >
+          <a-badge :count="allCount">
+            <a-avatar  icon="shopping-cart" style="color: #C39762;" shape="square" >
+              <!--          <div class="cart">-->
+<!--              style="color: #C39762;background: #ffffff;border:1px solid #C39762"-->
+              <!--          </div>-->
+            </a-avatar>
+          </a-badge>
+        </router-link>
+          <!--          <div class="cart">-->
+
+          <!--          </div>-->
+
+        <div class="line_service" @click="onlineService()">
+          <a-avatar  icon="user" style="color: #C39762;" shape="square" >
+          </a-avatar>
+        </div>
+
+
       </div>
+
     </div>
     <div class="hot_products">
       <ul class="hot_">
@@ -39,6 +55,7 @@
 
 <script>
 import {_getMenu, getShopCartData} from "../../http/apiProduct";
+import {mapGetters} from "vuex";
 
 export default {
   name: "Header",
@@ -46,13 +63,16 @@ export default {
     return {
       menuList: null,
       list: null,
-      shopCartTotal: null,
     }
   },
   mounted() {
     this.getMenu();
   },
-
+  computed: {
+    ...mapGetters([
+      'allCount',
+    ])
+  },
   methods: {
     getMenu() {
       this.$store.dispatch('getMenu')
@@ -60,7 +80,8 @@ export default {
     selectMenu(index) {
       this.$store.dispatch('toggleMenu', this.$store.state.menu[index])
       let paras = Object.assign({}, {
-        classId: this.$store.state.currentClass.classId.toString()},
+          classId: this.$store.state.currentClass.classId.toString()
+        },
         this.$store.state.pageConfig)
       console.log('paras', paras)
       if (index !== 0) {
@@ -168,9 +189,9 @@ input {
   width: 35px;
   height: 34px;
   text-align: center;
-  border: 1px solid #efbf7f;
-  border-radius: 3px;
-  background: url("../../assets/img/home_img/s-icon.png") no-repeat;
+  /*border: 1px solid #efbf7f;*/
+  /*border-radius: 3px;*/
+  /*background: url("../../assets/img/home_img/s-icon.png") no-repeat;*/
 }
 
 .service-link {
