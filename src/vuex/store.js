@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from "vuex-persistedstate";
 import {_getClassesPage, _getMenu, getRecommend} from "../http/apiProduct";
 //管理响应
 Vue.use(Vuex);
@@ -50,21 +51,27 @@ const getters = {
   allTips(state) { //获取全部消费
     let count = 0;
     state.car.forEach(item => {
-      count += item.goodNumber * item.good.tip.priceAmount;
+      if (item.check) {
+        count += item.goodNumber * item.good.tip.priceAmount;
+      }
     })
     return count
   },
   allPrice(state) {  // 获取全部价格费用
     let count = 0;
     state.car.forEach(item => {
-      count += item.goodNumber * item.good.price;
+      if (item.check) {
+        count += item.goodNumber * item.good.price;
+      }
     })
     return count
   },
   allCount(state) {  // 全部商品数量
     let count = 0;
     state.car.forEach(item => {
-      count += item.goodNumber;
+        if (item.check) {
+          count += item.goodNumber;
+        }
     })
     return count
   },
@@ -252,6 +259,19 @@ const actions = {
 
 const store = new Vuex.Store({
   state, getters, mutations, actions,
+  /* vuex数据持久化配置 */
+  plugins: [
+    createPersistedState({
+      // 存储方式：localStorage、sessionStorage、cookies
+      storage: window.localStorage,
+      // 存储的 key 的key值
+      key: "store",
+      render(state) {
+        // 要存储的数据：本项目采用es6扩展运算符的方式存储了state中所有的数据
+        return {...state};
+      }
+    })
+  ]
 })
 
 export default store;
