@@ -1,18 +1,18 @@
 <template>
   <div class="content">
     <div class="content-top">
-      <div class="banner" :style="bannerList[0]" @click="checkProduct(this.recommendList[0][1])"></div>
+      <div class="banner" :style="bannerList[0]" @click="checkProduct(recommendList[0][1])"></div>
       <div class="banners_right">
-        <div class="banners_right1" :style="bannerList[1]" @click="checkProduct(this.recommendList[0][2])"></div>
-        <div class="banners_right2" :style="bannerList[2]" @click="checkProduct(this.recommendList[0][3])"></div>
+        <div class="banners_right1" :style="bannerList[1]" @click="checkProduct(recommendList[0][2])"></div>
+        <div class="banners_right2" :style="bannerList[2]" @click="checkProduct(recommendList[0][3])"></div>
       </div>
     </div>
     <div class="content-center">
       <div class="content-center-top">
-        <div class="content-center-top-left" :style="bannerList[3]" @click="checkProduct(this.recommendList[1][0])">
+        <div class="content-center-top-left" :style="bannerList[3]" @click="checkProduct(recommendList[1][0])">
           <a @click="addProduct()"></a>
         </div>
-        <div class="content-center-top-right" :style="bannerList[4]" @click="checkProduct(this.recommendList[1][1])">
+        <div class="content-center-top-right" :style="bannerList[4]" @click="checkProduct(recommendList[1][1])">
           <a @click="addProduct()"></a>
         </div>
       </div>
