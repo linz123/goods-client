@@ -16,7 +16,9 @@ const state = {
     pageNumber: 1
   },
   goodItemDetail: undefined, // 选中的商品详情
-  Recommend: [[], [], []]
+  Recommend: [[], [], []],
+  order: [], // 提交订单成功时
+  classIndex: 0
 
 }
 
@@ -69,9 +71,9 @@ const getters = {
   allCount(state) {  // 全部商品数量
     let count = 0;
     state.car.forEach(item => {
-        if (item.check) {
-          count += item.goodNumber;
-        }
+      if (item.check) {
+        count += item.goodNumber;
+      }
     })
     return count
   },
@@ -98,6 +100,12 @@ const getters = {
   },
   recommendList(state) {
     return state.Recommend;
+  },
+  getOrder(state) {
+    return state.order;
+  },
+  getClassIndex(state){
+    return state.classIndex;
   }
 
 }
@@ -128,7 +136,6 @@ const mutations = {
     }
     console.log('购物车', state.car)
   },
-
   syncGood(state, {good, goodNumber}) { //同步商品数量
     let len = state.car.length;
     for (let i = 0; i < len, i++;) {
@@ -137,7 +144,6 @@ const mutations = {
       }
     }
   },
-
   removeGood(state, id) {    // 移除购物车
     console.log('removeGoodId', id)
     let len = state.car.length;
@@ -150,7 +156,6 @@ const mutations = {
     }
     console.log('removeGood', state.car)
   },
-
   ckd(state, goodId) {
     state.car.forEach(item => {
       if (item.good.goodId === goodId) {
@@ -194,6 +199,15 @@ const mutations = {
   },
   setRecommend(state, data) {
     state.Recommend = data;
+  },
+  setOrder(state, data) {
+    state.order.push(data)
+  },
+  resetOrder(state) {
+    state.order = [];
+  },
+  setClassIndex(state,index){
+    state.classIndex = index;
   }
 }
 

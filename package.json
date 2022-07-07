@@ -13,6 +13,7 @@
     "ant-design-vue": "^1.7.8",
     "axios": "^0.27.2",
     "sass": "^1.51.0",
+    "v-clipboard": "^2.2.3",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.6.2",

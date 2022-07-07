@@ -6,9 +6,11 @@ import router from './router'
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import store from './vuex/store'
+import Clipboard from 'v-clipboard'
 Vue.config.productionTip = false;
 
 Vue.use(Antd);
+Vue.use(Clipboard)
 
 const actions = {
 

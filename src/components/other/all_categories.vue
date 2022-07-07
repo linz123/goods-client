@@ -8,7 +8,7 @@
         </div>
         <div class="category">
           <ul v-for="(item, index) in classList" @click="selectClass(item,index)">
-            <li v-bind:class="(index === currentPayerIndex) ? 'active' : ''">{{ item.className }}</li>
+            <li v-bind:class="(index === getClassIndex) ? 'active' : ''">{{ item.className }}</li>
           </ul>
         </div>
       </div>
@@ -19,9 +19,9 @@
           >
             <img class="product_img" v-bind:src="'//192.168.20.254:8080'+item.thumbImg[0].ImgRelativeUrl" alt=""
                  @click="checkProduct(item)"/>
-            <h2 class="product_name">{{ item.goodsName + "\|||||||||" + item.goodId }}</h2>
+            <h2 class="product_name">{{ item.goodsName }}</h2>
             <!--            <p class="product_parameter">{{index.describe}}</p>-->
-            <p class="product_price">{{ item.price }}</p>
+            <p class="product_price">฿&nbsp;{{ item.price }}</p>
             <div class="addCar" @click="submit(item)"></div>
           </div>
         </div>
@@ -44,7 +44,6 @@ export default {
 
   data() {
     return {
-      currentPayerIndex: 0,
       productList: [],
       goodData: []
     }
@@ -56,7 +55,8 @@ export default {
   computed: {
     ...mapGetters([
       'classList',
-      'pageConfig'
+      'pageConfig',
+      'getClassIndex'
     ])
   },
   methods: {
@@ -107,30 +107,30 @@ export default {
         goodNumber: 1,
         good: item
       };
-      this.$store.dispatch('addGood', carItem).then(()=>{
-       this.$message.success("添加成功")
+      this.$store.dispatch('addGood', carItem).then(() => {
+        this.$message.success("添加成功")
       })
     },
 
     // 查看详情
     checkProduct(item) {
-      this.$store.dispatch('setGoodItem',item).then(()=>{
+      this.$store.dispatch('setGoodItem', item).then(() => {
         this.$router.push({
           name: 'Product_details',
           params: {id: item.goodId}
         })
       })
     },
-    selectClass(item,index) {
-      this.currentPayerIndex = index;
+    selectClass(item, index) {
+      this.$store.commit('setClassIndex',index);
       let paras;
-      this.$store.dispatch('reSetPageConfig').then(()=>{
+      this.$store.dispatch('reSetPageConfig').then(() => {
         paras = Object.assign({}, {
           classId: item.classId.toString()
         }, this.$store.state.pageConfig)
-      console.log('selectClass', paras)
-      this.$store.dispatch('getGoodByClass', paras)
-      this.$store.dispatch('toggleCurrentClassItem', item)
+        console.log('selectClass', paras)
+        this.$store.dispatch('getGoodByClass', paras)
+        this.$store.dispatch('toggleCurrentClassItem', item)
       })
     },
 
@@ -212,8 +212,16 @@ export default {
           cursor: pointer;
           position: relative;
 
+          &:hover {
+            z-index: 2;
+            box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .25);
+            transition: all .2s ease-in-out;
+            //border: 1px solid #c69d6b;
+          }
+
           .product_img {
-            width: 100%;
+            width: 190px;
+            height: 190px;
           }
 
           .product_name {
@@ -222,6 +230,7 @@ export default {
             margin-bottom: 5px;
             font-size: 15px;
             font-weight: 600;
+            color: #666;
           }
 
           .product_parameter {

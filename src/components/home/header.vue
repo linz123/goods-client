@@ -18,21 +18,21 @@
         </div>
       </div>
       <div class="search-right">
-        <router-link to="/shopping-cart" class="service-link" >
-          <a-badge :count="allCount">
-            <a-avatar  icon="shopping-cart" style="color: #C39762;" shape="square" >
-              <!--          <div class="cart">-->
-<!--              style="color: #C39762;background: #ffffff;border:1px solid #C39762"-->
-              <!--          </div>-->
-            </a-avatar>
-          </a-badge>
-        </router-link>
-          <!--          <div class="cart">-->
+        <!--        <router-link to="/shopping-cart" class="service-link" >-->
+        <a-badge :count="allCount" @click="redirectCar">
+          <a-avatar icon="shopping-cart" style="color: #C39762;" shape="square">
+            <!--          <div class="cart">-->
+            <!--              style="color: #C39762;background: #ffffff;border:1px solid #C39762"-->
+            <!--          </div>-->
+          </a-avatar>
+        </a-badge>
+        <!--        </router-link>-->
+        <!--          <div class="cart">-->
 
-          <!--          </div>-->
+        <!--          </div>-->
 
         <div class="line_service" @click="onlineService()">
-          <a-avatar  icon="user" style="color: #C39762;" shape="square" >
+          <a-avatar icon="user" style="color: #C39762;" shape="square">
           </a-avatar>
         </div>
 
@@ -71,6 +71,7 @@ export default {
   computed: {
     ...mapGetters([
       'allCount',
+      'getOrder'
     ])
   },
   methods: {
@@ -87,6 +88,7 @@ export default {
       if (index !== 0) {
         this.$store.dispatch('getGoodByClass', paras)
       }
+      this.$store.commit('setClassIndex',0);
 
     },
     onlineService() {
@@ -97,6 +99,9 @@ export default {
         name: 'Search',
         query: {id: name}
       })
+    },
+    redirectCar() {
+      this.getOrder.length > 0 ? this.$router.push('/order') : this.$router.push('/shopping-cart');
     }
 
   }

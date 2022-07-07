@@ -162,7 +162,8 @@ export default {
       'allPrice',
       'allCount',
       'checkCount',
-      'checkCarParas'
+      'checkCarParas',
+      'getOrder',
     ]),
     carData() {
       // console.log('购物车的数据', this.$store.getters.getCar);
@@ -201,10 +202,16 @@ export default {
       this.showPrice = !this.showPrice;
     },
     submit() {
+      if (this.getOrder.length > 0) {
+        this.$message.warn('您有一笔订单未确认，请先联系客服确认')
+        return
+      }
       createGoodsOrder({bills: this.checkCarParas}).then(resp => {
         console.log('resp', resp);
-          this.$store.commit('setCar',[]) //清空购物车
-          // console.log('resp', resp);
+        this.$store.commit('setCar', []) //清空购物车
+        this.$store.commit('setOrder', resp.data)
+        // console.log('resp', resp);
+        this.$router.push('/order')
       })
     },
     print() {

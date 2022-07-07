@@ -15,9 +15,9 @@ export default new Router({
       component: () => import('@/components/home/layout.vue'),
       children: [
         {
-            path: 'index',
-            name: 'Index',
-            component: () => import('@/components/page/index.vue'),
+          path: 'index',
+          name: 'Index',
+          component: () => import('@/components/page/index.vue'),
         },
         //市场
         {
@@ -55,6 +55,11 @@ export default new Router({
           name: 'Car',
           component: () => import('@/components/page/market.vue'),
         },
+        {
+          path: '/order',
+          name: 'Order',
+          component: () => import('@/components/other/order.vue'),
+        },
       ]
     },
     //购物车
@@ -75,5 +80,6 @@ export default new Router({
       name: 'Search',
       component: () => import('@/components/other/search.vue'),
     },
+
   ]
 })
