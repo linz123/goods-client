@@ -1,7 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from "vuex-persistedstate";
-import {_getClassesPage, _getMenu, getRecommend} from "../http/apiProduct";
+import {
+  _getClassesPage,
+  _getGoodByLabel,
+  _getMenu, _goodSearch,
+  getAllLabels,
+  getGoodByLabel,
+  getRecommend
+} from "../http/apiProduct";
 //管理响应
 Vue.use(Vuex);
 
@@ -18,7 +25,8 @@ const state = {
   goodItemDetail: undefined, // 选中的商品详情
   Recommend: [[], [], []],
   order: [], // 提交订单成功时
-  classIndex: 0
+  classIndex: 0,
+  allLabels: []
 
 }
 
@@ -104,8 +112,11 @@ const getters = {
   getOrder(state) {
     return state.order;
   },
-  getClassIndex(state){
+  getClassIndex(state) {
     return state.classIndex;
+  },
+  getAllLabels(state) {
+    return state.allLabels;
   }
 
 }
@@ -206,8 +217,11 @@ const mutations = {
   resetOrder(state) {
     state.order = [];
   },
-  setClassIndex(state,index){
+  setClassIndex(state, index) {
     state.classIndex = index;
+  },
+  setAllLabels(state, data) {
+    state.allLabels = data;
   }
 }
 
@@ -252,6 +266,16 @@ const actions = {
       commit('setGoodData', resp.data)
     })
   },
+  getGoodByLabel({commit}, params) {
+    _getGoodByLabel(params).then(resp => {
+      commit('setGoodData', resp.data)
+    })
+  },
+  getGoodBySearch({commit}, params) {
+    _goodSearch(params).then(resp => {
+      commit('setGoodData', resp.data)
+    })
+  },
   toggleCurrentClassItem({commit}, item) {
     commit('toggleClass', item)
   },
@@ -268,7 +292,13 @@ const actions = {
     getRecommend().then(resp => {
       commit('setRecommend', resp.data)
     })
-  }
+  },
+  getLabels({commit}){
+    getAllLabels().then(resp=>{
+      commit('setAllLabels',resp.data)
+    })
+  },
+
 }
 
 const store = new Vuex.Store({

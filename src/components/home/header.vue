@@ -12,8 +12,8 @@
     <div class="search">
       <div class="logo">logo</div>
       <div class="search-input">
-        <input placeholder="请输入您想搜索的商品、品牌">
-        <div class="search-img">
+        <input placeholder="请输入您想搜索的商品、品牌" v-model="value">
+        <div class="search-img" @click="searchProduct">
           <a-icon type="search"/>
         </div>
       </div>
@@ -42,12 +42,9 @@
     </div>
     <div class="hot_products">
       <ul class="hot_">
-        <li class="products" @click="searchProduct('寿司')">寿司</li>
-        <li class="products" @click="searchProduct('三星')">三星</li>
-        <li class="products" @click="searchProduct('iphone13 pro')">iphone13 pro</li>
-        <li class="products" @click="searchProduct('牛肉')">牛肉</li>
-        <li class="products" @click="searchProduct('佛牌')">佛牌</li>
-        <li class="products" @click="searchProduct('耳机')">耳机</li>
+        <li class="products" v-for="(item,index) in getAllLabels.slice(0,7)" @click="searchProductByLabel(item,true)">
+          {{ item.labelName }}
+        </li>
       </ul>
     </div>
   </div>
@@ -63,6 +60,7 @@ export default {
     return {
       menuList: null,
       list: null,
+      value: ''
     }
   },
   mounted() {
@@ -71,12 +69,14 @@ export default {
   computed: {
     ...mapGetters([
       'allCount',
-      'getOrder'
+      'getOrder',
+      'getAllLabels'
     ])
   },
   methods: {
     getMenu() {
       this.$store.dispatch('getMenu')
+      this.$store.dispatch('getLabels')
     },
     selectMenu(index) {
       this.$store.dispatch('toggleMenu', this.$store.state.menu[index])
@@ -88,17 +88,51 @@ export default {
       if (index !== 0) {
         this.$store.dispatch('getGoodByClass', paras)
       }
-      this.$store.commit('setClassIndex',0);
+      this.$store.commit('setClassIndex', 0);
 
     },
     onlineService() {
       alert('您好，正在为您联系客服。请稍等片刻！');
     },
-    searchProduct(name) {
-      this.$router.push({
-        name: 'Search',
-        query: {id: name}
+    searchProductByLabel(item) {
+      // this.$router.push({
+      //   name: 'Search',
+      //   query: {id: name}
+      // })
+      this.$store.commit('setClassIndex', -1);
+      let paras;
+      this.$store.dispatch('reSetPageConfig').then(() => {
+        paras = Object.assign({}, {
+          labelId: item.labelId.toString()
+        }, this.$store.state.pageConfig)
+        this.$store.dispatch('getGoodByLabel', paras)
       })
+    },
+    searchProductByKeyString(item) {
+      // this.$router.push({
+      //   name: 'Search',
+      //   query: {id: name}
+      // })
+      this.$store.commit('setClassIndex', -1);
+      let paras;
+      this.$store.dispatch('reSetPageConfig').then(() => {
+        paras = Object.assign({}, {
+          value: item,
+        }, this.$store.state.pageConfig)
+        this.$store.dispatch('getGoodBySearch', paras)
+      })
+    },
+    searchProduct() {
+      if (this.value === '') {
+        this.$message.warn('内容不能为空！');
+        return
+      }
+      let relust = this.getAllLabels.find((item) => {
+        return item.labelName.indexOf(this.value) > -1
+      })
+      console.log('searchResult', relust);
+      relust ? this.searchProductByLabel(relust) : this.searchProductByKeyString(this.value);
+
     },
     redirectCar() {
       this.getOrder.length > 0 ? this.$router.push('/order') : this.$router.push('/shopping-cart');

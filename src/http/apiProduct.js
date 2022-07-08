@@ -18,8 +18,14 @@ export const createGoodsOrder = data => axios.post('/api/client/addOrder', data)
 // 获取首页推荐
 export const getRecommend = data => axios.post('/api/client/getRecommend', data);
 
+// 根据标签获取商品
+export const _getGoodByLabel = data => axios.post('/api/client/getGoodByLabel', data);
 
+// 根据商品名关键字获取商品
+export const _goodSearch = data => axios.post('/api/client/GoodSearch', data);
 
+// 获取所有标签
+export const getAllLabels = data => axios.post('/api/client/getAllLabels', data);
 
 export const getShopCartData = () =>{
   let prdData = JSON.parse(localStorage.getItem('goodData')||[]);
