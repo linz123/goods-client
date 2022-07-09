@@ -1,69 +1,65 @@
+amy🐾, [2022-07-09 11:06]
 <template>
   <div class="content">
-    <div class="content-top">
-      <div class="banner" :style="bannerList[0]" @click="checkProduct(recommendList[0][1])"></div>
-      <div class="banners_right">
-        <div class="banners_right1" :style="bannerList[1]" @click="checkProduct(recommendList[0][2])"></div>
-        <div class="banners_right2" :style="bannerList[2]" @click="checkProduct(recommendList[0][3])"></div>
-      </div>
-    </div>
-    <div class="content-center">
-      <div class="content-center-top">
-        <div class="content-center-top-left" :style="bannerList[3]" @click="checkProduct(recommendList[1][0])">
-          <a @click="addProduct()"></a>
-        </div>
-        <div class="content-center-top-right" :style="bannerList[4]" @click="checkProduct(recommendList[1][1])">
-          <a @click="addProduct()"></a>
+    <div class="content-top-box">
+      <div class="content-top">
+        <div class="banner" :style="bannerList[0]" @click="checkProduct(recommendList[0][1])"></div>
+        <div class="banners_right">
+          <div class="banners_right1" :style="bannerList[1]" @click="checkProduct(recommendList[0][2])"></div>
+          <div class="banners_right2" :style="bannerList[2]" @click="checkProduct(recommendList[0][3])"></div>
         </div>
       </div>
-      <div class="content-center-botton">
-        <div class="content-center-botton-product" v-for="item in recommend2" :key ="item.goodId">
-          <h2>{{item.goodsName}}</h2>
-          <p>{{item.title}}</p>
-          <b>{{item.price}} Baht</b>
-          <button @click="addProduct()">添加到购物车</button>
-          <img :src='"http://192.168.20.254:8080" + item.thumbImg[0].ImgRelativeUrl'
-               @click="checkProduct(item)"/>
+    </div>
+
+    <div class="content-center-box">
+      <div class="content-center">
+        <div class="content-center-top">
+          <div class="content-center-top-left" :style="bannerList[3]" @click="checkProduct(recommendList[1][0])">
+            <div class="center-top-product">
+              <h2>{{recommendCenter1.goodsName}}</h2>
+              <p>{{recommendCenter1.title}}</p>
+              <b>{{recommendCenter1.price}} Baht</b>
+              <button @click.stop="addProduct(recommendCenter1)">添加到购物车</button>
+            </div>
+
+          </div>
+          <div class="content-center-top-right" :style="bannerList[4]" @click="checkProduct(recommendList[1][1])">
+            <div class="center-top-product">
+              <h2>{{recommendCenter2.goodsName}}</h2>
+              <p>{{recommendCenter2.title}}</p>
+              <b>{{recommendCenter2.price}} Baht</b>
+              <button @click.stop="addProduct(recommendCenter2)">添加到购物车</button>
+            </div>
+          </div>
         </div>
-<!--        <div class="content-center-botton-product">-->
-<!--          <h2>SK-II套装</h2>-->
-<!--          <p>护肤精华露与精华霜套装</p>-->
-<!--          <b>10,640.00 Baht</b>-->
-<!--          <button @click="addProduct()">添加到购物车</button>-->
-<!--          <img src="../../assets/img/home_img/content_center_bottom2.png"-->
-<!--               @click="checkProduct('SK-II套装')"/>-->
-<!--        </div>-->
-<!--        <div class="content-center-botton-product">-->
-<!--          <h2>阿玛尼男士手表</h2>-->
-<!--          <p>Renato都会经典湛蓝多功能</p>-->
-<!--          <b>6,5550.00 Baht</b>-->
-<!--          <button @click="addProduct()">添加到购物车</button>-->
-<!--          <img src="../../assets/img/home_img/content_center_bottom3.png"-->
-<!--               @click="checkProduct('阿玛尼男士手表')"/>-->
-<!--        </div>-->
-<!--        <div class="content-center-botton-product">-->
-<!--          <h2>圣罗兰Y男士淡香水</h2>-->
-<!--          <p>淡香水EDT-100ML</p>-->
-<!--          <b>3,740.00 Baht</b>-->
-<!--          <button @click="addProduct()">添加到购物车</button>-->
-<!--          <img src="../../assets/img/home_img/content_center_bottom4.png"-->
-<!--               @click="checkProduct('圣罗兰Y男士淡香水')"/>-->
-<!--        </div>-->
+        <div class="content-center-botton">
+          <div class="content-center-botton-product" v-for="item in recommend2" :key ="item.goodId">
+            <h2>{{item.goodsName}}</h2>
+            <p>{{item.title}}</p>
+            <b>{{item.price}} Baht</b>
+            <button @click="addProduct(item)">添加到购物车</button>
+            <img :src='"http://192.168.20.254:8080" + item.thumbImg[0].ImgRelativeUrl'
+                 @click="checkProduct(item)"/>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="content-bottom">
-      <div class="content-bottom-product" v-for="item in recommend3" @click="checkProduct(item)">
-        <img src="../../assets/img/home_img/content_center_bottom1.png"/>
-        <h2>{{ item.goodsName }}</h2>
-        <p>{{ item.price }}</p>
+
+    <div class="content-bottom-box">
+      <div class="content-bottom">
+        <div class="content-bottom-product" v-for="item in recommend3" @click="checkProduct(item)">
+          <img src="../../assets/img/home_img/content_center_bottom1.png"/>
+          <h2>{{ item.goodsName }}</h2>
+          <p>{{ item.price }}</p>
+        </div>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import {getGoodsInfo, getDate, _getClassesPage} from "../../http/apiProduct";
+import {_getClassesPage} from "../../http/apiProduct";
 import {message} from "ant-design-vue";
 import {mapGetters} from "vuex";
 
@@ -78,10 +74,6 @@ export default {
     ...mapGetters([
       'recommendList',
     ]),
-    carData() {
-      // console.log('购物车的数据', this.$store.getters.getCar);
-      // return this.$store.getters.getCar;
-    },
     bannerList() {
       return [
         {backgroundImage: "url(" + "http://192.168.20.254:8080" + (this.recommendList[0][0] && this.recommendList[0][0].thumbImg[0].ImgRelativeUrl) + ")"},
@@ -90,6 +82,12 @@ export default {
         {backgroundImage: "url(" + "http://192.168.20.254:8080" + (this.recommendList[1][0] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
         {backgroundImage: "url(" + "http://192.168.20.254:8080" + (this.recommendList[1][1] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
       ]
+    },
+    recommendCenter1(){
+      return this.recommendList[1][0];
+    },
+    recommendCenter2(){
+      return this.recommendList[1][1];
     },
     recommend2(){
       return this.recommendList[1].slice(2);
@@ -110,27 +108,36 @@ export default {
     // 查看详情
     checkProduct(item) {
       // 查看详情
-        this.$store.dispatch('setGoodItem',item).then(()=>{
-          this.$router.push({
-            name: 'Product_details',
-            params: {id: item.goodId}
-          })
+      this.$store.dispatch('setGoodItem',item).then(()=>{
+        this.$router.push({
+          name: 'Product_details',
+          params: {id: item.goodId}
         })
+      })
 
+      amy🐾, [2022-07-09 11:06]
     },
-    addProduct() {
-      const good = {
+    addProduct(item) {
+      // const good = {
+      //   check: true,
+      //   goodId: this.goodData.goodId,
+      //   goodsName: this.goodData.goodsName,
+      //   goodNumber: parseInt(this.goodNumber),
+      //   price: this.goodData.price,
+      //   img: this.goodData.img
+      // };
+      // this.$store.commit('addGood', good);
+      // setTimeout(() => {
+      //   message.success('已添加至您的购物车');
+      // }, 300);
+      const carItem = {
         check: true,
-        goodId: this.goodData.goodId,
-        goodsName: this.goodData.goodsName,
-        goodNumber: parseInt(this.goodNumber),
-        price: this.goodData.price,
-        img: this.goodData.img
+        goodNumber: 1,
+        good: item
       };
-      this.$store.commit('addGood', good);
-      setTimeout(() => {
-        message.success('已添加至您的购物车');
-      }, 300);
+      this.$store.dispatch('addGood', carItem).then(() => {
+        this.$message.success("添加成功")
+      })
     },
     goKingPower() {
       this.$router.push({
@@ -172,98 +179,230 @@ export default {
 
 <style scoped lang="scss">
 .content {
-  width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  .content-top-box{
+    width: 100%;
+    margin: 15px 0;
+    .content-top {
+      width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      height: 230px;
+      justify-content: space-around;
 
-  .content-top {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-around;
-
-    .banner {
-      width: 788px;
-      height: 226px;
-      //background: url("../../assets/img/home_img/content_top-banner.png");
-    }
-
-    .banners_right {
-      width: 400px;
-      height: 250px;
-
-      .banners_right1 {
-        width: 400px;
-        height: 120px;
-        //background: url("../../assets/img/home_img/content_top-banner-right1.png") no-repeat;
+      .banner {
+        width: 788px;
+        height: 230px;
       }
 
-      .banners_right2 {
+      .banners_right {
         width: 400px;
-        height: 320px;
-        //background: url("../../assets/img/home_img/content_top-banner-right2.png") no-repeat;
-      }
+        height: 230px;
 
-      a {
-        width: 350px;
-        height: 120px;
+        .banners_right1 {
+          width: 400px;
+          height: 110px;
+          margin-bottom: 10px;
+        }
+
+        .banners_right2 {
+          width: 400px;
+          height: 110px;
+        }
+
+        a {
+          width: 350px;
+          height: 120px;
+        }
       }
     }
   }
 
-  .content-center {
+  .content-center-box{
     width: 100%;
+    margin: 20px 0;
     background: #f3f3f3;
+    .content-center {
+      width: 1200px;
+      margin: 0 auto;
+      padding-top: 40px;
+      height: 835px;
+      .content-center-top {
+        display: flex;
+        justify-content: space-between;
 
-    .content-center-top {
-      display: flex;
-      justify-content: space-between;
+        .content-center-top-right {
+          width: 464px;
+          height: 300px;
+          border-radius: 8px;
+          padding: 25px;
+          .center-top-product{
+            width: 200px;
+            height: 180px;
+            text-align: left;
+            h2 {
+              font-size: 17px;
+              font-weight: 600;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
 
-      .content-center-top-right {
-        width: 464px;
-        height: 300px;
-        //background: url("../../assets/img/home_img/content_center_right.png");
+            p {
+              height: 30px;
+              line-height: 30px;
+              font-size: 15px;
+              color: #999;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
 
-        a {
-          width: 110px;
-          height: 25px;
-          margin-bottom: 10px;
-          display: block;
-          color: #c69d6b;
-          font-size: 14px;
-          margin-left: 30px;
-          margin-top: 100px;
+            b {
+              font-size: 16px;
+              color: #c69d6b;
+            }
+
+            button {
+              width: 110px;
+              height: 25px;
+              display: block;
+              color: #c69d6b;
+              font-size: 14px;
+              margin-top: 10px;
+              background: none;
+              border: 1px solid #c69d6b;
+              border-radius: 14px;
+            }
+          }
+
+        }
+
+        .content-center-top-left {
+          width: 700px;
+          height: 300px;
+          border-radius: 8px;
+          padding: 25px;
+          .center-top-product{
+            width: 200px;
+            height: 180px;
+            text-align: left;
+            h2 {
+              font-size: 17px;
+              font-weight: 600;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+
+            p {
+              height: 30px;
+              line-height: 30px;
+              font-size: 15px;
+              color: #999;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+
+            amy🐾, [2022-07-09 11:06]
+          b {
+            font-size: 16px;
+            color: #c69d6b;
+          }
+
+            button {
+              width: 110px;
+              height: 25px;
+              display: block;
+              color: #c69d6b;
+              font-size: 14px;
+              margin-top: 10px;
+              background: none;
+              border: 1px solid #c69d6b;
+              border-radius: 14px;
+            }
+          }
+
         }
       }
 
-      .content-center-top-left {
-        width: 700px;
-        height: 300px;
-        //background: url("../../assets/img/home_img/content_center_l.png");
+      .content-center-botton {
+        margin-top: 38px;
+        display: flex;
+        justify-content: space-between;
 
-        a {
-          width: 110px;
-          height: 25px;
-          margin-bottom: 10px;
-          display: block;
-          color: #c69d6b;
-          font-size: 14px;
-          margin-left: 30px;
-          margin-top: 100px;
+        .content-center-botton-product {
+          width: 280px;
+          height: 420px;
+          text-align: left;
+          border: 1px solid #e6e6e6;
+          border-radius: 8px;
+          background: #f3f3f3;
+          padding: 25px;
+          h2 {
+            font-size: 17px;
+            font-weight: 600;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          p {
+            height: 30px;
+            line-height: 30px;
+            font-size: 15px;
+            color: #999;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          b {
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #c69d6b;
+          }
+
+          button {
+            margin-bottom: 20px;
+            margin-top: 12px;
+            display: block;
+            color: #c69d6b;
+            font-size: 14px;
+            border: 1px solid #c69d6b;
+            border-radius: 14px;
+          }
+
+          img {
+            width: 100%;
+            height: 230px;
+            margin: 0 auto;
+          }
         }
       }
     }
+  }
 
-    .content-center-botton {
-      margin-top: 20px;
+  .content-bottom-box{
+    width: 100%;
+    margin: 30px 0;
+    .content-bottom {
+      width: 1200px;
+      margin: 0 auto;
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
 
-      .content-center-botton-product {
-        width: 290px;
-        height: 380px;
+      .content-bottom-product {
+        width: 235px;
+        height: 280px;
         text-align: left;
-        border: 1px solid #e6e6e6;
-        border-radius: 5px;
-        background: #f3f3f3;
+
+        img {
+          width: 235px;
+          height: 200px;
+        }
 
         h2 {
           padding-left: 15px;
@@ -275,67 +414,13 @@ export default {
 
         p {
           margin-bottom: 5px;
-          padding-left: 14px;
-          font-size: 15px;
-          color: #999;
-        }
-
-        b {
-          margin-bottom: 5px;
           padding-left: 15px;
           font-size: 16px;
           color: #c69d6b;
         }
-
-        button {
-          margin-bottom: 10px;
-          display: block;
-          color: #c69d6b;
-          font-size: 14px;
-          margin-left: 16px;
-          border: 1px solid #c69d6b;
-          border-radius: 14px;
-        }
-
-        img {
-          width: 100%;
-          margin: 0 auto;
-        }
       }
     }
   }
 
-  .content-bottom {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 15px;
-
-    .content-bottom-product {
-      width: 235px;
-      height: 300px;
-      text-align: left;
-
-      img {
-        width: 100%;
-      }
-
-      h2 {
-        padding-left: 15px;
-        padding-top: 12px;
-        margin-bottom: 5px;
-        font-size: 17px;
-        font-weight: 600;
-      }
-
-      p {
-        margin-bottom: 5px;
-        padding-left: 15px;
-        font-size: 16px;
-        color: #c69d6b;
-      }
-    }
-  }
 }
 </style>
