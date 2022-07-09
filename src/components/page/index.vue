@@ -1,4 +1,4 @@
-amy🐾, [2022-07-09 11:06]
+
 <template>
   <div class="content">
     <div class="content-top-box">
@@ -114,8 +114,6 @@ export default {
           params: {id: item.goodId}
         })
       })
-
-      amy🐾, [2022-07-09 11:06]
     },
     addProduct(item) {
       // const good = {
@@ -193,6 +191,8 @@ export default {
       .banner {
         width: 788px;
         height: 230px;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
       }
 
       .banners_right {
@@ -203,11 +203,15 @@ export default {
           width: 400px;
           height: 110px;
           margin-bottom: 10px;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
         }
 
         .banners_right2 {
           width: 400px;
           height: 110px;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
         }
 
         a {
@@ -236,6 +240,8 @@ export default {
           height: 300px;
           border-radius: 8px;
           padding: 25px;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
           .center-top-product{
             width: 200px;
             height: 180px;
@@ -283,6 +289,8 @@ export default {
           height: 300px;
           border-radius: 8px;
           padding: 25px;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
           .center-top-product{
             width: 200px;
             height: 180px;
@@ -305,7 +313,6 @@ export default {
               text-overflow: ellipsis;
             }
 
-            amy🐾, [2022-07-09 11:06]
           b {
             font-size: 16px;
             color: #c69d6b;
