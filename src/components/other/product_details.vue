@@ -7,7 +7,7 @@
           <span class="text-color">首页</span>&nbsp;&nbsp;<a-icon type="double-right"/>
           <span class="text-color">超市</span>&nbsp;&nbsp;<a-icon type="double-right"/>
           <span class="text-color">蔬菜水果</span>&nbsp;&nbsp;<a-icon type="double-right"/>
-          <span>{{goodData.goodsName}}</span>
+          <span>{{goodItemDetail.goodsName}}</span>
         </div>
         <div class="product">
           <div class="product_">
@@ -24,7 +24,7 @@
             </div>
 
             <div class="goods-information">
-              <div class="goods-" v-if="goodData">
+              <div class="goods-" v-if="goodItemDetail">
 
                 <h2 class="goods-name">{{goodItemDetail.goodsName}}</h2>
                 <p class="product_number">{{goodItemDetail.serialNumber}}</p>
@@ -57,13 +57,13 @@
             </div>
           </div>
 <!--          <div class="imgList">-->
-<!--            <div class="product_img product_img-active" v-for="list in goodData.imgs[0]">-->
+<!--            <div class="product_img product_img-active" v-for="list in goodItemDetail.img">-->
 <!--              <img :src="list.img" alt=""/>-->
 <!--            </div>-->
 <!--          </div>-->
         </div>
 
-        <div class="specifications" v-if="goodData">
+        <div class="specifications" v-if="goodItemDetail">
           <h2>{{goodItemDetail.goodsName}}</h2>
           <ul >
             <li>{{goodItemDetail.describe}}</li>
@@ -114,21 +114,10 @@ export default {
     this.id = id;
   },
   mounted() {
-   // this.init();
+
   },
   methods: {
-    // init(){
-    //   getGoodsInfo({id:this.id}).then(res => {
-    //     if (res.status !== 200){
-    //       setTimeout(() => {
-    //       },1000)
-    //       return;
-    //     }
-    //     this.goodData = res.data.data;
-    //   }) .catch(function (err){
-    //     console.log(err)
-    //   })
-    // },
+
     submit() {
       this.addProduct = true;
       const carItem = {
@@ -213,19 +202,20 @@ export default {
         position: relative;
 
         .goods-show {
-          width: 360px;
-          height: 310px;
+          width: 350px;
+          height: 315px;
           border: 1px solid #dfdada;
           border-radius: 7px;
           position: relative;
 
           .goods-img {
             width: 350px;
-            height: 300px;
+            height: 315px;
             padding: 10px;
 
             img {
-              width: 100%;
+              width: 330px;
+              height:295px;
             }
           }
 

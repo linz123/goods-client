@@ -203,6 +203,7 @@ const mutations = {
     Object.assign(state.pageConfig, data)
   },
   setGoodItemDetail(state, data) {
+    console.log('xiangqing',data);
     state.goodItemDetail = data;
   },
   setCar(state, carData) {
