@@ -1,4 +1,3 @@
-amy🐾, [2022-07-09 11:06]
 <template>
   <div class="content">
     <div class="content-top-box">
@@ -114,8 +113,6 @@ export default {
           params: {id: item.goodId}
         })
       })
-
-      amy🐾, [2022-07-09 11:06]
     },
     addProduct(item) {
       // const good = {
@@ -305,7 +302,6 @@ export default {
               text-overflow: ellipsis;
             }
 
-            amy🐾, [2022-07-09 11:06]
           b {
             font-size: 16px;
             color: #c69d6b;
