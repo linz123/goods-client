@@ -4,31 +4,41 @@
     <div class="content">
       <div class="content_box">
         <div class="position">
-          <span class="text-color">首页</span>&nbsp;&nbsp;<a-icon type="double-right"/>
-          <span class="text-color">超市</span>&nbsp;&nbsp;<a-icon type="double-right"/>
-          <span class="text-color">蔬菜水果</span>&nbsp;&nbsp;<a-icon type="double-right"/>
+          <span class="text-color">{{getCurrentMenu.name}}</span>&nbsp;&nbsp;<a-icon type="double-right"/>
+          <span class="text-color">{{getCurrentClass.className}}</span>&nbsp;&nbsp;<a-icon type="double-right"/>
           <span>{{goodItemDetail.goodsName}}</span>
         </div>
         <div class="product">
           <div class="product_">
+<!--            <div class="goods-show">-->
+<!--              <button class="pre">-->
+<!--                <a-icon type="left"/>-->
+<!--              </button>-->
+<!--              <div class="goods-img">-->
+<!--                <img src="../../assets/img/xiangqing/xiangqing.png" alt="">-->
+<!--              </div>-->
+<!--              <button class="next">-->
+<!--                <a-icon type="right"/>-->
+<!--              </button>-->
+<!--            </div>-->
             <div class="goods-show">
-              <button class="pre">
-                <a-icon type="left"/>
-              </button>
-              <div class="goods-img">
-                <img src="../../assets/img/xiangqing/xiangqing.png" alt="">
+            <a-carousel arrows dots-class="slick-dots slick-thumb">
+              <a slot="customPaging" slot-scope="props">
+                <img :src="getImgUrl(props.i)" />
+              </a>
+              <div v-for="item in goodItemDetail.img" >
+                <img :src="baseUrl+item.ImgRelativeUrl" style="height: 280px;width: 280px;" />
               </div>
-              <button class="next">
-                <a-icon type="right"/>
-              </button>
+            </a-carousel>
             </div>
+
 
             <div class="goods-information">
               <div class="goods-" v-if="goodItemDetail">
 
                 <h2 class="goods-name">{{goodItemDetail.goodsName}}</h2>
                 <p class="product_number">{{goodItemDetail.serialNumber}}</p>
-                <h1 class="goods-price" >{{goodItemDetail.price}}</h1>
+                <h1 class="goods-price" > ฿ {{goodItemDetail.price}}</h1>
                 <div class="exchange-number fr">
                   <span class="noselect" @click="changeNum(false)">-</span>
                   <a-input class="nmu-input" v-model="goodNumber"/>
@@ -45,17 +55,17 @@
               <a-icon type="share-alt"/>
             </div>
           </div>
-          <div class="imgList">
-            <div class="product_img product_img-active">
-              <img src="../../assets/img/xiangqing/xq1.png" alt=""/>
-            </div>
-            <div class="product_img">
-              <img src="../../assets/img/xiangqing/xq1.png" alt=""/>
-            </div>
-            <div class="product_img">
-              <img src="../../assets/img/xiangqing/xq1.png" alt=""/>
-            </div>
-          </div>
+<!--          <div class="imgList">-->
+<!--            <div class="product_img product_img-active">-->
+<!--              <img src="../../assets/img/xiangqing/xq1.png" alt=""/>-->
+<!--            </div>-->
+<!--            <div class="product_img">-->
+<!--              <img src="../../assets/img/xiangqing/xq1.png" alt=""/>-->
+<!--            </div>-->
+<!--            <div class="product_img">-->
+<!--              <img src="../../assets/img/xiangqing/xq1.png" alt=""/>-->
+<!--            </div>-->
+<!--          </div>-->
 <!--          <div class="imgList">-->
 <!--            <div class="product_img product_img-active" v-for="list in goodItemDetail.img">-->
 <!--              <img :src="list.img" alt=""/>-->
@@ -64,7 +74,7 @@
         </div>
 
         <div class="specifications" v-if="goodItemDetail">
-          <h2>{{goodItemDetail.goodsName}}</h2>
+          <h2>{{goodItemDetail.title}}</h2>
           <ul >
             <li>{{goodItemDetail.describe}}</li>
           </ul>
@@ -87,6 +97,7 @@ import Footer from "../home/footer";
 import NoData from "./no-data";
 import {getGoodsInfo} from '../../http/apiProduct';
 import {mapGetters} from "vuex";
+
 export default {
   name: "product_details",
   components: {NoData, Footer, Header},
@@ -98,11 +109,15 @@ export default {
       goodNumber: 1,
       id: null,
       goodData:[],
+
     }
   },
   computed:{
     ...mapGetters([
-      'goodItemDetail'
+      'goodItemDetail',
+      'baseUrl',
+      'getCurrentMenu',
+      'getCurrentClass'
     ])
   },
   created() {
@@ -114,7 +129,7 @@ export default {
     this.id = id;
   },
   mounted() {
-
+    console.log('baseUrl',this.baseUrl)
   },
   methods: {
 
@@ -133,7 +148,7 @@ export default {
     },
 
     share() {
-      alert('已经分享至微信好友！')
+      // alert('已经分享至微信好友！')
     },
     goHistory(){
       this.$router.go(-1);
@@ -145,6 +160,9 @@ export default {
      */
     changeNum(bol) {
       return bol ? this.goodNumber++ : this.goodNumber > 1 ? this.goodNumber-- : '';
+    },
+    getImgUrl(i) {
+      return this.baseUrl+this.goodItemDetail.img[i].ImgRelativeUrl;
     },
 
   },
@@ -200,13 +218,14 @@ export default {
         height: 300px;
         display: flex;
         position: relative;
-
+        //justify-content: space-between;
         .goods-show {
           width: 350px;
           height: 315px;
-          border: 1px solid #dfdada;
+          //border: 1px solid #dfdada;
           border-radius: 7px;
           position: relative;
+          margin-right: 150px;
 
           .goods-img {
             width: 350px;
@@ -430,5 +449,29 @@ export default {
       }
     }
   }
+}
+.ant-carousel >>> .slick-dots {
+  height: auto;
+}
+.ant-carousel >>> .slick-slide img {
+  border: 5px solid #fff;
+  display: block;
+  margin: auto;
+  max-width: 80%;
+}
+.ant-carousel >>> .slick-thumb {
+  bottom: -45px;
+}
+.ant-carousel >>> .slick-thumb li {
+  width: 60px;
+  height: 45px;
+}
+.ant-carousel >>> .slick-thumb li img {
+  width: 100%;
+  height: 100%;
+  filter: grayscale(100%);
+}
+.ant-carousel >>> .slick-thumb li.slick-active img {
+  filter: grayscale(0%);
 }
 </style>

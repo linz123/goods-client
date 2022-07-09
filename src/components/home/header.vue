@@ -99,6 +99,7 @@ export default {
       //   name: 'Search',
       //   query: {id: name}
       // })
+      this.$router.push('/home/market')
       this.$store.commit('setClassIndex', -1);
       let paras;
       this.$store.dispatch('reSetPageConfig').then(() => {
@@ -109,10 +110,7 @@ export default {
       })
     },
     searchProductByKeyString(item) {
-      // this.$router.push({
-      //   name: 'Search',
-      //   query: {id: name}
-      // })
+      this.$router.push('/home/market')
       this.$store.commit('setClassIndex', -1);
       let paras;
       this.$store.dispatch('reSetPageConfig').then(() => {
@@ -142,7 +140,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .header {
   width: 100%;
 }
@@ -204,7 +202,7 @@ input {
   text-align: left;
   border-radius: 5px;
   color: #333333;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .search-img {
@@ -213,7 +211,12 @@ input {
   line-height: 25px;
   margin-left: 15px;
   font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s linear;
   /*background: url("../../assets/img/home_img/ss.png") no-repeat;*/
+  &:hover{
+    transform: scale(1.5);
+   }
 }
 
 .search-right {

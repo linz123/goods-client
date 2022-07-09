@@ -17,7 +17,7 @@
           <div class="product_list" v-for="item in this.$store.state.currentGoodData.list || []"
                :key="item.goodId"
           >
-            <img class="product_img" v-bind:src="'//192.168.20.254:8080'+item.thumbImg[0].ImgRelativeUrl" alt=""
+            <img class="product_img" v-bind:src="baseUrl+item.thumbImg[0].ImgRelativeUrl" alt=""
                  @click="checkProduct(item)"/>
             <h2 class="product_name">{{ item.goodsName }}</h2>
             <!--            <p class="product_parameter">{{index.describe}}</p>-->
@@ -29,6 +29,8 @@
           <a-pagination @change="onChange" :pageSize="pageConfig.pageSize" :current="pageConfig.pageNumber"
                         :total="this.$store.state.currentGoodData.total"/>
         </div>
+        <a-result title="未能搜索相关商品" v-if="!this.$store.state.currentGoodData.total">
+        </a-result>
       </div>
     </div>
   </div>
@@ -56,7 +58,8 @@ export default {
     ...mapGetters([
       'classList',
       'pageConfig',
-      'getClassIndex'
+      'getClassIndex',
+      'baseUrl'
     ])
   },
   methods: {
@@ -202,7 +205,7 @@ export default {
         width: 980px;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        //justify-content: space-between;
 
         .product_list {
           width: 190px;
@@ -211,6 +214,7 @@ export default {
           text-align: left;
           cursor: pointer;
           position: relative;
+          margin-right:6px;
 
           &:hover {
             z-index: 2;
@@ -256,6 +260,11 @@ export default {
             height: 35px;
             text-align: center;
             background: url("../../assets/img/home_img/car-icon.png") no-repeat;
+            transition: all 0.2s linear;
+            /*background: url("../../assets/img/home_img/ss.png") no-repeat;*/
+            &:hover{
+              transform: scale(1.3);
+            }
           }
         }
       }

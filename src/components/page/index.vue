@@ -1,3 +1,4 @@
+
 <template>
   <div class="content">
     <div class="content-top-box">
@@ -37,7 +38,7 @@
             <p>{{item.title}}</p>
             <b>{{item.price}} Baht</b>
             <button @click="addProduct(item)">添加到购物车</button>
-            <img :src='"http://192.168.20.254:8080" + item.thumbImg[0].ImgRelativeUrl'
+            <img :src='baseUrl + item.thumbImg[0].ImgRelativeUrl'
                  @click="checkProduct(item)"/>
           </div>
         </div>
@@ -72,14 +73,15 @@ export default {
   computed: {
     ...mapGetters([
       'recommendList',
+      'baseUrl'
     ]),
     bannerList() {
       return [
-        {backgroundImage: "url(" + "http://192.168.20.254:8080" + (this.recommendList[0][0] && this.recommendList[0][0].thumbImg[0].ImgRelativeUrl) + ")"},
-        {backgroundImage: "url(" + "http://192.168.20.254:8080" + (this.recommendList[0][1] && this.recommendList[0][1].thumbImg[0].ImgRelativeUrl) + ")"},
-        {backgroundImage: "url(" + "http://192.168.20.254:8080" + (this.recommendList[0][2] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
-        {backgroundImage: "url(" + "http://192.168.20.254:8080" + (this.recommendList[1][0] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
-        {backgroundImage: "url(" + "http://192.168.20.254:8080" + (this.recommendList[1][1] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[0][0] && this.recommendList[0][0].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl  + (this.recommendList[0][1] && this.recommendList[0][1].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl  + (this.recommendList[0][2] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl  + (this.recommendList[1][0] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl  + (this.recommendList[1][1] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
       ]
     },
     recommendCenter1(){
@@ -190,6 +192,8 @@ export default {
       .banner {
         width: 788px;
         height: 230px;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
       }
 
       .banners_right {
@@ -200,11 +204,15 @@ export default {
           width: 400px;
           height: 110px;
           margin-bottom: 10px;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
         }
 
         .banners_right2 {
           width: 400px;
           height: 110px;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
         }
 
         a {
@@ -233,6 +241,8 @@ export default {
           height: 300px;
           border-radius: 8px;
           padding: 25px;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
           .center-top-product{
             width: 200px;
             height: 180px;
@@ -280,6 +290,8 @@ export default {
           height: 300px;
           border-radius: 8px;
           padding: 25px;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
           .center-top-product{
             width: 200px;
             height: 180px;
@@ -302,10 +314,10 @@ export default {
               text-overflow: ellipsis;
             }
 
-          b {
-            font-size: 16px;
-            color: #c69d6b;
-          }
+            b {
+              font-size: 16px;
+              color: #c69d6b;
+            }
 
             button {
               width: 110px;

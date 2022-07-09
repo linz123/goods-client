@@ -1,7 +1,27 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../vuex/store.js';
 
 Vue.use(Router)
+
+// let rawMenu = []
+//
+// store.state.menu.forEach(item => {
+//   if(item.url === 'index'){
+//     rawMenu.push(  {
+//       path: item.url,
+//       name: item.url,
+//       component: () => import('@/components/page/index.vue'),
+//     })
+//   }else{
+//     rawMenu.push(  {
+//       path: item.url,
+//       name: item.url,
+//       component: () => import('@/components/page/market.vue'),
+//     })
+//   }
+// })
+
 
 export default new Router({
   mode: 'hash',
