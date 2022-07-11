@@ -1,12 +1,11 @@
-
 <template>
   <div class="content">
     <div class="content-top-box">
       <div class="content-top">
-        <div class="banner" :style="bannerList[0]" @click="checkProduct(recommendList[0][1])"></div>
+        <div class="banner" v-if="recommendList[0][1]" :style="bannerList[0]" @click="checkProduct(recommendList[0][1])"></div>
         <div class="banners_right">
-          <div class="banners_right1" :style="bannerList[1]" @click="checkProduct(recommendList[0][2])"></div>
-          <div class="banners_right2" :style="bannerList[2]" @click="checkProduct(recommendList[0][3])"></div>
+          <div class="banners_right1" v-if="recommendList[0][2]" :style="bannerList[1]" @click="checkProduct(recommendList[0][2])"></div>
+          <div class="banners_right2" v-if="recommendList[0][3]"  :style="bannerList[2]" @click="checkProduct(recommendList[0][3])"></div>
         </div>
       </div>
     </div>
@@ -14,29 +13,29 @@
     <div class="content-center-box">
       <div class="content-center">
         <div class="content-center-top">
-          <div class="content-center-top-left" :style="bannerList[3]" @click="checkProduct(recommendList[1][0])">
+          <div class="content-center-top-left" v-if="recommendList[1][0]" :style="bannerList[3]" @click="checkProduct(recommendList[1][0])">
             <div class="center-top-product">
-              <h2>{{recommendCenter1.goodsName}}</h2>
-              <p>{{recommendCenter1.title}}</p>
-              <b>{{recommendCenter1.price}} Baht</b>
+              <h2>{{ recommendCenter1.goodsName }}</h2>
+              <p>{{ recommendCenter1.title }}</p>
+              <b>{{ recommendCenter1.price }} Baht</b>
               <button @click.stop="addProduct(recommendCenter1)">添加到购物车</button>
             </div>
 
           </div>
-          <div class="content-center-top-right" :style="bannerList[4]" @click="checkProduct(recommendList[1][1])">
+          <div class="content-center-top-right" v-if="recommendList[1][1]"  :style="bannerList[4]" @click="checkProduct(recommendList[1][1])">
             <div class="center-top-product">
-              <h2>{{recommendCenter2.goodsName}}</h2>
-              <p>{{recommendCenter2.title}}</p>
-              <b>{{recommendCenter2.price}} Baht</b>
+              <h2>{{ recommendCenter2.goodsName }}</h2>
+              <p>{{ recommendCenter2.title }}</p>
+              <b>{{ recommendCenter2.price }} Baht</b>
               <button @click.stop="addProduct(recommendCenter2)">添加到购物车</button>
             </div>
           </div>
         </div>
         <div class="content-center-botton">
-          <div class="content-center-botton-product" v-for="item in recommend2" :key ="item.goodId">
-            <h2>{{item.goodsName}}</h2>
-            <p>{{item.title}}</p>
-            <b>{{item.price}} Baht</b>
+          <div class="content-center-botton-product" v-for="item in recommend2" :key="item.goodId">
+            <h2>{{ item.goodsName }}</h2>
+            <p>{{ item.title }}</p>
+            <b>{{ item.price }} Baht</b>
             <button @click="addProduct(item)">添加到购物车</button>
             <img :src='baseUrl + item.thumbImg[0].ImgRelativeUrl'
                  @click="checkProduct(item)"/>
@@ -48,7 +47,7 @@
     <div class="content-bottom-box">
       <div class="content-bottom">
         <div class="content-bottom-product" v-for="item in recommend3" @click="checkProduct(item)">
-          <img src="../../assets/img/home_img/content_center_bottom1.png"/>
+          <img :src="baseUrl + item.thumbImg[0].ImgRelativeUrl"/>
           <h2>{{ item.goodsName }}</h2>
           <p>{{ item.price }}</p>
         </div>
@@ -66,9 +65,7 @@ import {mapGetters} from "vuex";
 export default {
   name: "index",
   data() {
-    return {
-
-    }
+    return {}
   },
   computed: {
     ...mapGetters([
@@ -78,28 +75,28 @@ export default {
     bannerList() {
       return [
         {backgroundImage: "url(" + this.baseUrl + (this.recommendList[0][0] && this.recommendList[0][0].thumbImg[0].ImgRelativeUrl) + ")"},
-        {backgroundImage: "url(" + this.baseUrl  + (this.recommendList[0][1] && this.recommendList[0][1].thumbImg[0].ImgRelativeUrl) + ")"},
-        {backgroundImage: "url(" + this.baseUrl  + (this.recommendList[0][2] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
-        {backgroundImage: "url(" + this.baseUrl  + (this.recommendList[1][0] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
-        {backgroundImage: "url(" + this.baseUrl  + (this.recommendList[1][1] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[0][1] && this.recommendList[0][1].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[0][2] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[1][0] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[1][1] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
       ]
     },
-    recommendCenter1(){
+    recommendCenter1() {
       return this.recommendList[1][0];
     },
-    recommendCenter2(){
+    recommendCenter2() {
       return this.recommendList[1][1];
     },
-    recommend2(){
+    recommend2() {
       return this.recommendList[1].slice(2);
     },
-    recommend3(){
+    recommend3() {
       return this.recommendList[2];
     }
 
   },
   mounted() {
-
+    console.log('recommendList1111', this.recommendList)
   },
   created() {
     this.getRecommend()
@@ -109,7 +106,7 @@ export default {
     // 查看详情
     checkProduct(item) {
       // 查看详情
-      this.$store.dispatch('setGoodItem',item).then(()=>{
+      this.$store.dispatch('setGoodItem', item).then(() => {
         this.$router.push({
           name: 'Product_details',
           params: {id: item.goodId}
@@ -179,9 +176,11 @@ export default {
 <style scoped lang="scss">
 .content {
   width: 100%;
-  .content-top-box{
+
+  .content-top-box {
     width: 100%;
     margin: 15px 0;
+
     .content-top {
       width: 1200px;
       margin: 0 auto;
@@ -223,15 +222,17 @@ export default {
     }
   }
 
-  .content-center-box{
+  .content-center-box {
     width: 100%;
     margin: 20px 0;
     background: #f3f3f3;
+
     .content-center {
       width: 1200px;
       margin: 0 auto;
       padding-top: 40px;
       height: 835px;
+
       .content-center-top {
         display: flex;
         justify-content: space-between;
@@ -243,10 +244,12 @@ export default {
           padding: 25px;
           background-repeat: no-repeat;
           background-size: 100% 100%;
-          .center-top-product{
+
+          .center-top-product {
             width: 200px;
             height: 180px;
             text-align: left;
+
             h2 {
               font-size: 17px;
               font-weight: 600;
@@ -292,10 +295,12 @@ export default {
           padding: 25px;
           background-repeat: no-repeat;
           background-size: 100% 100%;
-          .center-top-product{
+
+          .center-top-product {
             width: 200px;
             height: 180px;
             text-align: left;
+
             h2 {
               font-size: 17px;
               font-weight: 600;
@@ -348,6 +353,7 @@ export default {
           border-radius: 8px;
           background: #f3f3f3;
           padding: 25px;
+
           h2 {
             font-size: 17px;
             font-weight: 600;
@@ -392,9 +398,10 @@ export default {
     }
   }
 
-  .content-bottom-box{
+  .content-bottom-box {
     width: 100%;
     margin: 30px 0;
+
     .content-bottom {
       width: 1200px;
       margin: 0 auto;
