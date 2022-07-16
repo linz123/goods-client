@@ -58,7 +58,7 @@
             <a-checkbox :checked="checkAll" @click="allCheck()">全选
             </a-checkbox>
             <span>({{ checkCount }})</span>
-            <div class="price-show" @click="show()">价格表</div>
+            <div class="price-show" >价格表</div>
           </div>
           <div class="product-price-total">
             <div class="total-info">

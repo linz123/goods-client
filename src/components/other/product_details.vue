@@ -76,7 +76,7 @@
         <div class="specifications" v-if="goodItemDetail">
           <h2>{{goodItemDetail.title}}</h2>
           <ul >
-            <li>{{goodItemDetail.describe}}</li>
+            <li v-html="goodItemDetail.describe"></li>
           </ul>
         </div>
       </div>
