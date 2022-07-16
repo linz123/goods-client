@@ -409,7 +409,7 @@ export default {
           color: #999;
           padding: 3px 0;
           font-size: 15px;
-          list-style: disc;
+          list-style: none;
           text-align: left;
         }
       }
