@@ -177,13 +177,14 @@ export default {
 }
 .content {
   width: 100%;
-  height: 760px;
+  //height: 760px;
   border-top: 1px solid #dfdada;
   background: #f3f3f3;
+  padding-bottom: 30px;
 
   .content_box {
     width: 1200px;
-    height: 700px;
+    //height: 700px;
     margin: 30px auto 20px auto;
     background: #fff;
     border-radius: 15px;
