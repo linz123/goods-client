@@ -20,7 +20,7 @@
       <div class="search-right">
         <!--        <router-link to="/shopping-cart" class="service-link" >-->
         <a-badge :count="allCount" @click="redirectCar">
-          <a-avatar icon="shopping-cart" style="color: #C39762;" shape="square">
+          <a-avatar icon="shopping-cart" class="icon_" shape="square">
             <!--          <div class="cart">-->
             <!--              style="color: #C39762;background: #ffffff;border:1px solid #C39762"-->
             <!--          </div>-->
@@ -31,8 +31,8 @@
 
         <!--          </div>-->
 
-        <div class="line_service" @click="onlineService()">
-          <a-avatar icon="user" style="color: #C39762;" shape="square">
+        <div class="line_service"  @click="onlineService()">
+          <a-avatar icon="user" class="icon_" shape="square">
           </a-avatar>
         </div>
 
@@ -225,6 +225,12 @@ input {
   display: flex;
   align-content: center;
   justify-content: space-around;
+  .icon_{
+    color: #C39762;
+    background: #ffffff;
+    border-radius:5px;
+    border: 1px solid #ccc;
+  }
 }
 
 .line_service {
@@ -267,7 +273,7 @@ input {
 }
 
 .hot_ {
-  width: 870px;
+  width: 830px;
   height: 30px;
   padding: 0;
   margin: 0 auto;

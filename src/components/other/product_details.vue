@@ -3,33 +3,44 @@
     <Header></Header>
     <div class="content">
       <div class="content_box">
-        <div class="position">
-          <span class="text-color">{{getCurrentMenu.name}}</span>&nbsp;&nbsp;<a-icon type="double-right"/>
-          <span class="text-color">{{getCurrentClass.className}}</span>&nbsp;&nbsp;<a-icon type="double-right"/>
+        <div class="position"><ForwardOutlined />
+          <span class="text-color">{{getCurrentMenu.name}}</span>&nbsp;&nbsp;<a-icon type="caret-right"/>
+          <span class="text-color">{{getCurrentClass.className}}</span>&nbsp;&nbsp;<a-icon type="caret-right"/>
           <span>{{goodItemDetail.goodsName}}</span>
         </div>
         <div class="product">
           <div class="product_">
 <!--            <div class="goods-show">-->
-<!--              <button class="pre">-->
-<!--                <a-icon type="left"/>-->
+<!--              <button class="pre" @click="prevDetails()">-->
+<!--                <a-icon type="left" />-->
 <!--              </button>-->
-<!--              <div class="goods-img">-->
-<!--                <img src="../../assets/img/xiangqing/xiangqing.png" alt="">-->
-<!--              </div>-->
-<!--              <button class="next">-->
-<!--                <a-icon type="right"/>-->
+<!--              <a-carousel arrows dots-class="slick-dots slick-thumb">-->
+<!--                <a slot="customPaging" slot-scope="props">-->
+<!--                  <img :src="getImgUrl(props.i)"/>-->
+<!--                </a>-->
+<!--                <div v-for="item in goodItemDetail.img">-->
+<!--                  <img :src="baseUrl+item.ImgRelativeUrl" style="height: 280px;width: 280px;"/>-->
+<!--                </div>-->
+<!--              </a-carousel>-->
+<!--              <button class="next" @click="nextDetails()">-->
+<!--                <a-icon type="right" />-->
 <!--              </button>-->
 <!--            </div>-->
             <div class="goods-show">
-            <a-carousel arrows dots-class="slick-dots slick-thumb">
-              <a slot="customPaging" slot-scope="props">
-                <img :src="getImgUrl(props.i)" />
-              </a>
-              <div v-for="item in goodItemDetail.img" >
-                <img :src="baseUrl+item.ImgRelativeUrl" style="height: 280px;width: 280px;" />
-              </div>
-            </a-carousel>
+              <a-carousel arrows dots-class="slick-dots slick-thumb">
+<!--                <button class="pre" @click="prevDetails()">-->
+<!--                  <a-icon type="left"/>-->
+<!--                </button>-->
+                <a slot="customPaging" slot-scope="props">
+                  <img :src="getImgUrl(props.i)"/>
+                </a>
+<!--                <button class="next" @click="nextDetails()">-->
+<!--                  <a-icon type="right"/>-->
+<!--                </button>-->
+                <div v-for="item in goodItemDetail.img">
+                  <img :src="baseUrl+item.ImgRelativeUrl" style="height: 280px;width: 280px;"/>
+                </div>
+              </a-carousel>
             </div>
 
 
@@ -55,22 +66,6 @@
               <a-icon type="share-alt"/>
             </div>
           </div>
-<!--          <div class="imgList">-->
-<!--            <div class="product_img product_img-active">-->
-<!--              <img src="../../assets/img/xiangqing/xq1.png" alt=""/>-->
-<!--            </div>-->
-<!--            <div class="product_img">-->
-<!--              <img src="../../assets/img/xiangqing/xq1.png" alt=""/>-->
-<!--            </div>-->
-<!--            <div class="product_img">-->
-<!--              <img src="../../assets/img/xiangqing/xq1.png" alt=""/>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div class="imgList">-->
-<!--            <div class="product_img product_img-active" v-for="list in goodItemDetail.img">-->
-<!--              <img :src="list.img" alt=""/>-->
-<!--            </div>-->
-<!--          </div>-->
         </div>
 
         <div class="specifications" v-if="goodItemDetail">
@@ -109,7 +104,8 @@ export default {
       goodNumber: 1,
       id: null,
       goodData:[],
-
+      selectIndex:0,
+      goodsImg:[]
     }
   },
   computed:{
@@ -130,6 +126,7 @@ export default {
   },
   mounted() {
     console.log('baseUrl',this.baseUrl)
+    this.goodsImg = this.goodItemDetail.img;
   },
   methods: {
 
@@ -146,7 +143,21 @@ export default {
         }, 1000);
       })
     },
+    prevDetails() {
+      alert(111)
+      this.selectIndex--;
+      if (this.selectIndex < 0) {
+        this.selectIndex = this.goodsImg.length - 1;
+      }
+    },
 
+    nextDetails() {
+      alert(222)
+      this.selectIndex++;
+      if (this.selectIndex > this.goodsImg.length - 1) {
+        this.selectIndex = 0;
+      }
+    },
     share() {
       // alert('已经分享至微信好友！')
     },
@@ -227,24 +238,6 @@ export default {
           border-radius: 7px;
           position: relative;
           margin-right: 150px;
-
-          .goods-img {
-            width: 350px;
-            height: 315px;
-            padding: 10px;
-
-            img {
-              width: 330px;
-              height:295px;
-            }
-          }
-
-          button {
-            width: 25px;
-            height: 25px;
-            border: 1px solid #dfdada;
-          }
-
           .pre {
             position: absolute;
             left: 0;
@@ -264,6 +257,24 @@ export default {
             background: #333;
             opacity: .5;
           }
+          .goods-img {
+            width: 350px;
+            height: 315px;
+            padding: 10px;
+
+            img {
+              width: 330px;
+              height:295px;
+            }
+          }
+
+          button {
+            width: 25px;
+            height: 25px;
+            border: 1px solid #dfdada;
+          }
+
+
         }
 
         .goods-information {

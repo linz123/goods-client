@@ -7,8 +7,11 @@
           当前类别
         </div>
         <div class="category">
-          <ul v-for="(item, index) in classList" @click="selectClass(item,index)">
-            <li v-bind:class="(index === getClassIndex) ? 'active' : ''">{{ item.className }}</li>
+          <ul>
+            <li v-for="(item, index) in classList" @click="selectClass(item,index)"
+                v-bind:class="(index === getClassIndex) ? 'active' : ''">
+              {{ item.className }}
+            </li>
           </ul>
         </div>
       </div>
@@ -21,8 +24,10 @@
                  @click="checkProduct(item)"/>
             <h2 class="product_name">{{ item.goodsName }}</h2>
             <!--            <p class="product_parameter">{{index.describe}}</p>-->
-            <p class="product_price">฿&nbsp;{{ item.price }}</p>
-            <div class="addCar" @click="submit(item)"></div>
+            <div class="price_addcar">
+              <p class="product_price">฿&nbsp;{{ item.price }}</p>
+              <span class="addCar" @click="submit(item)"></span>
+            </div>
           </div>
         </div>
         <div class="paging">
@@ -125,7 +130,7 @@ export default {
       })
     },
     selectClass(item, index) {
-      this.$store.commit('setClassIndex',index);
+      this.$store.commit('setClassIndex', index);
       let paras;
       this.$store.dispatch('reSetPageConfig').then(() => {
         paras = Object.assign({}, {
@@ -165,8 +170,8 @@ export default {
 
     .menu {
       width: 180px;
-      height: 800px;
-      background: #fbf7f7;
+      //height: 800px;
+      //background: #fbf7f7;
 
       .menu-title {
         margin-top: 15px;
@@ -188,10 +193,24 @@ export default {
             font-weight: 600;
             color: #666;
             cursor: pointer;
+            position: relative;
           }
 
           .active {
             color: #efbf7f;
+            padding-left: 25px;
+          }
+
+          .active:before {
+            position: absolute;
+            bottom: 11px;
+            left: 16px;
+            height: 0;
+            width: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 5px solid #efbf7f;
+            content: "";
           }
         }
       }
@@ -199,7 +218,7 @@ export default {
 
     .content-box {
       width: 1000px;
-      min-height: 900px;
+      min-height: 546px;
 
       .product {
         width: 980px;
@@ -209,12 +228,13 @@ export default {
 
         .product_list {
           width: 190px;
-          height: 280px;
+          height: 285px;
           margin-bottom: 13px;
           text-align: left;
           cursor: pointer;
+
           position: relative;
-          margin-right:6px;
+          margin-right: 6px;
 
           &:hover {
             z-index: 2;
@@ -226,15 +246,21 @@ export default {
           .product_img {
             width: 190px;
             height: 190px;
+            border-radius: 10px;
           }
 
           .product_name {
+            height: 57px;
             padding-left: 15px;
             padding-top: 12px;
-            margin-bottom: 5px;
             font-size: 15px;
             font-weight: 600;
             color: #666;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
           }
 
           .product_parameter {
@@ -244,28 +270,32 @@ export default {
             font-weight: 600;
           }
 
-          .product_price {
-            margin-bottom: 5px;
-            padding-left: 15px;
-            font-size: 14px;
-            color: #c69d6b;
-            font-weight: 600;
-          }
+          .price_addcar {
+            height: 30px;
+            display: flex;
+            line-height: 30px;
+            justify-content: space-between;
+            .product_price {
+              margin-bottom: 5px;
+              padding-left: 15px;
+              font-size: 14px;
+              color: #c69d6b;
+              font-weight: 600;
+            }
 
-          .addCar {
-            position: absolute;
-            bottom: 14px;
-            right: 10px;
-            width: 35px;
-            height: 35px;
-            text-align: center;
-            background: url("../../assets/img/home_img/car-icon.png") no-repeat;
-            transition: all 0.2s linear;
-            /*background: url("../../assets/img/home_img/ss.png") no-repeat;*/
-            &:hover{
-              transform: scale(1.3);
+            .addCar {
+              width: 30px;
+              height: 30px;
+              text-align: center;
+              background: url("../../assets/img/home_img/car-icon.png") no-repeat;
+              transition: all 0.2s linear;
+              /*background: url("../../assets/img/home_img/ss.png") no-repeat;*/
+              &:hover {
+                transform: scale(1.3);
+              }
             }
           }
+
         }
       }
 

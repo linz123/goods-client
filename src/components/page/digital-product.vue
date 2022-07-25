@@ -9,20 +9,10 @@ import All_categories from "../other/all_categories";
 export default {
   name: "digital-product",
   components: {All_categories},
-  data() {
-    return {
-      currentPayerIndex: 0,
-      productList: [],
-      menuList: [],
-    }
-  },
-  methods:{
-  }
 }
 </script>
 <style scoped lang="scss">
 .content {
   width: 100%;
-  border-top: 1px solid #dfdada;
 }
 </style>
