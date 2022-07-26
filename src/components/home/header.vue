@@ -10,7 +10,7 @@
       </ul>
     </div>
     <div class="search">
-      <div class="logo">logo</div>
+      <div class="logo"></div>
       <div class="search-input">
         <input placeholder="请输入您想搜索的商品、品牌" v-model="value">
         <div class="search-img" @click="searchProduct">
@@ -179,12 +179,13 @@ export default {
 }
 
 .logo {
-  width: 120px;
+  width: 139px;
   height: 50px;
   text-align: center;
   font-size: 20px;
   line-height: 50px;
-  background: antiquewhite;
+  //background: antiquewhite;
+  background: url("../../assets/logo.png") center;
 }
 
 .search-input {
