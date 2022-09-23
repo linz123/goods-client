@@ -4,7 +4,7 @@
 
 const path = require('path')
 
-const target = process.env.npm_lifecycle_event == 'dev' ? 'http://192.168.20.254:8080' : '';
+const target = process.env.npm_lifecycle_event == 'dev' ? 'http://localhost:8080' : '';
 
 module.exports = {
   dev: {
@@ -16,13 +16,13 @@ module.exports = {
         "target": target,
         "changeOrigin": true,
         "pathRewrite": {
-          "^/api": "" //api相当于一个别名
+          // "^/api": "/api" //api相当于一个别名
         }
       },
     },
 
     // Various Dev Server settings
-    host: '0.0.0.0', // can be overwritten by process.env.HOST
+    host: '127.0.0.1', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

@@ -13,7 +13,7 @@ import {
 Vue.use(Vuex);
 
 const state = {
-  baseUrl: (location.host.indexOf('192') > -1 ||location.host.indexOf('localhost') > -1 ) ? '//192.168.20.254:8080' : '',
+  baseUrl: (location.host.indexOf('192') > -1 ||location.host.indexOf('localhost') > -1 ) ? '//localhost:8080' : '',
   car: [],// {goodNumber:1,check: true,good:{}} 商品数量，是否选中，商品详情
   menu: [],
   currentMenu: {}, //当前菜单选中的菜单
