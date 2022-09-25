@@ -5,33 +5,26 @@
         </div>
         <div class="content">
             <div class="li-content">
-                <div class="li-item">
+                <div class="li-item"  v-for="item in this.$store.state.currentGoodData.list || []"
+                     :key="item.goodId">
                     <div class="li-item-left">
                         <div class="title">
-                            <div>集团老板秘书</div>
-                            <div>巅峰集团</div>
+                            <div>{{item.goodsName}}</div>
+                            <div>{{item.title}}</div>
                         </div>
                         <div class="center">
-                            <div class="price">60000-800000</div>
-                            <div>腾讯</div>
-                            <div>大学计算机专业毕业者优先</div>
-                            <div>男女不限</div>
+                            <div class="price">{{item.price}}</div>
+                            <div class="welfare" v-for="welfare in mapWelfare(item)" :key="welfare">{{welfare}}</div>
                         </div>
                         <div class="labels">
-                            <div class="label-item">
-                                包吃住
-                            </div>
-                            <div class="label-item">
-                                业绩提成
-                            </div>
-                            <div class="label-item">
-                                包住宿
+                            <div class="label-item" v-for="labelName in getLabelNameByIds(item.labelId)" >
+                                {{labelName}}
                             </div>
                         </div>
                     </div>
                     <div class="li-item-right">
-                        <div class="detail" @click="detail">查看详情</div>
-                        <div class="time">2022-7-3</div>
+                        <div class="detail" @click="checkProduct(item)">查看详情</div>
+                        <div class="time">{{item.updateTime}}</div>
                     </div>
                 </div>
             </div>
@@ -51,12 +44,28 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
     name: "recruit",
+    computed:{
+        ...mapGetters([
+            'getLabelNameByIds',
+        ])
+    },
     methods: {
-        detail(){
-            this.$router.push('/recruit-detail')
-        }
+        // 查看详情
+        checkProduct(item) {
+            this.$store.dispatch('setGoodItem', item).then(() => {
+                this.$router.push({
+                    name: 'Recruit-detail',
+                    params: {id: item.goodId}
+                })
+            })
+        },
+        mapWelfare(item){
+            return item.welfare.split('，')
+        },
     }
 }
 </script>
@@ -90,9 +99,10 @@ export default {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                margin-bottom: 10px;
 
                 .li-item-left {
-
+                    width: 700px;
 
                     .title {
                         display: flex;
@@ -104,7 +114,9 @@ export default {
                             color: #4b93ff;
                             font-size: 18px;
                             font-weight: bold;
-                            margin: 0 324px 0 0;
+                            //margin: 0 324px 0 0;
+                            text-align: left;
+                            width: 50%;
                         }
 
                         div:last-child {
@@ -114,6 +126,9 @@ export default {
                             font-size: 18px;
                             line-height: 25px;
                             text-transform: capitalize;
+                            text-align: left;
+                            padding-left: 150px;
+                            width: 50%;
                         }
                     }
 
@@ -163,7 +178,7 @@ export default {
                 }
 
                 .li-item-right {
-                    margin-right: 20px;
+                    margin: 82px 21px 0 0 ;
 
                     .detail {
                         width: 84px;

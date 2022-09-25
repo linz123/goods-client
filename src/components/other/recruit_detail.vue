@@ -2,45 +2,32 @@
     <div class="wrapper">
         <div class="content">
             <div class="content-left">
-                <div class="title">集团老板秘书（助理）</div>
-                <div class="number">编号: 952700</div>
-                <div class="price">฿ 60000-80000</div>
+                <div class="title">{{goodItemDetail.goodsName}}</div>
+                <div class="number">编号: {{goodItemDetail.serialNumber}}</div>
+                <div class="price">฿ {{goodItemDetail.price}}</div>
                 <div class="remark">
-                    <div>亚洲</div>
-                    <div>大学计算机专业毕业者优先</div>
-                    <div>男女不限</div>
+                    <div v-for="welfare in mapWelfare(goodItemDetail)" :key="welfare">{{welfare}}</div>
                 </div>
-                <div class="labels">
-                    <div class="label-item">
-                        包吃住
-                    </div>
-                    <div class="label-item">
-                        业绩提成
-                    </div>
-                    <div class="label-item">
-                        月休两天
+                <div class="labels" >
+                    <div class="label-item"  v-for="labelName in getLabelNameByIds(goodItemDetail.labelId)">
+                        {{labelName}}
                     </div>
                 </div>
                 <div class="time">
-                    2022-07-19 更新
+                    {{goodItemDetail.updateTime}} 更新
                 </div>
                 <div class="line"/>
                 <div class="content-items">
-                    <h5>集团老板秘书（助理）</h5>
-                    <div class="content-item">数名 大学计算机专业毕业 者优先 （男女不限 ） 懂Wps公式 函数 头脑机灵 反应快，思路清晰
-                        初步工资：12000RMB转正15000有能力者可面议</div>
-                    <div class="content-item">数名 大学计算机专业毕业 者优先 （男女不限 ） 懂Wps公式 函数 头脑机灵 反应快，思路清晰</div>
+                    <h5>{{goodItemDetail.goodsName}}</h5>
+                    <div class="content-item" v-for="describe in goodItemDetail.describe.split('，')">{{describe}}</div>
+<!--                    <div class="content-item">数名 大学计算机专业毕业 者优先 （男女不限 ） 懂Wps公式 函数 头脑机灵 反应快，思路清晰</div>-->
                 </div>
             </div>
             <div class="content-right">
                 <div class="img"/>
-                <h5>亚洲巅峰集团</h5>
+                <h5>{{goodItemDetail.title}}</h5>
                 <div class="items">
-                    <div class="item">福利多 大量需要华管理</div>
-                    <div class="item">地址：亚洲城</div>
-                    <div class="item">不需要 押身份证 不需要签合同 赔付就床单被子生活用品1500泰猪 （在满三个月免赔）
-                        自己带就0赔付
-                    </div>
+                    <div class="item" v-for="remark in goodItemDetail.remark.split('，')">{{remark}}</div>
 
                 </div>
             </div>
@@ -51,8 +38,21 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
     name: "recruit_detail",
+    computed:{
+        ...mapGetters([
+            'goodItemDetail',
+            'getLabelNameByIds'
+        ])
+    },
+    methods:{
+        mapWelfare(item){
+            return item.welfare.split('，')
+        },
+    }
 
 }
 </script>
