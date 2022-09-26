@@ -5,7 +5,7 @@ import {
     _getClassesPage,
     _getGoodByLabel,
     _getMenu, _goodSearch,
-    getAllLabels,
+    getAllLabels, getCompanyHot,
     getGoodByLabel,
     getRecommend
 } from "../http/apiProduct";
@@ -27,7 +27,8 @@ const state = {
     Recommend: [[], [], []],
     order: [], // 提交订单成功时
     classIndex: 0,
-    allLabels: []
+    allLabels: [],
+    hotCompany: []
 
 }
 
@@ -127,7 +128,6 @@ const getters = {
             let labelName;
             state.allLabels.forEach(item => {
                 if (parseInt(id) === item.labelId) {
-                    console.log('labelName', item.labelName)
                     labelName = item.labelName;
                 }
             })
@@ -135,6 +135,9 @@ const getters = {
         }
 
         return ids.split(',').map(id => find(id))
+    },
+    getHotCompany(state) {
+        return state.hotCompany;
     }
 }
 
@@ -150,7 +153,7 @@ const mutations = {
         //下面是根据传来的数据修改car中的数据
         let isHas = state.car.some(item => {
             //some方法中只要有一个item，isHas就为true
-            console.log("newItem", carItem, "oldItem", item)
+            // console.log("newItem", carItem, "oldItem", item)
 
             if (item.good.goodId === carItem.good.goodId) {
                 item.goodNumber += carItem.goodNumber;
@@ -162,7 +165,7 @@ const mutations = {
         if (!isHas) {
             state.car.push(carItem)
         }
-        console.log('购物车', state.car)
+        // console.log('购物车', state.car)
     },
     syncGood(state, {good, goodNumber}) { //同步商品数量
         let len = state.car.length;
@@ -173,16 +176,16 @@ const mutations = {
         }
     },
     removeGood(state, id) {    // 移除购物车
-        console.log('removeGoodId', id)
+        // console.log('removeGoodId', id)
         let len = state.car.length;
         for (let i = 0; i < len; i++) {
-            console.log('state.car[i].good.goodId', state.car[i].good.goodId)
+            // console.log('state.car[i].good.goodId', state.car[i].good.goodId)
             if (state.car[i].good.goodId === id) {
                 state.car.splice(i, 1)
                 break;
             }
         }
-        console.log('removeGood', state.car)
+        // console.log('removeGood', state.car)
     },
     ckd(state, goodId) {
         state.car.forEach(item => {
@@ -240,6 +243,9 @@ const mutations = {
     },
     setAllLabels(state, data) {
         state.allLabels = data;
+    },
+    setCompanyHot(state, data) {
+        state.hotCompany = data;
     }
 }
 
@@ -316,6 +322,12 @@ const actions = {
             commit('setAllLabels', resp.data)
         })
     },
+    getHotCompany({commit}, paras) {
+        getCompanyHot(paras).then(resp => {
+            commit('setCompanyHot', resp.data);
+        })
+        return undefined;
+    }
 
 }
 

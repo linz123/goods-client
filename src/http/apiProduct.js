@@ -27,6 +27,10 @@ export const _goodSearch = data => axios.post('/api/client/GoodSearch', data);
 // 获取所有标签
 export const getAllLabels = data => axios.post('/api/client/getAllLabels', data);
 
+// 获取热度招聘
+export const getCompanyHot = data => axios.post('/api/client/getRecruit', data);
+
+
 export const getShopCartData = () =>{
   let prdData = JSON.parse(localStorage.getItem('goodData')||[]);
    return prdData;

@@ -5,26 +5,26 @@
         </div>
         <div class="content">
             <div class="li-content">
-                <div class="li-item"  v-for="item in this.$store.state.currentGoodData.list || []"
+                <div class="li-item" v-for="item in this.$store.state.currentGoodData.list || []"
                      :key="item.goodId">
                     <div class="li-item-left">
                         <div class="title">
-                            <div>{{item.goodsName}}</div>
-                            <div>{{item.title}}</div>
+                            <div>{{ item.goodsName }}</div>
+                            <div>{{ item.title }}</div>
                         </div>
                         <div class="center">
-                            <div class="price">{{item.pay}}</div>
-                            <div class="welfare" v-for="welfare in mapWelfare(item)" :key="welfare">{{welfare}}</div>
+                            <div class="price">{{ item.pay }}</div>
+                            <div class="welfare" v-for="welfare in mapWelfare(item)" :key="welfare">{{ welfare }}</div>
                         </div>
                         <div class="labels">
-                            <div class="label-item" v-for="labelName in getLabelNameByIds(item.labelId)" >
-                                {{labelName}}
+                            <div class="label-item" v-for="labelName in getLabelNameByIds(item.labelId)">
+                                {{ labelName }}
                             </div>
                         </div>
                     </div>
                     <div class="li-item-right">
                         <div class="detail" @click="checkProduct(item)">查看详情</div>
-                        <div class="time">{{formatTime(item.updateTime) }}</div>
+                        <div class="time">{{ formatTime(item.updateTime) }}</div>
                     </div>
                 </div>
                 <div class="paging">
@@ -40,9 +40,7 @@
                 </div>
                 <div class="rank-list">
                     <h5>推荐企业</h5>
-                    <div class="list-item">企业1</div>
-                    <div class="list-item">企业2</div>
-                    <div class="list-item">企业3</div>
+                    <div class="list-item" v-for="item in getHotCompany" @click="checkProduct(item)">{{item.title}}</div>
                 </div>
             </div>
         </div>
@@ -51,15 +49,17 @@
 
 <script>
 import {mapGetters} from "vuex";
+
 const moment = require('moment');
 
 
 export default {
     name: "recruit",
-    computed:{
+    computed: {
         ...mapGetters([
             'getLabelNameByIds',
             'pageConfig',
+            'getHotCompany'
         ])
     },
     methods: {
@@ -72,7 +72,7 @@ export default {
                 })
             })
         },
-        mapWelfare(item){
+        mapWelfare(item) {
             return item.welfare.split('，')
         },
         onChange(current, pageSize) {
@@ -85,9 +85,15 @@ export default {
             }, this.$store.state.pageConfig)
             this.$store.dispatch('getGoodByClass', paras)
         },
-        formatTime(timeString){
+        formatTime(timeString) {
             return moment(timeString).format('YYYY-MM-DD');
         }
+    },
+    mounted() {
+        this.$store.dispatch('getHotCompany', {
+            classId: this.$store.state.currentClass.classId.toString(),
+            count: 5
+        })
     }
 }
 </script>
@@ -201,7 +207,7 @@ export default {
                 }
 
                 .li-item-right {
-                    margin: 82px 21px 0 0 ;
+                    margin: 82px 21px 0 0;
 
                     .detail {
                         width: 84px;
@@ -226,6 +232,7 @@ export default {
                     }
                 }
             }
+
             .paging {
                 //width: 980px;
                 height: 50px;
