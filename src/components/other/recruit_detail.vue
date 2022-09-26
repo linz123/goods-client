@@ -4,7 +4,7 @@
             <div class="content-left">
                 <div class="title">{{goodItemDetail.goodsName}}</div>
                 <div class="number">编号: {{goodItemDetail.serialNumber}}</div>
-                <div class="price">฿ {{goodItemDetail.price}}</div>
+                <div class="price">฿ {{goodItemDetail.pay}}</div>
                 <div class="remark">
                     <div v-for="welfare in mapWelfare(goodItemDetail)" :key="welfare">{{welfare}}</div>
                 </div>
@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="time">
-                    {{goodItemDetail.updateTime}} 更新
+                    {{formatTime(goodItemDetail.updateTime)}} 更新
                 </div>
                 <div class="line"/>
                 <div class="content-items">
@@ -39,7 +39,7 @@
 
 <script>
 import {mapGetters} from "vuex";
-
+const moment = require('moment');
 export default {
     name: "recruit_detail",
     computed:{
@@ -52,6 +52,9 @@ export default {
         mapWelfare(item){
             return item.welfare.split('，')
         },
+        formatTime(timeString){
+            return moment(timeString).format('YYYY-MM-DD');
+        }
     }
 
 }
@@ -154,6 +157,7 @@ export default {
                     margin-right: 10px;
                     background: #F3F3F3;
                     border-radius: 10px;
+                    text-align: center;
                 }
             }
 

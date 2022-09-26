@@ -13,7 +13,7 @@
                             <div>{{item.title}}</div>
                         </div>
                         <div class="center">
-                            <div class="price">{{item.price}}</div>
+                            <div class="price">{{item.pay}}</div>
                             <div class="welfare" v-for="welfare in mapWelfare(item)" :key="welfare">{{welfare}}</div>
                         </div>
                         <div class="labels">
@@ -24,9 +24,15 @@
                     </div>
                     <div class="li-item-right">
                         <div class="detail" @click="checkProduct(item)">查看详情</div>
-                        <div class="time">{{item.updateTime}}</div>
+                        <div class="time">{{formatTime(item.updateTime) }}</div>
                     </div>
                 </div>
+                <div class="paging">
+                    <a-pagination @change="onChange" :pageSize="pageConfig.pageSize" :current="pageConfig.pageNumber"
+                                  :total="this.$store.state.currentGoodData.total"/>
+                </div>
+                <a-result title="未能搜索相关商品" v-if="!this.$store.state.currentGoodData.total">
+                </a-result>
             </div>
             <div class="rank">
                 <div class="title">
@@ -45,12 +51,15 @@
 
 <script>
 import {mapGetters} from "vuex";
+const moment = require('moment');
+
 
 export default {
     name: "recruit",
     computed:{
         ...mapGetters([
             'getLabelNameByIds',
+            'pageConfig',
         ])
     },
     methods: {
@@ -66,6 +75,19 @@ export default {
         mapWelfare(item){
             return item.welfare.split('，')
         },
+        onChange(current, pageSize) {
+            this.$store.dispatch('changePageConfig', {
+                pageSize,
+                pageNumber: current
+            })
+            let paras = Object.assign({}, {
+                classId: this.$store.state.currentClass.classId.toString()
+            }, this.$store.state.pageConfig)
+            this.$store.dispatch('getGoodByClass', paras)
+        },
+        formatTime(timeString){
+            return moment(timeString).format('YYYY-MM-DD');
+        }
     }
 }
 </script>
@@ -87,6 +109,7 @@ export default {
         justify-content: space-between;
         margin-top: 10px;
         width: 1200px;
+        min-height: 1000px;
 
         .li-content {
             width: 900px;
@@ -202,6 +225,13 @@ export default {
                         margin-top: 10px;
                     }
                 }
+            }
+            .paging {
+                //width: 980px;
+                height: 50px;
+                margin-top: 25px;
+                margin-right: 0;
+                text-align: right;
             }
 
         }
