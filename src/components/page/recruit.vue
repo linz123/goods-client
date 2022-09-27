@@ -40,7 +40,8 @@
                 </div>
                 <div class="rank-list">
                     <h5>推荐企业</h5>
-                    <div class="list-item" v-for="item in getHotCompany" @click="checkProduct(item)">{{item.title}}</div>
+                    <div class="list-item" v-for="item in getHotCompany" @click="checkProduct(item)">{{ item.title }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -90,10 +91,12 @@ export default {
         }
     },
     mounted() {
-        this.$store.dispatch('getHotCompany', {
-            classId: this.$store.state.currentClass.classId.toString(),
-            count: 5
-        })
+        setTimeout(()=>{
+            this.$store.dispatch('getHotCompany', {
+                classId: this.$store.state.currentClass.classId.toString(),
+                count: 5
+            })
+        },200)
     }
 }
 </script>

@@ -28,7 +28,6 @@
                 <h5>{{goodItemDetail.title}}</h5>
                 <div class="items">
                     <div class="item" v-for="remark in goodItemDetail.remark.split('，')">{{remark}}</div>
-
                 </div>
             </div>
 

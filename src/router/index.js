@@ -81,6 +81,18 @@ export default new Router({
                     name: 'Recruit',
                     component: () => import('@/components/page/recruit.vue'),
                 },
+                //格子铺
+                {
+                    path: 'grid',
+                    name: 'Grid',
+                    component: () => import('@/components/page/market.vue'),
+                },
+                //跳蚤市场
+                {
+                    path: 'flea',
+                    name: 'Flea',
+                    component: () => import('@/components/page/market.vue'),
+                },
                 {
                     path: '/order',
                     name: 'Order',
@@ -92,6 +104,13 @@ export default new Router({
                     name: 'Recruit-detail',
                     component: () => import('@/components/other/recruit_detail.vue'),
                 },
+                //格子铺详情
+                {
+                    path: '/grid-detail',
+                    name: 'Grid-detail',
+                    component: () => import('@/components/other/shop-detail.vue'),
+                },
+
             ]
         },
         //购物车
@@ -105,6 +124,12 @@ export default new Router({
             path: '/product_details',
             name: 'Product_details',
             component: () => import('@/components/other/product_details.vue'),
+        },
+        //跳蚤市场详情
+        {
+            path: '/flea-detail',
+            name: 'Flea-detail',
+            component: () => import('@/components/other/flea-details.vue'),
         },
         //搜索
         {

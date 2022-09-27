@@ -114,6 +114,7 @@ export default {
       'baseUrl',
       'getCurrentMenu',
       'getCurrentClass'
+
     ])
   },
   created() {

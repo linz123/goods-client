@@ -123,8 +123,9 @@ export default {
     // 查看详情
     checkProduct(item) {
       this.$store.dispatch('setGoodItem', item).then(() => {
+          console.log('this.$store.state.currentClass.classDescribe+\'-detail\' ',this.$store.state.currentClass.classDescribe+'-detail' )
         this.$router.push({
-          name: 'Product_details',
+          name: this.$store.state.currentClass.classDescribe+'-detail' || 'Product_details',
           params: {id: item.goodId}
         })
       })
