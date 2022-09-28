@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="content-right">
-                <img class="img"  v-bind:src="goodItemDetail.thumbImg[0] && baseUrl+ goodItemDetail.thumbImg[0].ImgRelativeUrl" alt="" />
+                <img class="img"  v-bind:src="goodItemDetail.thumbImg && goodItemDetail.thumbImg[0] && baseUrl+ goodItemDetail.thumbImg[0].ImgRelativeUrl" alt="" />
                 <h5>{{goodItemDetail.title}}</h5>
                 <div class="items">
                     <div class="item" v-for="remark in goodItemDetail.remark.split('，')">{{remark}}</div>
