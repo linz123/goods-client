@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="content-right">
-                <div class="img"/>
+                <img class="img"  v-bind:src="goodItemDetail.thumbImg[0] && baseUrl+ goodItemDetail.thumbImg[0].ImgRelativeUrl" alt="" />
                 <h5>{{goodItemDetail.title}}</h5>
                 <div class="items">
                     <div class="item" v-for="remark in goodItemDetail.remark.split('，')">{{remark}}</div>
@@ -44,7 +44,8 @@ export default {
     computed:{
         ...mapGetters([
             'goodItemDetail',
-            'getLabelNameByIds'
+            'getLabelNameByIds',
+            'baseUrl'
         ])
     },
     methods:{

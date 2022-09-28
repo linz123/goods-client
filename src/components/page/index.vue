@@ -13,7 +13,7 @@
     <div class="content-center-box">
       <div class="content-center">
         <div class="content-center-top">
-          <div class="content-center-top-left" v-if="recommendList[1][0]" :style="bannerList[3]" @click="checkProduct(recommendList[1][0])">
+          <div class="content-center-top-left" v-if="recommendList && recommendList[1][0]" :style="bannerList[3]" @click="checkProduct(recommendList[1][0])">
             <div class="center-top-product">
               <h2>{{ recommendCenter1.goodsName }}</h2>
               <p>{{ recommendCenter1.title }}</p>
@@ -22,7 +22,7 @@
             </div>
 
           </div>
-          <div class="content-center-top-right" v-if="recommendList[1][1]"  :style="bannerList[4]" @click="checkProduct(recommendList[1][1])">
+          <div class="content-center-top-right" v-if="recommendList && recommendList[1][1]"  :style="bannerList[4]" @click="checkProduct(recommendList[1][1])">
             <div class="center-top-product">
               <h2>{{ recommendCenter2.goodsName }}</h2>
               <p>{{ recommendCenter2.title }}</p>
@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="content-center-botton">
-          <div class="content-center-botton-product" v-for="item in recommend2" :key="item.goodId">
+          <div class="content-center-botton-product" v-if="recommend2" v-for="item in recommend2" :key="item.goodId">
             <h2>{{ item.goodsName }}</h2>
             <p>{{ item.title }}</p>
             <b>{{ item.price }} Baht</b>
@@ -46,7 +46,7 @@
 
     <div class="content-bottom-box">
       <div class="content-bottom">
-        <div class="content-bottom-product" v-for="item in recommend3" @click="checkProduct(item)">
+        <div class="content-bottom-product" v-if="recommend3" v-for="item in recommend3" @click="checkProduct(item)">
           <img :src="baseUrl + item.thumbImg[0].ImgRelativeUrl"/>
           <h2>{{ item.goodsName }}</h2>
           <p>{{ item.price }}</p>
@@ -74,24 +74,24 @@ export default {
     ]),
     bannerList() {
       return [
-        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[0][0] && this.recommendList[0][0].thumbImg[0].ImgRelativeUrl) + ")"},
-        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[0][1] && this.recommendList[0][1].thumbImg[0].ImgRelativeUrl) + ")"},
-        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[0][2] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
-        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[1][0] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
-        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[1][1] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[0] && this.recommendList[0][0] && this.recommendList[0][0].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[0] && this.recommendList[0][1] && this.recommendList[0][1].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[0] && this.recommendList[0][2] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[0] && this.recommendList[1][0] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
+        {backgroundImage: "url(" + this.baseUrl + (this.recommendList[0] && this.recommendList[1][1] && this.recommendList[0][2].thumbImg[0].ImgRelativeUrl) + ")"},
       ]
     },
     recommendCenter1() {
-      return this.recommendList[1][0];
+      return this.recommendList[1][0] || undefined;
     },
     recommendCenter2() {
-      return this.recommendList[1][1];
+      return this.recommendList[1][1] || undefined;
     },
     recommend2() {
-      return this.recommendList[1].slice(2);
+      return this.recommendList[1].slice(2) || undefined;
     },
     recommend3() {
-      return this.recommendList[2];
+      return this.recommendList[2] || undefined;
     }
 
   },
