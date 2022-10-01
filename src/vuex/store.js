@@ -27,6 +27,7 @@ const state = {
     Recommend: [[], [], []],
     order: [], // 提交订单成功时
     classIndex: 0,
+    menuIndex: 0,
     allLabels: [],
     hotCompany: []
 
@@ -138,6 +139,9 @@ const getters = {
     },
     getHotCompany(state) {
         return state.hotCompany;
+    },
+    getMenuIndex(state) {
+        return state.menuIndex;
     }
 }
 
@@ -246,6 +250,9 @@ const mutations = {
     },
     setCompanyHot(state, data) {
         state.hotCompany = data;
+    },
+    setMenuIndex(state, data) {
+        state.menuIndex = data;
     }
 }
 

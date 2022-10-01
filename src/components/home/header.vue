@@ -3,7 +3,7 @@
         <div class="menu">
             <ul class="menu_">
                 <template v-for="(item,index) in this.$store.state.menu">
-                    <li class="menu_li " @click="selectMenu(index)" v-bind:class="{'menu-active':index === menuIndex}">
+                    <li class="menu_li " @click="selectMenu(index)" v-bind:class="{'menu-active':index === getMenuIndex}">
                         <router-link  :to="`/home/${item.url}`" class="service">{{ item.name }}</router-link>
                     </li>
                 </template>
@@ -61,8 +61,7 @@ export default {
         return {
             menuList: null,
             list: null,
-            value: '',
-            menuIndex:0
+            value: ''
         }
     },
     mounted() {
@@ -72,7 +71,8 @@ export default {
         ...mapGetters([
             'allCount',
             'getOrder',
-            'getAllLabels'
+            'getAllLabels',
+            'getMenuIndex'
         ])
     },
     methods: {
@@ -81,7 +81,7 @@ export default {
             this.$store.dispatch('getLabels')
         },
         selectMenu(index) {
-            this.menuIndex = index;
+            this.$store.commit('setMenuIndex',index)
             this.$store.dispatch('toggleMenu', this.$store.state.menu[index])
             let paras = Object.assign({}, {
                     classId: this.$store.state.currentClass.classId.toString()

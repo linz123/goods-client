@@ -2,18 +2,18 @@
     <div class="content">
         <div class="content-top-box">
             <div class="content-top">
-                <div class="banner" v-if="recommendList[0][1]" :style="bannerList[0]"
-                     @click="checkProduct(recommendList[0][1])"></div>
+                <div class="banner" v-if="recommendList[0][0]" :style="bannerList[0]"
+                     @click="checkProduct(recommendList[0][0])"></div>
                 <div class="banners_right">
-                    <div class="banners_right1" v-if="recommendList[0][2]" :style="bannerList[1]"
+                    <div class="banners_right1" v-if="recommendList[0][1]" :style="bannerList[1]"
+                         @click="checkProduct(recommendList[0][1])"></div>
+                    <div class="banners_right2" v-if="recommendList[0][2]" :style="bannerList[2]"
                          @click="checkProduct(recommendList[0][2])"></div>
-                    <div class="banners_right2" v-if="recommendList[0][3]" :style="bannerList[2]"
-                         @click="checkProduct(recommendList[0][3])"></div>
                 </div>
             </div>
         </div>
 
-        <div class="content-center-box">
+        <div class="content-center-box" v-if="recommendList[1].length">
             <div class="content-center">
                 <div class="content-center-top">
                     <div class="content-center-top-left" v-if="recommendList && recommendList[1][0]"
@@ -124,12 +124,13 @@ export default {
         // 查看详情
         checkProduct(item) {
             // 查看详情
-            // this.$store.dispatch('setGoodItem', item).then(() => {
-            this.$router.push({
-                name: 'Flea-detail',
-                params: {id: item.goodId}
+            this.$store.dispatch('setGoodItem', item).then(() => {
+                this.$router.push({
+                    name: 'Flea-detail',
+                    params: {id: item.goodId}
+                })
             })
-            // })
+
         },
         addProduct(item) {
             // const good = {
