@@ -126,7 +126,7 @@ export default {
         this.id = id;
     },
     mounted() {
-        console.log('baseUrl', this.baseUrl)
+        // console.log('baseUrl', this.baseUrl)
         this.goodsImg = this.goodItemDetail.img;
     },
     methods: {

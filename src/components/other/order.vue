@@ -52,7 +52,7 @@ export default {
       this.$router.push('/')
     },
     clipboardSuccessHandler({value, event}) {
-      console.log('success', value);
+      // console.log('success', value);
       this.$message.success("已复制");
     }
   },
@@ -60,7 +60,7 @@ export default {
     // 若订单失效
     let nowTime = new Date().getTime();
     let deadLine = this.deadLine;
-    console.log(nowTime, deadLine, deadLine < nowTime)
+    // console.log(nowTime, deadLine, deadLine < nowTime)
     if (deadLine < nowTime) {
       this.onFinish();
     }

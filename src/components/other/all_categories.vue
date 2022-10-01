@@ -24,10 +24,10 @@
                              @click="checkProduct(item)"/>
                         <h2 class="product_name">{{ item.goodsName }}</h2>
                         <!--            <p class="product_parameter">{{index.describe}}</p>-->
-                        <div class="price_addcar" v-if="getCurrentMenu.description !== 'Flea' && getCurrentMenu.description !== 'Grid'">
-                            <p class="product_price">฿&nbsp;{{ item.price }}</p>
-                            <span class="addCar" @click="submit(item)"></span>
-                        </div>
+<!--                        <div class="price_addcar" v-if="getCurrentMenu.description !== 'Flea' && getCurrentMenu.description !== 'Grid'">-->
+<!--                            <p class="product_price">฿&nbsp;{{ item.price }}</p>-->
+<!--                            <span class="addCar" @click="submit(item)"></span>-->
+<!--                        </div>-->
                     </div>
                 </div>
                 <div class="paging">
@@ -58,7 +58,7 @@ export default {
     mounted() {
         // this.getProDate();
         // this.initGetClassesPage();
-        console.log('currentMenu',this.$store.state.currentMenu)
+        // console.log('currentMenu',this.$store.state.currentMenu)
     },
     computed: {
         ...mapGetters([
@@ -125,7 +125,7 @@ export default {
         // 查看详情
         checkProduct(item) {
             this.$store.dispatch('setGoodItem', item).then(() => {
-                console.log('this.$store.state.currentClass.classDescribe+\'-detail\' ', this.$store.state.currentClass.classDescribe + '-detail')
+
                 this.$router.push({
                     name: this.$store.state.currentClass.classDescribe + '-detail' || 'Product_details',
                     params: {id: item.goodId}
@@ -139,7 +139,7 @@ export default {
                 paras = Object.assign({}, {
                     classId: item.classId.toString()
                 }, this.$store.state.pageConfig)
-                console.log('selectClass', paras)
+                // console.log('selectClass', paras)
                 this.$store.dispatch('getGoodByClass', paras)
                 this.$store.dispatch('toggleCurrentClassItem', item)
             })
@@ -150,7 +150,7 @@ export default {
                 pageSize,
                 pageNumber: current
             })
-            console.log('current', current)
+            // console.log('current', current)
             let paras = Object.assign({}, {
                 classId: this.$store.state.currentClass.classId.toString()
             }, this.$store.state.pageConfig)
@@ -164,6 +164,7 @@ export default {
 .content {
     width: 100%;
     border-top: 1px solid #dfdada;
+    min-height: calc(100vh - 380px);
 
     .categories {
         width: 1200px;
@@ -239,17 +240,18 @@ export default {
                     position: relative;
                     margin-right: 6px;
 
-                    &:hover {
-                        z-index: 2;
-                        box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .25);
-                        transition: all .2s ease-in-out;
-                        //border: 1px solid #c69d6b;
-                    }
+
 
                     .product_img {
                         width: 190px;
                         height: 190px;
                         border-radius: 10px;
+                        &:hover {
+                            z-index: 2;
+                            box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .25);
+                            transition: all .2s ease-in-out;
+                            border: 1px solid #c69d6b;
+                        }
                     }
 
                     .product_name {

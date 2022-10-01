@@ -194,7 +194,7 @@ export default {
     //全选
     allCheck() {
       this.checkAll = !this.checkAll;
-      console.log("isCheck", this.checkAll)
+      // console.log("isCheck", this.checkAll)
       this.$store.commit('ckdAll', this.checkAll)
     },
 
@@ -207,7 +207,7 @@ export default {
         return
       }
       createGoodsOrder({bills: this.checkCarParas}).then(resp => {
-        console.log('resp', resp);
+        // console.log('resp', resp);
         this.$store.commit('setCar', []) //清空购物车
         this.$store.commit('setOrder', resp.data)
         // console.log('resp', resp);

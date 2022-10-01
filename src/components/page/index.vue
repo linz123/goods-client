@@ -96,7 +96,7 @@ export default {
 
   },
   mounted() {
-    console.log('recommendList1111', this.recommendList)
+    // console.log('recommendList1111', this.recommendList)
   },
   created() {
     this.getRecommend()
@@ -156,7 +156,7 @@ export default {
         pageNumber: 1,
       })
         .then(res => {
-          console.log(res);
+          // console.log(res);
         })
         .catch(err => {
           console.log(err);

@@ -191,7 +191,7 @@ const mutations = {
         state.car.forEach(item => {
             if (item.good.goodId === goodId) {
                 item.check = !item.check
-                console.log('item', item)
+                // console.log('item', item)
             }
         })
     },
@@ -199,15 +199,15 @@ const mutations = {
         state.car.forEach(item => {
             item.check = isCheck
         })
-        console.log('ckdAll', state.car)
+        // console.log('ckdAll', state.car)
     }
     , toggleMenu(state, menu) {
         state.currentMenu = menu;
-        console.log('toggleMenu', this.state.currentMenu)
+        // console.log('toggleMenu', this.state.currentMenu)
     }
     , toggleClass(state, classItem) {
         state.currentClass = classItem;
-        console.log('toggleClass', this.state.currentClass)
+        // console.log('toggleClass', this.state.currentClass)
     },
     reInitPageConfig(state) {
         state.pageConfig = {
@@ -216,14 +216,14 @@ const mutations = {
         }
     },
     setGoodData(state, goodData) {
-        console.log('goodData', goodData)
+        // console.log('goodData', goodData)
         state.currentGoodData = goodData;
     },
     setPageConfig(state, data) {
         Object.assign(state.pageConfig, data)
     },
     setGoodItemDetail(state, data) {
-        console.log('xiangqing', data);
+        // console.log('xiangqing', data);
         state.goodItemDetail = data;
     },
     setCar(state, carData) {
@@ -254,7 +254,7 @@ const actions = {
         //异步数据的获取
         _getMenu().then(res => {
             commit('getMenu', res.data)
-            console.log('vuex导航', res.data);
+            // ('vuex导航', res.data);
         })
     },
 
