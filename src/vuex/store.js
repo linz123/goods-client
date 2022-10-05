@@ -29,7 +29,8 @@ const state = {
     classIndex: 0,
     menuIndex: 0,
     allLabels: [],
-    hotCompany: []
+    hotCompany: [],
+    goodsLoading: false,
 
 }
 
@@ -142,6 +143,9 @@ const getters = {
     },
     getMenuIndex(state) {
         return state.menuIndex;
+    },
+    goodData(state) {
+        return state.currentGoodData ? state.currentGoodData : [];
     }
 }
 
@@ -253,6 +257,9 @@ const mutations = {
     },
     setMenuIndex(state, data) {
         state.menuIndex = data;
+    },
+    setGoodLoading(state, data) {
+        state.goodsLoading = data;
     }
 }
 
@@ -293,9 +300,12 @@ const actions = {
         commit('toggleClass', params.classes[0]) // 默认选择第一个分类
     },
     getGoodByClass({commit}, params) {
+        commit('setGoodLoading', true)
+        commit('setGoodData', [])
         _getClassesPage(params).then(resp => {
             commit('setGoodData', resp.data)
-        })
+            commit('setGoodLoading', false)
+        }).catch(() => commit('setGoodLoading', false))
     },
     getGoodByLabel({commit}, params) {
         _getGoodByLabel(params).then(resp => {

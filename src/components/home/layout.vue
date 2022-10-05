@@ -2,7 +2,9 @@
     <div class="home">
         <Header class="header"></Header>
         <div class="mian">
-            <router-view></router-view>
+            <a-spin size="large" class="loading" :spinning="this.$store.state.goodsLoading" >
+                <router-view></router-view>
+            </a-spin>
         </div>
         <Footer class="footer"></Footer>
     </div>
@@ -42,5 +44,14 @@ export default {
     width: 100%;
     height: 250px;
     background: #e6e6e6;
+}
+
+.loading {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 30px 50px;
+    margin: 20px 0;
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
     <div class="mian">
-        <Header></Header>
         <div class="content">
             <div class="content_box">
                 <div class="position">
@@ -39,7 +38,7 @@
                                 <!--                <button class="next" @click="nextDetails()">-->
                                 <!--                  <a-icon type="right"/>-->
                                 <!--                </button>-->
-                                <div v-for="item in goodItemDetail.img">
+                                <div v-for="item in goodItemDetail.thumbImg">
                                     <img :src="baseUrl+item.ImgRelativeUrl" style="height: 280px;width: 280px;"/>
                                 </div>
                             </a-carousel>
@@ -74,6 +73,10 @@
                     <h2>{{ goodItemDetail.title }}</h2>
                     <div class="content-item" v-for="describe in goodItemDetail.describe.split('，')">{{describe}}</div>
                 </div>
+
+                <div class="content-imgs">
+                    <img width="100%" v-for="imgItem in goodItemDetail.img"  v-bind:src="baseUrl+imgItem.ImgRelativeUrl" alt=""  style="margin-bottom: 10px" />
+                </div>
             </div>
 <!--            <div class="add-success" v-if="addProduct">-->
 <!--                <div class="add-box">-->
@@ -82,7 +85,6 @@
 <!--                </div>-->
 <!--            </div>-->
         </div>
-        <Footer></Footer>
     </div>
 </template>
 
@@ -136,7 +138,6 @@ export default {
             window.open(url)
         },
         prevDetails() {
-            alert(111)
             this.selectIndex--;
             if (this.selectIndex < 0) {
                 this.selectIndex = this.goodsImg.length - 1;
@@ -401,6 +402,7 @@ export default {
 
         .specifications {
             margin-top: 15px;
+            margin-bottom: 20px;
 
             h2 {
                 font-size: 18px;
@@ -423,6 +425,11 @@ export default {
                text-transform: capitalize;
                color: #666666;
            }
+        }
+        .content-imgs {
+            width: 1060px;
+            //height: 860px;
+
         }
     }
 

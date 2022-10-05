@@ -5,7 +5,7 @@
         </div>
         <div class="content">
             <div class="li-content">
-                <div class="li-item" v-for="item in this.$store.state.currentGoodData.list || []"
+                <div class="li-item" v-for="item in goodData.list "
                      :key="item.goodId">
                     <div class="li-item-left">
                         <div class="title">
@@ -29,9 +29,9 @@
                 </div>
                 <div class="paging">
                     <a-pagination @change="onChange" :pageSize="pageConfig.pageSize" :current="pageConfig.pageNumber"
-                                  :total="this.$store.state.currentGoodData.total"/>
+                                  :total="goodData.total"/>
                 </div>
-                <a-result title="未能搜索相关商品" v-if="!this.$store.state.currentGoodData.total">
+                <a-result title="未能搜索相关商品" v-if="!goodData.total">
                 </a-result>
             </div>
             <div class="rank">
@@ -60,7 +60,8 @@ export default {
         ...mapGetters([
             'getLabelNameByIds',
             'pageConfig',
-            'getHotCompany'
+            'getHotCompany',
+            'goodData'
         ])
     },
     methods: {

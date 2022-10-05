@@ -4,7 +4,7 @@
             <ul class="menu_">
                 <template v-for="(item,index) in this.$store.state.menu">
                     <li class="menu_li " @click="selectMenu(index)" v-bind:class="{'menu-active':index === getMenuIndex}">
-                        <router-link  :to="`/home/${item.url}`" class="service">{{ item.name }}</router-link>
+                        <router-link   :to="`/home/${item.url}`" class="service">{{ item.name }}</router-link>
                     </li>
                 </template>
             </ul>
@@ -63,6 +63,9 @@ export default {
             list: null,
             value: ''
         }
+    },
+    created() {
+        this.$store.commit('setMenuIndex',0)
     },
     mounted() {
         this.getMenu();
@@ -177,6 +180,11 @@ export default {
     line-height: 50px;
     text-align: center;
     list-style: none;
+    a{
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .service {

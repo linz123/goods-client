@@ -30,6 +30,9 @@ export const getAllLabels = data => axios.post('/api/client/getAllLabels', data)
 // 获取热度招聘
 export const getCompanyHot = data => axios.post('/api/client/getRecruit', data);
 
+// 根据类别id 获取分类
+export const getClassById = data => axios.post('/api/client/getClassById', data);
+
 
 export const getShopCartData = () =>{
   let prdData = JSON.parse(localStorage.getItem('goodData')||[]);

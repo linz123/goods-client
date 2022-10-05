@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import {_getClassesPage} from "../../http/apiProduct";
+import {_getClassesPage, getClassById} from "../../http/apiProduct";
 import {message} from "ant-design-vue";
 import {mapGetters} from "vuex";
 
@@ -125,9 +125,18 @@ export default {
         checkProduct(item) {
             // 查看详情
             this.$store.dispatch('setGoodItem', item).then(() => {
-                this.$router.push({
-                    name: 'Flea-detail',
-                    params: {id: item.goodId}
+                getClassById({classId: parseInt(item.classId.slice(',')[0])}).then(
+                    resp => {
+                        this.$router.push({
+                            name: resp.data.classDescribe ? (resp.data.classDescribe + '-detail') : 'flea-detail',
+                            params: {id: item.goodId}
+                        })
+                    }
+                ).catch(() => {
+                    this.$router.push({
+                        name: 'Flea-detail',
+                        params: {id: item.goodId}
+                    })
                 })
             })
 

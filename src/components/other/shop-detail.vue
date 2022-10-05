@@ -17,24 +17,29 @@
 <!--                    {{ formatTime(goodItemDetail.updateTime) }} 更新-->
 <!--                </div>-->
                 <div class="line"/>
-                <div class="content-imgs">
-                    <a-carousel arrows>
-                        <div
-                            slot="prevArrow"
-                            slot-scope="props"
-                            class="custom-slick-arrow"
-                            style="left: 10px;zIndex: 1"
-                        >
-                            <a-icon type="left-circle" />
-                        </div>
-                        <div slot="nextArrow" slot-scope="props" class="custom-slick-arrow" style="right: 10px">
-                            <a-icon type="right-circle" />
-                        </div>
-<!--                        <div class="slide"  v-for="imgItem in goodItemDetail.img">-->
-                            <img width="100%" v-for="imgItem in goodItemDetail.img"  v-bind:src="baseUrl+imgItem.ImgRelativeUrl" alt="" />
+<!--                <div class="content-imgs">-->
+<!--                    <a-carousel arrows>-->
+<!--                        <div-->
+<!--                            slot="prevArrow"-->
+<!--                            slot-scope="props"-->
+<!--                            class="custom-slick-arrow"-->
+<!--                            style="left: 10px;zIndex: 1"-->
+<!--                        >-->
+<!--                            <a-icon type="left-circle" />-->
 <!--                        </div>-->
-                    </a-carousel>
+<!--                        <div slot="nextArrow" slot-scope="props" class="custom-slick-arrow" style="right: 10px">-->
+<!--                            <a-icon type="right-circle" />-->
+<!--                        </div>-->
+<!--&lt;!&ndash;                        <div class="slide"  v-for="imgItem in goodItemDetail.img">&ndash;&gt;-->
+<!--                            <img width="100%" v-for="imgItem in goodItemDetail.img"  v-bind:src="baseUrl+imgItem.ImgRelativeUrl" alt="" />-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                    </a-carousel>-->
+<!--                </div>-->
+
+                <div class="content-imgs">
+                        <img width="100%" v-for="imgItem in goodItemDetail.img"  v-bind:src="baseUrl+imgItem.ImgRelativeUrl" alt=""  style="margin-bottom: 10px" />
                 </div>
+
             </div>
 
 

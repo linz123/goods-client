@@ -17,24 +17,25 @@
             </div>
             <div class="content-box">
                 <div class="product">
-                    <div class="product_list" v-for="item in this.$store.state.currentGoodData.list || []"
+                    <div class="product_list" v-for="item in goodData.list || []"
                          :key="item.goodId"
                     >
-                        <img class="product_img" v-bind:src="baseUrl+item.thumbImg[0].ImgRelativeUrl" alt=""
+                        <img class="product_img" v-if="item.thumbImg[0]"
+                             v-bind:src="baseUrl+item.thumbImg[0].ImgRelativeUrl" alt=""
                              @click="checkProduct(item)"/>
                         <h2 class="product_name">{{ item.goodsName }}</h2>
                         <!--            <p class="product_parameter">{{index.describe}}</p>-->
-<!--                        <div class="price_addcar" v-if="getCurrentMenu.description !== 'Flea' && getCurrentMenu.description !== 'Grid'">-->
-<!--                            <p class="product_price">฿&nbsp;{{ item.price }}</p>-->
-<!--                            <span class="addCar" @click="submit(item)"></span>-->
-<!--                        </div>-->
+                        <!--                        <div class="price_addcar" v-if="getCurrentMenu.description !== 'Flea' && getCurrentMenu.description !== 'Grid'">-->
+                        <!--                            <p class="product_price">฿&nbsp;{{ item.price }}</p>-->
+                        <!--                            <span class="addCar" @click="submit(item)"></span>-->
+                        <!--                        </div>-->
                     </div>
                 </div>
                 <div class="paging">
                     <a-pagination @change="onChange" :pageSize="pageConfig.pageSize" :current="pageConfig.pageNumber"
-                                  :total="this.$store.state.currentGoodData.total"/>
+                                  :total="goodData.total"/>
                 </div>
-                <a-result title="未能搜索相关商品" v-if="!this.$store.state.currentGoodData.total">
+                <a-result title="未能搜索到相关商品" v-if="!goodData.total">
                 </a-result>
             </div>
         </div>
@@ -51,8 +52,7 @@ export default {
 
     data() {
         return {
-            productList: [],
-            goodData: []
+
         }
     },
     mounted() {
@@ -66,7 +66,8 @@ export default {
             'pageConfig',
             'getClassIndex',
             'baseUrl',
-            'getCurrentMenu'
+            'getCurrentMenu',
+            'goodData'
         ])
     },
     methods: {
@@ -125,9 +126,8 @@ export default {
         // 查看详情
         checkProduct(item) {
             this.$store.dispatch('setGoodItem', item).then(() => {
-
                 this.$router.push({
-                    name: this.$store.state.currentClass.classDescribe + '-detail' || 'Product_details',
+                    name: this.$store.state.currentClass.classDescribe ? this.$store.state.currentClass.classDescribe + '-detail' : 'flea-detail',
                     params: {id: item.goodId}
                 })
             })
@@ -241,11 +241,11 @@ export default {
                     margin-right: 6px;
 
 
-
                     .product_img {
                         width: 190px;
                         height: 190px;
                         border-radius: 10px;
+
                         &:hover {
                             z-index: 2;
                             box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .25);
