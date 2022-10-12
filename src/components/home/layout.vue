@@ -54,4 +54,7 @@ export default {
     padding: 30px 50px;
     margin: 20px 0;
 }
+.good-button{
+    cursor: pointer !important;
+}
 </style>

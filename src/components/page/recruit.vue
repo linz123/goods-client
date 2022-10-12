@@ -5,7 +5,7 @@
         </div>
         <div class="content">
             <div class="li-content">
-                <div class="li-item" v-for="item in goodData.list "
+                <div class="li-item" @click="checkProduct(item)" v-for="item in goodData.list "
                      :key="item.goodId">
                     <div class="li-item-left">
                         <div class="title">
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="li-item-right">
-                        <div class="detail" @click="checkProduct(item)">查看详情</div>
+                        <div class="detail good-button" @click="checkProduct(item)">查看详情</div>
                         <div class="time">{{ formatTime(item.updateTime) }}</div>
                     </div>
                 </div>

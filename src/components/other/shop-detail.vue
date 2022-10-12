@@ -4,7 +4,7 @@
             <div class="content-left">
                 <div class="title">{{ goodItemDetail.goodsName }}</div>
                 <div class="number">编号: {{ goodItemDetail.serialNumber }}</div>
-                <div class="link" @click="jumpLink(goodItemDetail.link)">联系商家</div>
+                <div class="link good-detail good-detail" @click="jumpLink(goodItemDetail.link)">联系商家</div>
                 <div class="remark">
                     <div v-for="welfare in mapWelfare(goodItemDetail)" :key="welfare">{{ welfare }}</div>
                 </div>

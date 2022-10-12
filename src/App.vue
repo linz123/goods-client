@@ -34,4 +34,7 @@ export default {
 .mian{
   width: 100%;
 }
+.good-button{
+    cursor: pointer !important;
+}
 </style>

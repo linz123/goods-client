@@ -13,6 +13,7 @@
                         {{labelName}}
                     </div>
                 </div>
+                <div class="link good-button" @click="jumpLink(goodItemDetail.link)">立即应聘</div>
                 <div class="time">
                     {{formatTime(goodItemDetail.updateTime)}} 更新
                 </div>
@@ -22,9 +23,12 @@
                     <div class="content-item" v-for="describe in goodItemDetail.describe.split('，')">{{describe}}</div>
 <!--                    <div class="content-item">数名 大学计算机专业毕业 者优先 （男女不限 ） 懂Wps公式 函数 头脑机灵 反应快，思路清晰</div>-->
                 </div>
+                <div class="content-imgs">
+                    <img width="100%" v-for="imgItem in goodItemDetail.img"  v-bind:src="baseUrl+imgItem.ImgRelativeUrl" alt=""  style="margin-bottom: 10px" />
+                </div>
             </div>
             <div class="content-right">
-                <img class="img"  v-bind:src="goodItemDetail.thumbImg && goodItemDetail.thumbImg[0] && baseUrl+ goodItemDetail.thumbImg[0].ImgRelativeUrl" alt="" />
+                <img class="img"  v-bind:src="goodItemDetail.thumbImg && goodItemDetail.thumbImg[2] && baseUrl+ goodItemDetail.thumbImg[2].ImgRelativeUrl" alt="" />
                 <h5>{{goodItemDetail.title}}</h5>
                 <div class="items">
                     <div class="item" v-for="remark in goodItemDetail.remark.split('，')">{{remark}}</div>
@@ -54,6 +58,10 @@ export default {
         },
         formatTime(timeString){
             return moment(timeString).format('YYYY-MM-DD');
+        },
+        jumpLink(telegramId){
+            let url = telegramId.indexOf('http') > -1 ? item.merchant_id : 'https://t.me/' + telegramId.slice(1);
+            window.open(url)
         }
     }
 
@@ -130,8 +138,7 @@ export default {
                 div {
                     //font-size: 14px;
                     padding: 0 10px 0 10px;
-                    border-right: 1px solid #999999;
-                    color: #DCDCDC;
+                    border-right: 1px solid #dcdcdc;
                     font-size: 14px;
                 }
 
@@ -145,7 +152,7 @@ export default {
             }
 
             .labels {
-                height: 50px;
+                //height: 50px;
                 color: #999999;
                 font-size: 14px;
                 display: flex;
@@ -159,6 +166,22 @@ export default {
                     border-radius: 10px;
                     text-align: center;
                 }
+            }
+
+            .link {
+                width: 172px;
+                height: 44px;
+                background: #C39762;
+                border: 1px solid #C39762;
+                border-radius: 10px;
+                font-family: 'PingFang SC';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 18px;
+                line-height: 44px;
+                color: #FFFFFF;
+                text-align: center;
+                margin-bottom: 15px;
             }
 
             .time {
@@ -198,6 +221,10 @@ export default {
                     color: #666666;
                     //min-height: 30px;
                 }
+            }
+            .content-imgs {
+                //width: 1060px;
+                //height: 860px;
             }
         }
 

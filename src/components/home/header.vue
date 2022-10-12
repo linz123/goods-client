@@ -30,13 +30,14 @@
                 <!--          <div class="cart">-->
 
                 <!--          </div>-->
-
-                <div class="line_service" @click="onlineService()">
+                <div class="line_service good-button" @click="jumpLink('@aTomcatbot')">
+                    <a-avatar icon="robot" class="icon_" shape="square">
+                    </a-avatar>
+                </div>
+                <div class="line_service good-button"  @click="jumpLink('@aide_uTbao')">
                     <a-avatar icon="user" class="icon_" shape="square">
                     </a-avatar>
                 </div>
-
-
             </div>
 
         </div>
@@ -140,6 +141,10 @@ export default {
         },
         redirectCar() {
             this.getOrder.length > 0 ? this.$router.push('/order') : this.$router.push('/shopping-cart');
+        },
+        jumpLink(telegramId){
+            let url = telegramId.indexOf('http') > -1 ? item.merchant_id : 'https://t.me/' + telegramId.slice(1);
+            window.open(url)
         }
 
     }
@@ -243,7 +248,7 @@ input {
 }
 
 .search-right {
-    width: 150px;
+    width: 100px;
     height: 34px;
     display: flex;
     align-content: center;
