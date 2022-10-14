@@ -181,10 +181,11 @@ export default {
 }
 .menu_li {
     font-size: 16px;
-    width: 80px;
+    //width: 80px;
     line-height: 50px;
     text-align: center;
     list-style: none;
+    padding: 0 20px 0 20px;
     a{
         display: block;
         width: 100%;
