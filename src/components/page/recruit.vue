@@ -178,7 +178,7 @@ export default {
                         div {
                             //font-size: 14px;
                             padding: 0 10px 0 10px;
-                            border-right: 1px solid #b3b3b3;
+                            border-right: 1px solid #DCDCDC;
                             color: #DCDCDC;
                             font-size: 14px;
                         }
@@ -190,6 +190,9 @@ export default {
 
                         div:last-child {
                             border: none;
+                        }
+                        .welfare {
+                            color: #999999;
                         }
                     }
 

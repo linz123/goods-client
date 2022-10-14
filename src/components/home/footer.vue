@@ -44,7 +44,7 @@
             <!--      </div>-->
         </div>
         <div class="footer-suggest">
-            © 2022 泰易购. 版权所有。
+            © 2022 泰易网. 版权所有。
         </div>
     </div>
 

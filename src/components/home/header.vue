@@ -31,7 +31,7 @@
 
                 <!--          </div>-->
                 <div class="line_service good-button" @click="jumpLink('@aTomcatbot')">
-                    <a-avatar icon="robot" class="icon_" shape="square">
+                    <a-avatar icon="robot" class="icon_" shape="square" style="color:#bc996a">
                     </a-avatar>
                 </div>
                 <div class="line_service good-button"  @click="jumpLink('@aide_uTbao')">
@@ -258,7 +258,7 @@ input {
         color: #C39762;
         background: #ffffff;
         border-radius: 5px;
-        border: 1px solid #ccc;
+        border: 1px solid #bc996a;
     }
 }
 
@@ -266,6 +266,7 @@ input {
     width: 35px;
     height: 34px;
     text-align: center;
+    color: #bc996a;
     /*border: 1px solid #efbf7f;*/
     /*border-radius: 3px;*/
     /*background: url("../../assets/img/home_img/s-icon.png") no-repeat;*/

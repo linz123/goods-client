@@ -93,6 +93,18 @@ export default new Router({
                     name: 'Flea',
                     component: () => import('@/components/page/market.vue'),
                 },
+                //逍遥泰国
+                {
+                    path: 'thai',
+                    name: 'Thai',
+                    component: () => import('@/components/page/market.vue'),
+                },
+                // 泰易直营
+                {
+                    path: 'shopping',
+                    name: 'Shopping',
+                    component: () => import('@/components/page/market.vue'),
+                },
                 {
                     path: '/order',
                     name: 'Order',
