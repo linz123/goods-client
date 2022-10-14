@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="content-imgs">
-                    <img width="100%" v-for="imgItem in goodItemDetail.img"  v-bind:src="baseUrl+imgItem.ImgRelativeUrl" alt=""  style="margin-bottom: 10px" />
+                    <img width="100%" v-if="goodItemDetail.img" v-for="imgItem in goodItemDetail.img"  v-bind:src="baseUrl+imgItem.ImgRelativeUrl" alt=""  style="margin-bottom: 10px" />
                 </div>
             </div>
 <!--            <div class="add-success" v-if="addProduct">-->
@@ -166,7 +166,7 @@ export default {
             return bol ? this.goodNumber++ : this.goodNumber > 1 ? this.goodNumber-- : '';
         },
         getImgUrl(i) {
-            return this.baseUrl + this.goodItemDetail.img[i].ImgRelativeUrl;
+            return this.baseUrl + this.goodItemDetail.thumbImg[i].ImgRelativeUrl;
         },
 
     },
