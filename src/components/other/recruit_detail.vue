@@ -20,8 +20,10 @@
                 <div class="line"/>
                 <div class="content-items">
                     <h5>{{goodItemDetail.goodsName}}</h5>
-                    <div class="content-item" v-for="describe in goodItemDetail.describe.split('，')">{{describe}}</div>
+<!--                    <div class="content-item" v-for="describe in goodItemDetail.describe.split('，')">{{describe}}</div>-->
 <!--                    <div class="content-item">数名 大学计算机专业毕业 者优先 （男女不限 ） 懂Wps公式 函数 头脑机灵 反应快，思路清晰</div>-->
+
+                    <div class="content-item" v-html="goodItemDetail.describe"></div>
                 </div>
                 <div class="content-imgs">
                     <img width="100%" v-for="imgItem in goodItemDetail.img"  v-bind:src="baseUrl+imgItem.ImgRelativeUrl" alt=""  style="margin-bottom: 10px" />
