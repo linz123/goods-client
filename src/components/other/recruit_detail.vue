@@ -2,38 +2,41 @@
     <div class="wrapper">
         <div class="content">
             <div class="content-left">
-                <div class="title">{{goodItemDetail.goodsName}}</div>
-                <div class="number">编号: {{goodItemDetail.serialNumber}}</div>
-                <div class="price">฿ {{goodItemDetail.pay}}</div>
+                <div class="title">{{ goodItemDetail.goodsName }}</div>
+                <div class="number">编号: {{ goodItemDetail.serialNumber }}</div>
+                <div class="price">{{ goodItemDetail.pay }}</div>
                 <div class="remark">
-                    <div v-for="welfare in mapWelfare(goodItemDetail)" :key="welfare">{{welfare}}</div>
+                    <div v-for="welfare in mapWelfare(goodItemDetail)" :key="welfare">{{ welfare }}</div>
                 </div>
-                <div class="labels" >
-                    <div class="label-item"  v-for="labelName in getLabelNameByIds(goodItemDetail.labelId)">
-                        {{labelName}}
+                <div class="labels">
+                    <div class="label-item" v-for="labelName in getLabelNameByIds(goodItemDetail.labelId)">
+                        {{ labelName }}
                     </div>
                 </div>
                 <div class="link good-button" @click="jumpLink(goodItemDetail.link)">立即应聘</div>
                 <div class="time">
-                    {{formatTime(goodItemDetail.updateTime)}} 更新
+                    {{ formatTime(goodItemDetail.updateTime) }} 更新
                 </div>
                 <div class="line"/>
                 <div class="content-items">
-                    <h5>{{goodItemDetail.goodsName}}</h5>
-<!--                    <div class="content-item" v-for="describe in goodItemDetail.describe.split('，')">{{describe}}</div>-->
-<!--                    <div class="content-item">数名 大学计算机专业毕业 者优先 （男女不限 ） 懂Wps公式 函数 头脑机灵 反应快，思路清晰</div>-->
+                    <h5>{{ goodItemDetail.goodsName }}</h5>
+                    <!--                    <div class="content-item" v-for="describe in goodItemDetail.describe.split('，')">{{describe}}</div>-->
+                    <!--                    <div class="content-item">数名 大学计算机专业毕业 者优先 （男女不限 ） 懂Wps公式 函数 头脑机灵 反应快，思路清晰</div>-->
 
                     <div class="content-item" v-html="goodItemDetail.describe"></div>
                 </div>
                 <div class="content-imgs">
-                    <img width="100%" v-for="imgItem in goodItemDetail.img"  v-bind:src="baseUrl+imgItem.ImgRelativeUrl" alt=""  style="margin-bottom: 10px" />
+                    <img width="100%" v-for="imgItem in goodItemDetail.img" v-bind:src="baseUrl+imgItem.ImgRelativeUrl"
+                         alt="" style="margin-bottom: 10px"/>
                 </div>
             </div>
             <div class="content-right">
-                <img class="img"  v-bind:src="goodItemDetail.thumbImg && goodItemDetail.thumbImg[2] && baseUrl+ goodItemDetail.thumbImg[2].ImgRelativeUrl" alt="" />
-                <h5>{{goodItemDetail.title}}</h5>
+                <img class="img"
+                     v-bind:src="goodItemDetail.thumbImg && goodItemDetail.thumbImg[2] && baseUrl+ goodItemDetail.thumbImg[2].ImgRelativeUrl"
+                     alt=""/>
+                <h5>{{ goodItemDetail.title }}</h5>
                 <div class="items">
-                    <div class="item" v-for="remark in goodItemDetail.remark.split('，')">{{remark}}</div>
+                    <div class="item" v-for="remark in goodItemDetail.remark.split('，')">{{ remark }}</div>
                 </div>
             </div>
 
@@ -44,24 +47,25 @@
 
 <script>
 import {mapGetters} from "vuex";
+
 const moment = require('moment');
 export default {
     name: "recruit_detail",
-    computed:{
+    computed: {
         ...mapGetters([
             'goodItemDetail',
             'getLabelNameByIds',
             'baseUrl'
         ])
     },
-    methods:{
-        mapWelfare(item){
+    methods: {
+        mapWelfare(item) {
             return item.welfare.split('，')
         },
-        formatTime(timeString){
+        formatTime(timeString) {
             return moment(timeString).format('YYYY-MM-DD');
         },
-        jumpLink(telegramId){
+        jumpLink(telegramId) {
             let url = telegramId.indexOf('http') > -1 ? item.merchant_id : 'https://t.me/' + telegramId.slice(1);
             window.open(url)
         }
@@ -77,6 +81,7 @@ export default {
     background: #F3F3F3;
     display: flex;
     justify-content: center;
+
     .content {
         display: flex;
         justify-content: space-between;
@@ -145,7 +150,7 @@ export default {
                 }
 
                 div:first-child {
-                padding-left: 0;
+                    padding-left: 0;
                 }
 
                 div:last-child {
@@ -221,9 +226,12 @@ export default {
                     line-height: 20px;
                     text-transform: capitalize;
                     color: #666666;
+                    text-align: justify;
+                    width: 800px;
                     //min-height: 30px;
                 }
             }
+
             .content-imgs {
                 //width: 1060px;
                 //height: 860px;
@@ -236,6 +244,7 @@ export default {
             background: #FFFFFF;
             border-radius: 10px;
             text-align: left;
+
             .img {
                 width: 210px;
                 height: 100px;
