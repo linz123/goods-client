@@ -13,31 +13,32 @@
                         {{ labelName }}
                     </div>
                 </div>
-<!--                <div class="time">-->
-<!--                    {{ formatTime(goodItemDetail.updateTime) }} 更新-->
-<!--                </div>-->
+                <!--                <div class="time">-->
+                <!--                    {{ formatTime(goodItemDetail.updateTime) }} 更新-->
+                <!--                </div>-->
                 <div class="line"/>
-<!--                <div class="content-imgs">-->
-<!--                    <a-carousel arrows>-->
-<!--                        <div-->
-<!--                            slot="prevArrow"-->
-<!--                            slot-scope="props"-->
-<!--                            class="custom-slick-arrow"-->
-<!--                            style="left: 10px;zIndex: 1"-->
-<!--                        >-->
-<!--                            <a-icon type="left-circle" />-->
-<!--                        </div>-->
-<!--                        <div slot="nextArrow" slot-scope="props" class="custom-slick-arrow" style="right: 10px">-->
-<!--                            <a-icon type="right-circle" />-->
-<!--                        </div>-->
-<!--&lt;!&ndash;                        <div class="slide"  v-for="imgItem in goodItemDetail.img">&ndash;&gt;-->
-<!--                            <img width="100%" v-for="imgItem in goodItemDetail.img"  v-bind:src="baseUrl+imgItem.ImgRelativeUrl" alt="" />-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--                    </a-carousel>-->
-<!--                </div>-->
+                <!--                <div class="content-imgs">-->
+                <!--                    <a-carousel arrows>-->
+                <!--                        <div-->
+                <!--                            slot="prevArrow"-->
+                <!--                            slot-scope="props"-->
+                <!--                            class="custom-slick-arrow"-->
+                <!--                            style="left: 10px;zIndex: 1"-->
+                <!--                        >-->
+                <!--                            <a-icon type="left-circle" />-->
+                <!--                        </div>-->
+                <!--                        <div slot="nextArrow" slot-scope="props" class="custom-slick-arrow" style="right: 10px">-->
+                <!--                            <a-icon type="right-circle" />-->
+                <!--                        </div>-->
+                <!--&lt;!&ndash;                        <div class="slide"  v-for="imgItem in goodItemDetail.img">&ndash;&gt;-->
+                <!--                            <img width="100%" v-for="imgItem in goodItemDetail.img"  v-bind:src="baseUrl+imgItem.ImgRelativeUrl" alt="" />-->
+                <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+                <!--                    </a-carousel>-->
+                <!--                </div>-->
 
                 <div class="content-imgs">
-                        <img width="100%" v-for="imgItem in goodItemDetail.img"  v-bind:src="baseUrl+imgItem.ImgRelativeUrl" alt=""  style="margin-bottom: 10px" />
+                    <img width="100%" v-for="imgItem in goodItemDetail.img" v-bind:src="baseUrl+imgItem.ImgRelativeUrl"
+                         alt="" style="margin-bottom: 10px"/>
                 </div>
 
             </div>
@@ -68,7 +69,7 @@ export default {
         formatTime(timeString) {
             return moment(timeString).format('YYYY-MM-DD');
         },
-        jumpLink(telegramId){
+        jumpLink(telegramId) {
             let url = telegramId.indexOf('http') > -1 ? item.merchant_id : 'https://t.me/' + telegramId.slice(1);
             window.open(url)
         }
@@ -170,6 +171,7 @@ export default {
                 color: #999999;
                 font-size: 14px;
                 display: flex;
+                flex-wrap: wrap;
                 margin-bottom: 30px;
 
                 .label-item {
@@ -204,7 +206,7 @@ export default {
             .content-imgs {
                 width: 1060px;
                 //height: 860px;
-                .ant-carousel >>> .slick-slide {
+                .ant-carousel > > > .slick-slide {
                     text-align: center;
                     height: 160px;
                     line-height: 160px;
@@ -212,7 +214,7 @@ export default {
                     overflow: hidden;
                 }
 
-                .ant-carousel >>> .custom-slick-arrow {
+                .ant-carousel > > > .custom-slick-arrow {
                     width: 50px;
                     height: 50px;
                     font-size: 50px;
@@ -220,20 +222,23 @@ export default {
                     background-color: rgba(31, 45, 61, 0.11);
                     opacity: 0.3;
                 }
-                .ant-carousel >>> .custom-slick-arrow:before {
+
+                .ant-carousel > > > .custom-slick-arrow:before {
                     display: none;
                 }
-                .ant-carousel >>> .custom-slick-arrow:hover {
+
+                .ant-carousel > > > .custom-slick-arrow:hover {
                     opacity: 0.5;
                 }
-                .ant-carousel >>> .slick-slide{
+
+                .ant-carousel > > > .slick-slide {
                     //min-height: 860px;、
                     height: 100%;
                     line-height: normal;
                     background: none;
                 }
 
-                .ant-carousel >>> .slick-slide h3 {
+                .ant-carousel > > > .slick-slide h3 {
                     color: #fff;
                 }
             }
