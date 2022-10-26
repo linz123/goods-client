@@ -71,7 +71,9 @@
 
                 <div class="specifications" v-if="goodItemDetail">
                     <h2>{{ goodItemDetail.title }}</h2>
-                    <div class="content-item" v-for="describe in goodItemDetail.describe.split('，')">{{describe}}</div>
+<!--                    <div class="content-item" v-for="describe in goodItemDetail.describe.split('，')">{{describe}}</div>-->
+
+                    <div class="content-item" v-html="goodItemDetail.describe"></div>
                 </div>
 
                 <div class="content-imgs">

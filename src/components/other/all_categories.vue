@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import {_getClassesPage, getDate} from "../../http/apiProduct";
+import {_getClassesPage, getClassById, getDate} from "../../http/apiProduct";
 import {message} from 'ant-design-vue';
 import {mapGetters} from 'vuex'
 
@@ -126,11 +126,41 @@ export default {
         // 查看详情
         checkProduct(item) {
             this.$store.dispatch('setGoodItem', item).then(() => {
+                // this.$router.push({
+                //     name: this.$store.state.currentClass.classDescribe ? this.$store.state.currentClass.classDescribe + '-detail' : 'flea-detail',
+                //     params: {id: item.goodId}
+                // })
+                getClassById({classId: parseInt(item.classId.slice(',')[0])}).then(
+                    resp => {
+                        this.$router.push({
+                            name: resp.data.classDescribe ? (resp.data.classDescribe + '-detail') : 'flea-detail',
+                            params: {id: item.goodId}
+                        })
+                    }
+                ).catch(() => {
+                    this.$router.push({
+                        name: 'Flea-detail',
+                        params: {id: item.goodId}
+                    })
+                })
+            })
+
+
+            getClassById({classId: parseInt(item.classId.slice(',')[0])}).then(
+                resp => {
+                    this.$router.push({
+                        name: resp.data.classDescribe ? (resp.data.classDescribe + '-detail') : 'flea-detail',
+                        params: {id: item.goodId}
+                    })
+                }
+            ).catch(() => {
                 this.$router.push({
-                    name: this.$store.state.currentClass.classDescribe ? this.$store.state.currentClass.classDescribe + '-detail' : 'flea-detail',
+                    name: 'Flea-detail',
                     params: {id: item.goodId}
                 })
             })
+
+
         },
         selectClass(item, index) {
             this.$store.commit('setClassIndex', index);
