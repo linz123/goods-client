@@ -41,6 +41,8 @@
                          alt="" style="margin-bottom: 10px"/>
                 </div>
 
+                <div class="content-item" v-html="goodItemDetail.describe"></div>
+
             </div>
 
 
@@ -241,6 +243,19 @@ export default {
                 .ant-carousel > > > .slick-slide h3 {
                     color: #fff;
                 }
+            }
+            .content-item{
+                width: 800px;
+                margin-top: 15px;
+                margin-bottom: 20px;
+                text-align: left;
+                font-family: 'PingFang SC';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 20px;
+                text-transform: capitalize;
+                color: #666666;
             }
         }
 
