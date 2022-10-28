@@ -35,13 +35,13 @@
                 <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
                 <!--                    </a-carousel>-->
                 <!--                </div>-->
-
+                <div class="content-item" v-html="goodItemDetail.describe"></div>
                 <div class="content-imgs">
                     <img width="100%" v-for="imgItem in goodItemDetail.img" v-bind:src="baseUrl+imgItem.ImgRelativeUrl"
                          alt="" style="margin-bottom: 10px"/>
                 </div>
 
-                <div class="content-item" v-html="goodItemDetail.describe"></div>
+
 
             </div>
 
@@ -245,7 +245,7 @@ export default {
                 }
             }
             .content-item{
-                width: 800px;
+                //width: 800px;
                 margin-top: 15px;
                 margin-bottom: 20px;
                 text-align: left;
