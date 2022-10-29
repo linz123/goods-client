@@ -56,7 +56,7 @@
                      @click="checkProduct(item)">
                     <img :src="baseUrl + (item.thumbImg[1]? item.thumbImg[1].ImgRelativeUrl:'') "/>
                     <h2>{{ item.goodsName }}</h2>
-                    <p>{{ item.price }}</p>
+<!--                    <p>{{ item.price }}</p>-->
                 </div>
             </div>
         </div>
