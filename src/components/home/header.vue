@@ -3,8 +3,9 @@
         <div class="menu">
             <ul class="menu_">
                 <template v-for="(item,index) in this.$store.state.menu">
-                    <li class="menu_li " @click="selectMenu(index)" v-bind:class="{'menu-active':index === getMenuIndex}">
-                        <router-link   :to="`/home/${item.url}`" class="service">{{ item.name }}</router-link>
+                    <li class="menu_li " @click="selectMenu(index)"
+                        v-bind:class="{'menu-active':index === getMenuIndex}">
+                        <router-link :to="`/home/${item.url}`" class="service">{{ item.name }}</router-link>
                     </li>
                 </template>
             </ul>
@@ -34,7 +35,7 @@
                     <a-avatar icon="robot" class="icon_" shape="square" style="color:#bc996a">
                     </a-avatar>
                 </div>
-                <div class="line_service good-button"  @click="jumpLink('@aide_uTbao')">
+                <div class="line_service good-button" @click="jumpLink('@aide_uTbao')">
                     <a-avatar icon="user" class="icon_" shape="square">
                     </a-avatar>
                 </div>
@@ -66,7 +67,7 @@ export default {
         }
     },
     created() {
-        this.$store.commit('setMenuIndex',0)
+        this.$store.commit('setMenuIndex', 0)
     },
     mounted() {
         this.getMenu();
@@ -85,7 +86,7 @@ export default {
             this.$store.dispatch('getLabels')
         },
         selectMenu(index) {
-            this.$store.commit('setMenuIndex',index)
+            this.$store.commit('setMenuIndex', index)
             this.$store.dispatch('toggleMenu', this.$store.state.menu[index])
             let paras = Object.assign({}, {
                     classId: this.$store.state.currentClass.classId.toString()
@@ -132,17 +133,18 @@ export default {
                 this.$message.warn('内容不能为空！');
                 return
             }
-            let relust = this.getAllLabels.find((item) => {
+            this.$store.commit('setKeyString', this.value);
+            let result = this.getAllLabels.find((item) => {
                 return item.labelName.indexOf(this.value) > -1
             })
             // console.log('searchResult', relust);
-            relust ? this.searchProductByLabel(relust) : this.searchProductByKeyString(this.value);
+            result ? this.searchProductByLabel(result) : this.searchProductByKeyString(this.value);
 
         },
         redirectCar() {
             this.getOrder.length > 0 ? this.$router.push('/order') : this.$router.push('/shopping-cart');
         },
-        jumpLink(telegramId){
+        jumpLink(telegramId) {
             let url = telegramId.indexOf('http') > -1 ? item.merchant_id : 'https://t.me/' + telegramId.slice(1);
             window.open(url)
         }
@@ -170,15 +172,18 @@ export default {
 
 
 }
+
 .menu-active {
     line-height: 20px;
     text-decoration-line: underline;
     text-transform: capitalize;
     color: #C39762 !important;
+
     a {
         color: #C39762;
     }
 }
+
 .menu_li {
     font-size: 16px;
     //width: 80px;
@@ -186,7 +191,8 @@ export default {
     text-align: center;
     list-style: none;
     padding: 0 20px 0 20px;
-    a{
+
+    a {
         display: block;
         width: 100%;
         height: 100%;

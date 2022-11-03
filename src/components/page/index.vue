@@ -125,7 +125,7 @@ export default {
         checkProduct(item) {
             // 查看详情
             this.$store.dispatch('setGoodItem', item).then(() => {
-                getClassById({classId: parseInt(item.classId.slice(',')[0])}).then(
+                getClassById({classId: parseInt(item.classId.split(',')[0])}).then(
                     resp => {
                         this.$router.push({
                             name: resp.data.classDescribe ? (resp.data.classDescribe + '-detail') : 'flea-detail',

@@ -31,6 +31,7 @@ const state = {
     allLabels: [],
     hotCompany: [],
     goodsLoading: false,
+    keyString: '',
 
 }
 
@@ -260,6 +261,9 @@ const mutations = {
     },
     setGoodLoading(state, data) {
         state.goodsLoading = data;
+    },
+    setKeyString(state, data) {
+        state.keyString = data;
     }
 }
 

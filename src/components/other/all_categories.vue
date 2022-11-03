@@ -51,9 +51,7 @@ export default {
     name: "all_categories",
 
     data() {
-        return {
-
-        }
+        return {}
     },
     mounted() {
         // this.getProDate();
@@ -67,27 +65,11 @@ export default {
             'getClassIndex',
             'baseUrl',
             'getCurrentMenu',
-            'goodData'
+            'goodData',
+            'getAllLabels',
         ])
     },
     methods: {
-
-        //获取数据
-        getProDate() {
-            getDate({
-                pageSize: 10,
-                pageNumber: 1,
-            })
-                .then(res => {
-                    if (!res) {
-                        return;
-                    }
-                    this.productList = res.data.data;
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        },
         //侧边栏分类
         initGetClassesPage() {
             // _getClassesPage({
@@ -130,7 +112,7 @@ export default {
                 //     name: this.$store.state.currentClass.classDescribe ? this.$store.state.currentClass.classDescribe + '-detail' : 'flea-detail',
                 //     params: {id: item.goodId}
                 // })
-                getClassById({classId: parseInt(item.classId.slice(',')[0])}).then(
+                getClassById({classId: parseInt(item.classId.split(',')[0])}).then(
                     resp => {
                         this.$router.push({
                             name: resp.data.classDescribe ? (resp.data.classDescribe + '-detail') : 'flea-detail',
@@ -144,22 +126,6 @@ export default {
                     })
                 })
             })
-
-
-            getClassById({classId: parseInt(item.classId.slice(',')[0])}).then(
-                resp => {
-                    this.$router.push({
-                        name: resp.data.classDescribe ? (resp.data.classDescribe + '-detail') : 'flea-detail',
-                        params: {id: item.goodId}
-                    })
-                }
-            ).catch(() => {
-                this.$router.push({
-                    name: 'Flea-detail',
-                    params: {id: item.goodId}
-                })
-            })
-
 
         },
         selectClass(item, index) {
@@ -180,12 +146,43 @@ export default {
                 pageSize,
                 pageNumber: current
             })
-            // console.log('current', current)
-            let paras = Object.assign({}, {
-                classId: this.$store.state.currentClass.classId.toString()
+            if (this.$store.state.currentGoodData.type) {
+                this.searchProduct();
+            } else {
+                // console.log('current', current)
+                let paras = Object.assign({}, {
+                    classId: this.$store.state.currentClass.classId.toString()
+                }, this.$store.state.pageConfig)
+                this.$store.dispatch('getGoodByClass', paras)
+            }
+        },
+
+        searchProductByLabel(item) {
+            let paras;
+            paras = Object.assign({}, {
+                labelId: item.labelId.toString()
             }, this.$store.state.pageConfig)
-            this.$store.dispatch('getGoodByClass', paras)
-        }
+            this.$store.dispatch('getGoodByLabel', paras)
+        },
+        searchProductByKeyString(item) {
+            let paras;
+            paras = Object.assign({}, {
+                value: item,
+            }, this.$store.state.pageConfig)
+            this.$store.dispatch('getGoodBySearch', paras)
+        },
+        searchProduct() {
+            if (this.$store.state.keyString === '') {
+                // this.$message.warn('内容不能为空！');
+                return
+            }
+            let relust = this.getAllLabels.find((item) => {
+                return item.labelName.indexOf(this.$store.state.keyString) > -1
+            })
+            // console.log('searchResult', relust);
+            relust ? this.searchProductByLabel(relust) : this.searchProductByKeyString(this.$store.state.keyString);
+
+        },
     }
 }
 </script>
