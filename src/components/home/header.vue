@@ -110,11 +110,14 @@ export default {
         onlineService() {
             alert('您好，正在为您联系客服。请稍等片刻！');
         },
-        searchProductByLabel(item) {
+        searchProductByLabel(item, isHotLabel) {
             // this.$router.push({
             //   name: 'Search',
             //   query: {id: name}
             // })
+            if(isHotLabel) {
+                this.$store.commit('setKeyString', item.labelName);
+            }
             this.$router.push('/home/market')
             this.$store.commit('setClassIndex', -1);
             let paras;
