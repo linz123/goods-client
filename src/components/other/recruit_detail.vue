@@ -172,6 +172,7 @@ export default {
                     background: #F3F3F3;
                     border-radius: 10px;
                     text-align: center;
+                    padding: 0 5px 0 5px;
                 }
             }
 

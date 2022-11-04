@@ -71,6 +71,14 @@ export default {
     },
     mounted() {
         this.getMenu();
+        // 回车绑定事件
+        document.onkeydown = e => {
+            let event = e || window.event;
+            if (event.keyCode === 13) {
+                this.searchProduct();
+            }
+        }
+
     },
     computed: {
         ...mapGetters([
@@ -324,5 +332,6 @@ input {
     line-height: 30px;
     font-size: 15px;
     list-style: none;
+    cursor: pointer;
 }
 </style>

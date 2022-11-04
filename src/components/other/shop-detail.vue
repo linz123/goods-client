@@ -42,7 +42,6 @@
                 </div>
 
 
-
             </div>
 
 
@@ -183,6 +182,7 @@ export default {
                     background: #F3F3F3;
                     border-radius: 10px;
                     text-align: center;
+                    padding: 0 5px 0 5px;
                 }
             }
 
@@ -244,7 +244,8 @@ export default {
                     color: #fff;
                 }
             }
-            .content-item{
+
+            .content-item {
                 //width: 800px;
                 margin-top: 15px;
                 margin-bottom: 20px;

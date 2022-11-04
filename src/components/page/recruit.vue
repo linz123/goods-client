@@ -209,6 +209,7 @@ export default {
                             margin-right: 10px;
                             background: #F3F3F3;
                             border-radius: 10px;
+                            padding: 0 5px 0 5px;
                         }
                     }
                 }
