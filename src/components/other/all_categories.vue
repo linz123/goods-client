@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import {_getClassesPage, getClassById, getDate} from "../../http/apiProduct";
+import {_getClassesPage, getBrowserInfo, getClassById, getDate} from "../../http/apiProduct";
 import {message} from 'ant-design-vue';
 import {mapGetters} from 'vuex'
 
@@ -126,6 +126,10 @@ export default {
                     })
                 })
             })
+            this.statics({
+                type: '详情',
+                typeContent: '类别' + this.$store.state.currentClass.className + '->' + item.goodsName
+            })
 
         },
         selectClass(item, index) {
@@ -138,6 +142,10 @@ export default {
                 // console.log('selectClass', paras)
                 this.$store.dispatch('getGoodByClass', paras)
                 this.$store.dispatch('toggleCurrentClassItem', item)
+            })
+            this.statics({
+                type: '切换分类',
+                typeContent: '分类->' + item.className
             })
         },
 
@@ -155,6 +163,10 @@ export default {
                 }, this.$store.state.pageConfig)
                 this.$store.dispatch('getGoodByClass', paras)
             }
+            this.statics({
+                type: '分页',
+                typeContent: '类别' + this.$store.state.currentClass.className + '->页数->' + current
+            })
         },
 
         searchProductByLabel(item) {
@@ -183,6 +195,14 @@ export default {
             relust ? this.searchProductByLabel(relust) : this.searchProductByKeyString(this.$store.state.keyString);
 
         },
+        statics(item) {
+            this.$store.dispatch('setAccessLog', {
+                browser: getBrowserInfo().browser,
+                clientType: 'pc',
+                type: item.type,
+                typeContent: item.typeContent
+            })
+        }
     }
 }
 </script>

@@ -7,7 +7,8 @@ import {
     _getMenu, _goodSearch,
     getAllLabels, getCompanyHot,
     getGoodByLabel,
-    getRecommend
+    getRecommend,
+    accessLog
 } from "../http/apiProduct";
 //管理响应
 Vue.use(Vuex);
@@ -348,6 +349,10 @@ const actions = {
             commit('setCompanyHot', resp.data);
         })
         return undefined;
+    },
+    setAccessLog({commit}, paras) {
+        accessLog(paras).then(resp => {
+        })
     }
 
 }

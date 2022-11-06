@@ -7,9 +7,9 @@ export const _getMenu = data => axios.post('/api/client/getTreeList', data)
 //获取全部分类
 export const _getClassesPage = data => axios.post('/api/client/getGoodBYClass', data);
 // 获取首页商品
-export const  getDate = data => axios.post('/api/client/goodList',data);
+export const getDate = data => axios.post('/api/client/goodList', data);
 // 获取首页推荐
-export const  getRecommendDate = data => axios.post('/api/client/getRecommendByType',data);
+export const getRecommendDate = data => axios.post('/api/client/getRecommendByType', data);
 
 // 获取商品详情
 export const getGoodsInfo = data => axios.post('/api/client/getGoodById', data);
@@ -33,11 +33,24 @@ export const getCompanyHot = data => axios.post('/api/client/getRecruit', data);
 // 根据类别id 获取分类
 export const getClassById = data => axios.post('/api/client/getClassById', data);
 
+// 统计数据
+export const accessLog = data => axios.post('/api/client/setAccessLog', data);
 
-export const getShopCartData = () =>{
-  let prdData = JSON.parse(localStorage.getItem('goodData')||[]);
-   return prdData;
+export const getShopCartData = () => {
+    let prdData = JSON.parse(localStorage.getItem('goodData') || []);
+    return prdData;
 }
+
+export const getBrowserInfo = () => {
+    const Sys = {};
+    const ua = navigator.userAgent.toLowerCase();
+    const re = /(msie|firefox|chrome|opera|version).*?([\d.]+)/;
+    const m = ua.match(re);
+    Sys.browser = m[1].replace(/version/, "'safari");
+    Sys.ver = m[2];
+    return Sys;
+}
+
 
 // export const _createGoodsOrder =(data, vm)=>{
 //   vm.$confirm('您的采购订单已提交至客服，查看订单可联系客服！', ()=>{

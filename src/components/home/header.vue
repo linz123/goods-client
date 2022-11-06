@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import {_getMenu, getShopCartData} from "../../http/apiProduct";
+import {_getMenu, getBrowserInfo, getShopCartData} from "../../http/apiProduct";
 import {mapGetters} from "vuex";
 
 export default {
@@ -94,6 +94,7 @@ export default {
             this.$store.dispatch('getLabels')
         },
         selectMenu(index) {
+
             this.$store.commit('setMenuIndex', index)
             this.$store.dispatch('toggleMenu', this.$store.state.menu[index])
             let paras = Object.assign({}, {
@@ -105,6 +106,10 @@ export default {
                 this.$store.dispatch('getGoodByClass', paras)
             }
             this.$store.commit('setClassIndex', 0);
+            this.statics({
+                type: '菜单',
+                typeContent: this.$store.state.menu[index].name
+            });
 
         },
         onlineService() {
@@ -115,8 +120,12 @@ export default {
             //   name: 'Search',
             //   query: {id: name}
             // })
-            if(isHotLabel) {
+            if (isHotLabel) {
                 this.$store.commit('setKeyString', item.labelName);
+                this.statics({
+                    type: '标签',
+                    typeContent: item.labelName
+                });
             }
             this.$router.push('/home/market')
             this.$store.commit('setClassIndex', -1);
@@ -150,6 +159,10 @@ export default {
             })
             // console.log('searchResult', relust);
             result ? this.searchProductByLabel(result) : this.searchProductByKeyString(this.value);
+            this.statics({
+                type: '搜索',
+                typeContent: '关键词->' + this.value
+            });
 
         },
         redirectCar() {
@@ -158,6 +171,14 @@ export default {
         jumpLink(telegramId) {
             let url = telegramId.indexOf('http') > -1 ? item.merchant_id : 'https://t.me/' + telegramId.slice(1);
             window.open(url)
+        },
+        statics(item) {
+            this.$store.dispatch('setAccessLog', {
+                browser: getBrowserInfo().browser,
+                clientType: 'pc',
+                type: item.type,
+                typeContent: item.typeContent
+            })
         }
 
     }

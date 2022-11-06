@@ -56,7 +56,7 @@
                      @click="checkProduct(item)">
                     <img :src="baseUrl + (item.thumbImg[1]? item.thumbImg[1].ImgRelativeUrl:'') "/>
                     <h2>{{ item.goodsName }}</h2>
-<!--                    <p>{{ item.price }}</p>-->
+                    <!--                    <p>{{ item.price }}</p>-->
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import {_getClassesPage, getClassById} from "../../http/apiProduct";
+import {_getClassesPage, getBrowserInfo, getClassById} from "../../http/apiProduct";
 import {message} from "ant-design-vue";
 import {mapGetters} from "vuex";
 
@@ -139,6 +139,7 @@ export default {
                     })
                 })
             })
+            this.statics(item)
 
         },
         addProduct(item) {
@@ -190,13 +191,17 @@ export default {
                     console.log(err);
                 })
         },
-
-
         // 修改
-
-
         getRecommend() {
             this.$store.dispatch('getRecommend');
+        },
+        statics(item) {
+            this.$store.dispatch('setAccessLog', {
+                browser: getBrowserInfo().browser,
+                clientType: 'pc',
+                type: '首页',
+                typeContent: item.goodsName
+            })
         }
     }
 }
