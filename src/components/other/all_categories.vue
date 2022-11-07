@@ -128,7 +128,7 @@ export default {
             })
             this.statics({
                 type: '详情',
-                typeContent: '类别' + this.$store.state.currentClass.className + '->' + item.goodsName
+                typeContent: '类别->' + this.$store.state.currentClass.className + '->' + item.goodsName
             })
 
         },
@@ -165,7 +165,7 @@ export default {
             }
             this.statics({
                 type: '分页',
-                typeContent: '类别' + this.$store.state.currentClass.className + '->页数->' + current
+                typeContent: '类别->' + this.$store.state.currentClass.className + '->页数->' + current
             })
         },
 

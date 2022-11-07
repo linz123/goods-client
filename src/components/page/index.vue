@@ -200,7 +200,7 @@ export default {
                 browser: getBrowserInfo().browser,
                 clientType: 'pc',
                 type: '首页',
-                typeContent: item.goodsName
+                typeContent: '详情->' + item.goodsName
             })
         }
     }
