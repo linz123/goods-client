@@ -50,6 +50,7 @@
 
 <script>
 import {mapGetters} from "vuex";
+import {getBrowserInfo} from "../../http/apiProduct";
 
 const moment = require('moment');
 
@@ -73,6 +74,10 @@ export default {
                     params: {id: item.goodId}
                 })
             })
+            this.statics({
+                type: '详情',
+                typeContent: '类别->招聘->' + item.goodsName
+            })
         },
         mapWelfare(item) {
             return item.welfare.split('，')
@@ -86,9 +91,21 @@ export default {
                 classId: this.$store.state.currentClass.classId.toString()
             }, this.$store.state.pageConfig)
             this.$store.dispatch('getGoodByClass', paras)
+            this.statics({
+                type: '分页',
+                typeContent: '类别->招聘->页数->' + current
+            })
         },
         formatTime(timeString) {
             return moment(timeString).format('YYYY-MM-DD');
+        },
+        statics(item) {
+            this.$store.dispatch('setAccessLog', {
+                browser: getBrowserInfo().browser,
+                clientType: 'pc',
+                type: item.type,
+                typeContent: item.typeContent
+            })
         }
     },
     mounted() {
@@ -98,7 +115,8 @@ export default {
                 count: 5
             })
         },200)
-    }
+    },
+
 }
 </script>
 
